@@ -12,9 +12,13 @@ target/
 
 # Java class files (at any depth)
 *.class
+**/*.class
 
 # Secrets and config
 .env
 **/.env
 config.properties
 **/config.properties
+
+# Temp build artifacts
+temp/**/bin/

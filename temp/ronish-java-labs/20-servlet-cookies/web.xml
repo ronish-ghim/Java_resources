@@ -1,0 +1,18 @@
+<web-app>
+    <servlet>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>LoginServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewCookies</servlet-name>
+        <servlet-class>ViewCookiesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewCookies</servlet-name>
+        <url-pattern>/view</url-pattern>
+    </servlet-mapping>
+</web-app>
