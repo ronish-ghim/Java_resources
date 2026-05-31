@@ -20,9 +20,10 @@ public class App extends Frame {
     App() {
         Button btn = new Button("Hello world");
         add(btn);
+        btn.setBounds(130, 100, 100, 40);
         setSize(400, 500);
         setTitle("StudyTonight");
-        setLayout(new FlowLayout());
+        setLayout(null);
         setVisible(true);
 
     }

@@ -12,27 +12,29 @@ public class App {
         // myThread2.start();
         // A a = new A();
         // B b = new B();
-        Counter c = new Counter();
-        Runnable a = () -> {
-            for (int i = 0; i < 1000; i++) {
-                c.increment();
-            }
-        };
-        Runnable b = () -> {
-            for (int i = 0; i < 1000; i++) {
-                c.increment();
-            }
-        };
+        // Counter c = new Counter();
+        // Runnable a = () -> {
+        // for (int i = 0; i < 1000; i++) {
+        // c.increment();
+        // }
+        // };
+        // Runnable b = () -> {
+        // for (int i = 0; i < 1000; i++) {
+        // c.increment();
+        // }
+        // };
 
-        Thread t1 = new Thread(a);
-        Thread t2 = new Thread(b);
+        // Thread t1 = new Thread(a);
+        // Thread t2 = new Thread(b);
 
-        t1.start();
-        t2.start();
+        // t1.start();
+        // t2.start();
 
-        t1.join();
-        t2.join();
-        System.out.println("Final count: " + c.count);
+        // t1.join();
+        // t2.join();
+        // System.out.println("Final count: " + c.count);
+
+        new Test();
     }
 
 }
@@ -87,5 +89,27 @@ class Counter {
 
     public synchronized void increment() {
         count++;
+    }
+}
+
+class Counter2 {
+    static int count = 0;
+
+    static void increment() {
+        count++;
+    }
+
+    static void getCount() {
+        System.out.println(count);
+    }
+}
+
+class Test {
+    Test() {
+        Counter2.increment();
+        Counter2.getCount();
+        Counter2.increment();
+        Counter2.increment();
+        Counter2.getCount();
     }
 }

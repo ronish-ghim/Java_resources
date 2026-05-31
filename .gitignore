@@ -1,0 +1,6 @@
+*/.vscode/
+*/bin/*
+*/.env
+config.properties
+*/*.class
+**/bin/*.class

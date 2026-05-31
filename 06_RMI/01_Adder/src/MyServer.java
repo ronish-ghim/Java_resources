@@ -3,7 +3,7 @@ import java.rmi.server.*;
 import java.rmi.registry.*;
 
 public class MyServer extends UnicastRemoteObject implements Adder {
-    protected MyServer() throws RemoteException {
+    MyServer() throws RemoteException {
         super();
     }
 
