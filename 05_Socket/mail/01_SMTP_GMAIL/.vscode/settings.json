@@ -1,9 +1,0 @@
-{
-    "java.project.sourcePaths": ["src"],
-    "java.project.outputPath": "bin",
-    "java.project.referencedLibraries": [
-        "lib/**/*.jar",
-        "c:\\Users\\Rons\\Downloads\\jakarta.activation-2.0.1.jar",
-        "c:\\Users\\Rons\\Downloads\\jakarta.mail-2.0.1.jar"
-    ]
-}

@@ -1,6 +1,20 @@
-*/.vscode/
-*/bin/*
-*/.env
+# VS Code
+.vscode/
+**/.vscode/
+
+# Java build output
+bin/
+**/bin/
+
+# Maven / build targets
+target/
+**/target/
+
+# Java class files (at any depth)
+*.class
+
+# Secrets and config
+.env
+**/.env
 config.properties
-*/*.class
-**/bin/*.class
+**/config.properties
