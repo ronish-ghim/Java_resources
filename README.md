@@ -17,7 +17,7 @@ Advanced Java Programming coursework: class practice, lab assignments, and colle
 | `Labs/ronish-java-labs/` | 24 lab assignments with `App.java` + `report.md` (AWT/Swing, JDBC, Servlet/JSP, RMI) |
 | `Labs/convert-all.ps1` | Batch-converts all lab reports to DOCX via pandoc |
 | `Labs/todo-all-labs.md` | Status tracker for all 24 labs |
-| `Sunil_sir_notes/` | Course notes — 8 chapters + syllabus-aligned [table of contents](Sunil_sir_notes/toc.md) |
+| `Sunil_sir_notes/` | Course notes — 8 chapters + syllabus-aligned [table of contents](Sunil_sir_notes/readme.md) |
 
 ## Prerequisites
 
@@ -61,6 +61,6 @@ Lecture notes compiled from Sunil Sir's original `.docx` files for **CSC409: Adv
 | 8 | RMI & CORBA (3 hrs) — RMI Architecture, Stub/Skeleton, CORBA | [`Chapter-08_RMI.md`](Sunil_sir_notes/chapters/Chapter-08_RMI.md) |
 | — | Lab Programs (24 labs across A/B/C/D groups) | [`Appendix-Lab-Programs.md`](Sunil_sir_notes/chapters/Appendix-Lab-Programs.md) |
 
-- **[Full Table of Contents](Sunil_sir_notes/toc.md)** — syllabus-aligned with clickable anchors to every section heading
+- **[Full Table of Contents](Sunil_sir_notes/readme.md)** — syllabus-aligned with clickable anchors to every section heading
 - **[Original `.docx` sources](Sunil_sir_notes/original_docx/)** — 4 files: `UNIT 1.docx`, `Unit-1 (File IO).docx`, `Unit1(Threading).docx`, `Unit-1( Inner Class).docx`
 - **[Chapter images](Sunil_sir_notes/chapters/images/)** — 42 extracted diagrams in document order
