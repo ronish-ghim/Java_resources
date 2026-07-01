@@ -25,19 +25,19 @@
 8. Design a form with three buttons with captions “RED,” “BLUE,” and “GREEN,” respectively. Then write a program to handle the event such that when the user clicks the button, the color of that button will be the same as its caption.
 
 9. Write a Java program using Swing that demonstrates the use of different layout managers (FlowLayout, GridLayout, and BorderLayout).
-    •	Divide the main frame into three panels using BorderLayout:
-        o	North Panel: Use FlowLayout to arrange three labels (Name, Roll No, Class) in a single row.
-        o	Center Panel: Use GridLayout (3x2) to create a simple login form with two text fields (Username, Password), a JCheckBox (“Remember Me”), and a JButton (“Login”).
-        o	South Panel: Use FlowLayout to add two buttons (Reset and Exit).
-    •	Handle events so that:
-        o	When Login is pressed, display the entered username in a message dialog.
-        o	When Reset is pressed, clear the text fields.
-        o	When Exit is pressed, close the program.
+    -	Divide the main frame into three panels using BorderLayout:
+        -	North Panel: Use FlowLayout to arrange three labels (Name, Roll No, Class) in a single row.
+        -	Center Panel: Use GridLayout (3x2) to create a simple login form with two text fields (Username, Password), a JCheckBox (“Remember Me”), and a JButton (“Login”).
+        -	South Panel: Use FlowLayout to add two buttons (Reset and Exit).
+    -	Handle events so that:
+        -	When Login is pressed, display the entered username in a message dialog.
+        -	When Reset is pressed, clear the text fields.
+        -	When Exit is pressed, close the program.
 
 10.  Design a form with three buttons with captions “Circle,” “Square,” and “Triangle.”
-    •	When the user clicks the “Circle” button, draw a red circle in the center of the frame.
-    •	When the user clicks the “Square” button, draw a blue square in the center of the frame.
-    •	When the user clicks the “Triangle” button, draw a green triangle in the center of the frame.
+    -	When the user clicks the “Circle” button, draw a red circle in the center of the frame.
+    -	When the user clicks the “Square” button, draw a blue square in the center of the frame.
+    -	When the user clicks the “Triangle” button, draw a green triangle in the center of the frame.
 
 11. Design a Swing application that contains three radio buttons labeled "Red", "Green", and "Blue". When the user selects a radio button, the background color of the window should change to the selected color. Implement event handling using an ItemListener.
 

@@ -15,7 +15,7 @@ public class App implements ActionListener {
         JPanel north = new JPanel(new FlowLayout());
         north.add(new JLabel("Name: Ronish"));
         north.add(new JLabel("Roll No: 1"));
-        north.add(new JLabel("Class: BCA"));
+        north.add(new JLabel("Class: CSIT"));
         f.add(north, BorderLayout.NORTH);
 
         JPanel center = new JPanel(new GridLayout(3, 2));

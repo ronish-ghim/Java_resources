@@ -8,7 +8,7 @@ public class App implements ActionListener {
     JButton b;
 
     public App() {
-        f = new JFrame("Add Two Numbers");
+        f = new JFrame("Ronish 32");
         t1 = new JTextField();
         t2 = new JTextField();
         result = new JTextField();
