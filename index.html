@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Java Lab Programs — B.Sc. CSIT 7th Sem</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0b1120;
+      --surface: #131c31;
+      --surface-hover: #1a2640;
+      --border: #1e2d4a;
+      --text: #e2e8f0;
+      --text-muted: #8899b4;
+      --text-dim: #5a6e8a;
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.15);
+      --gradient-1: #38bdf8;
+      --gradient-2: #818cf8;
+      --radius: 14px;
+      --nav-height: 64px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #93d5fb; }
+
+    /* ─── Navbar ─── */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--nav-height);
+      background: rgba(11, 17, 32, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      z-index: 100;
+    }
+
+    .navbar .logo {
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .navbar .logo svg { flex-shrink: 0; }
+
+    .navbar .nav-links {
+      display: flex;
+      gap: 1.75rem;
+      align-items: center;
+    }
+
+    .navbar .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      position: relative;
+    }
+
+    .navbar .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.25s;
+    }
+
+    .navbar .nav-links a:hover::after { width: 100%; }
+
+    .navbar .nav-links a:hover { color: var(--text); }
+
+    /* ─── Hero ─── */
+    .hero {
+      padding: calc(var(--nav-height) + 4rem) 2rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      left: 50%;
+      translate: -50% 0;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.75rem;
+      position: relative;
+    }
+
+    .hero .tagline {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 0.5rem;
+      position: relative;
+    }
+
+    .hero .badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+      position: relative;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+
+    .badge.accent {
+      background: var(--accent-glow);
+      border-color: rgba(56, 189, 248, 0.3);
+      color: var(--accent);
+    }
+
+    /* ─── Sections ─── */
+    .section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+
+    .section-header {
+      margin-bottom: 2rem;
+    }
+
+    .section-header h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.35rem;
+    }
+
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* ─── Card Grid ─── */
+    .card-grid {
+      display: grid;
+      gap: 1.25rem;
+    }
+
+    .card-grid.modules {
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+
+    .card-grid.highlights {
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius);
+      opacity: 0;
+      transition: opacity 0.3s;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.03), transparent 60%);
+      pointer-events: none;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+      border-color: rgba(56, 189, 248, 0.3);
+    }
+
+    .card:hover::before { opacity: 1; }
+
+    .card .icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      background: var(--accent-glow);
+      color: var(--accent);
+    }
+
+    .card .icon.spring { background: rgba(108, 196, 84, 0.15); color: #6cc454; }
+    .card .icon.labs { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
+    .card .icon.notes { background: rgba(129, 140, 248, 0.15); color: #818cf8; }
+
+    .card h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .card p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+      line-height: 1.55;
+    }
+
+    .card .topics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: 1rem;
+    }
+
+    .card .topics span {
+      font-size: 0.72rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: var(--text-dim);
+    }
+
+    .card .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--accent);
+      margin-top: 0.25rem;
+    }
+
+    .card .card-link svg {
+      transition: transform 0.2s;
+    }
+
+    .card:hover .card-link svg {
+      transform: translateX(3px);
+    }
+
+    /* ─── Spring Boot Cards (taller highlight) ─── */
+    .card.highlight {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card.highlight .meta-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: auto;
+      padding-top: 0.75rem;
+    }
+
+    .card.highlight .meta-tags span {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 5px;
+      background: var(--accent-glow);
+      border: 1px solid rgba(56, 189, 248, 0.15);
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    /* ─── Full-width highlight cards ─── */
+    .card.full {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+    }
+
+    .card.full .icon { flex-shrink: 0; margin-bottom: 0; }
+    .card.full .card-body { flex: 1; }
+    .card.full .card-body h3 { margin-bottom: 0.3rem; }
+    .card.full .card-body p { margin-bottom: 0.6rem; }
+    .card.full .count {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--accent);
+      opacity: 0.3;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    /* ─── Footer ─── */
+    footer {
+      margin-top: 2rem;
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+
+    footer .prereqs {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    footer .prereqs span {
+      font-size: 0.78rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    footer .copyright {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+
+    footer .copyright strong {
+      color: var(--text-muted);
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 768px) {
+      .navbar { padding: 0 1rem; }
+      .navbar .nav-links { gap: 1rem; }
+      .section { padding: 2rem 1rem; }
+      .card.full { flex-direction: column; }
+      .card.full .count { align-self: flex-end; }
+    }
+
+    @media (max-width: 480px) {
+      .navbar .nav-links a:not(.badge) { display: none; }
+      .hero { padding-top: calc(var(--nav-height) + 2rem); padding-left: 1rem; padding-right: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ Navbar ═══ -->
+  <nav class="navbar">
+    <div class="logo">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+        <rect x="2" y="2" width="22" height="22" rx="6" stroke="#38bdf8" stroke-width="2" fill="none"/>
+        <path d="M8 13l3 3 7-7" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Java Lab
+    </div>
+    <div class="nav-links">
+      <a href="#modules">Modules</a>
+      <a href="#spring">Spring Boot</a>
+      <a href="#labs">Labs</a>
+      <a href="#notes">Notes</a>
+      <a href="https://github.com/ronsanyal/java" target="_blank" class="badge">GitHub</a>
+    </div>
+  </nav>
+
+  <!-- ═══ Hero ═══ -->
+  <section class="hero">
+    <h1>Advanced Java Programming</h1>
+    <p class="tagline">Lab programs, course notes, and Spring Boot projects for B.Sc. CSIT 7th Semester — IOST syllabus.</p>
+    <div class="badge-row">
+      <span class="badge accent">CSC409</span>
+      <span class="badge">Semester VII</span>
+      <span class="badge">Java 21+</span>
+      <span class="badge">Spring Boot</span>
+      <span class="badge">MySQL</span>
+      <span class="badge">24 Labs</span>
+    </div>
+  </section>
+
+  <!-- ═══ Modules 01–07 ═══ -->
+  <section class="section" id="modules">
+    <div class="section-header">
+      <h2>Core Modules</h2>
+      <p>Seven modules covering the Java programming spectrum — from language fundamentals to JDBC.</p>
+    </div>
+    <div class="card-grid modules">
+
+      <!-- 01 -->
+      <a class="card" href="01_Java_Class/">
+        <div class="icon">☕</div>
+        <h3>01 &middot; Java Core</h3>
+        <p>Fundamentals of the Java language — OOP, inheritance, exceptions, threads, and file I/O.</p>
+        <div class="topics">
+          <span>HelloWorld</span><span>Calculator</span><span>Prime</span>
+          <span>ClassTypes</span><span>Exception</span><span>Threads</span><span>File I/O</span>
+        </div>
+        <span class="card-link">Explore <span>&rarr;</span></span>
+      </a>
+
+      <!-- 02 -->
+      <a class="card" href="02_SpringBoot/">
+        <div class="icon">🍃</div>
+        <h3>02 &middot; Spring Boot</h3>
+        <p>Enterprise applications with Spring Boot — REST APIs, JPA, Flyway migrations, and Actuator.</p>
+        <div class="topics">
+          <span>e-commerce</span><span>store</span><span>Maven</span>
+        </div>
+        <span class="card-link">Explore <span>&rarr;</span></span>
+      </a>
+
+      <!-- 03 -->
+      <a class="card" href="03_Swing/">
+        <div class="icon">🖥️</div>
+        <h3>03 &middot; AWT / Swing</h3>
+        <p>Desktop GUI development with AWT and Swing — layout managers, dialogs, and form controls.</p>
+        <div class="topics">
+          <span>FlowLayout</span><span>BorderLayout</span><span>GridLayout</span>
+          <span>GridBagLayout</span><span>Calculator</span><span>Registration</span>
+        </div>
+        <span class="card-link">Explore <span>&rarr;</span></span>
+      </a>
+
+      <!-- 04 -->
+      <a class="card" href="04_Events/">
+        <div class="icon">🎯</div>
+        <h3>04 &middot; Event Handling</h3>
+        <p>Delegation event model — listeners, adapters, and event-driven GUI programming.</p>
+        <div class="topics">
+          <span>ActionListener</span><span>Mouse</span><span>Key</span><span>CalculatorComboBox</span>
+        </div>
+        <span class="card-link">Explore <span>&rarr;</span></span>
+      </a>
+
+      <!-- 05 -->
+      <a class="card" href="05_Socket/">
+        <div class="icon">🌐</div>
+        <h3>05 &middot; Networking</h3>
+        <p>TCP/UDP sockets, multi-client chat, URL processing, and SMTP email with Jakarta Mail.</p>
+        <div class="topics">
+          <span>TCP ChatApp</span><span>UDP</span><span>URL</span><span>SMTP</span>
+        </div>
+        <span class="card-link">Explore <span>&rarr;</span></span>
+      </a>
+
+      <!-- 06 -->
+      <a class="card" href="06_RMI/">
+        <div class="icon">📡</div>
+        <h3>06 &middot; RMI</h3>
+        <p>Remote Method Invocation — distributed object communication via stub/skeleton on port 5000.</p>
+        <div class="topics">
+          <span>Adder</span><span>MyServer</span><span>MyClient</span><span>rmiregistry</span>
+        </div>
+        <span class="card-link">Explore <span>&rarr;</span></span>
+      </a>
+
+      <!-- 07 -->
+      <a class="card" href="07_Database/">
+        <div class="icon">🗄️</div>
+        <h3>07 &middot; JDBC</h3>
+        <p>Database connectivity with MySQL — connection, login, DDL, CRUD, and ResultSet navigation.</p>
+        <div class="topics">
+          <span>Connection</span><span>Login</span><span>DDL</span><span>CRUD</span><span>ResultSet</span>
+        </div>
+        <span class="card-link">Explore <span>&rarr;</span></span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ═══ Spring Boot Highlight ═══ -->
+  <section class="section" id="spring">
+    <div class="section-header">
+      <h2>Spring Boot</h2>
+      <p>Two production-grade Maven projects with modern Java toolchains.</p>
+    </div>
+    <div class="card-grid highlights">
+
+      <a class="card highlight" href="02_SpringBoot/e-commerce/">
+        <div class="icon spring">SB</div>
+        <h3>e-commerce API</h3>
+        <p>Spring Boot 3.4.1 RESTful service — Web, JPA, MySQL, and Flyway for schema migrations.</p>
+        <div class="meta-tags">
+          <span>Java 23</span>
+          <span>Spring Boot 3.4.1</span>
+          <span>JPA</span>
+          <span>MySQL</span>
+          <span>Flyway</span>
+        </div>
+      </a>
+
+      <a class="card highlight" href="02_SpringBoot/store/store/">
+        <div class="icon spring">SB</div>
+        <h3>Store Service</h3>
+        <p>Spring Boot 4.0.1 web service with Actuator for production monitoring and management.</p>
+        <div class="meta-tags">
+          <span>Java 21</span>
+          <span>Spring Boot 4.0.1</span>
+          <span>Web</span>
+          <span>Actuator</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ═══ Labs + Notes ═══ -->
+  <section class="section" id="labs">
+    <div class="section-header">
+      <h2>Lab Assignments &amp; Notes</h2>
+      <p>24 lab programs plus 8 chapters of course notes aligned to the CSC409 syllabus.</p>
+    </div>
+    <div class="card-grid highlights">
+
+      <a class="card full" href="Labs/todo-all-labs.md">
+        <div class="icon labs">📝</div>
+        <div class="card-body">
+          <h3>24 Lab Assignments</h3>
+          <p>Complete set of lab works across four groups — AWT/Swing, JDBC, Servlet/JSP, and RMI. Each lab includes source code and a detailed report.</p>
+          <span class="card-link">View status &rarr;</span>
+        </div>
+        <div class="count">24</div>
+      </a>
+
+      <a class="card full" href="Sunil_sir_notes/index.html">
+        <div class="icon notes">📖</div>
+        <div class="card-body">
+          <h3>Course Notes</h3>
+          <p>8 chapters of lecture notes covering the full CSC409 syllabus — from Java fundamentals to RMI &amp; CORBA. Includes diagrams and code examples.</p>
+          <span class="card-link">Read notes &rarr;</span>
+        </div>
+        <div class="count">8</div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ═══ Footer ═══ -->
+  <footer>
+    <div class="prereqs">
+      <span>☕ Java 21+</span>
+      <span>🛠️ VS Code + Java Extension Pack</span>
+      <span>🐬 MySQL 8+</span>
+      <span>📦 Maven Wrapper</span>
+      <span>🔗 mysql-connector-j</span>
+      <span>📄 Pandoc</span>
+    </div>
+    <div class="copyright">
+      &copy; 2026 <strong>Ronish Sanyal</strong> &middot; B.Sc. CSIT 7th Semester &middot; CSC409 Advanced Java Programming
+    </div>
+  </footer>
+
+  <script>
+    // Highlight active nav link on scroll
+    const sections = document.querySelectorAll('.section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+
+    function onScroll() {
+      let current = '';
+      sections.forEach(s => {
+        const top = s.getBoundingClientRect().top;
+        if (top <= 150) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + current ? 'var(--text)' : '';
+      });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+  </script>
+
+</body>
+</html>

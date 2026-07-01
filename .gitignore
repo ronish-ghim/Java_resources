@@ -22,3 +22,5 @@ config.properties
 
 # Temp build artifacts
 temp/**/bin/
+
+Hangman-Java-Football-Edition/

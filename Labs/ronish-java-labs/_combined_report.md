@@ -1,6 +1,6 @@
 # Ronish's Java Lab Report
 
-# Lab 1: Mouse Sum Diff
+# Lab 1: AWT Mouse Event Handling – Sum and Difference Calculator
 
 ## Objective
 Create an AWT Frame that implements MouseListener. On mouse press, display the sum of two numbers. On mouse release, display the difference.
@@ -10,11 +10,11 @@ Create an AWT Frame that implements MouseListener. On mouse press, display the s
 import java.awt.*;
 import java.awt.event.*;
 
-public class App extends Frame implements MouseListener {
+public class Ronish32_App extends Frame implements MouseListener {
     TextField t1, t2, result;
     Label l;
 
-    public App() {
+    public Ronish32_App() {
         setLayout(new FlowLayout());
         t1 = new TextField(10);
         t2 = new TextField(10);
@@ -44,7 +44,7 @@ public class App extends Frame implements MouseListener {
     public void mouseExited(MouseEvent e) {}
 
     public static void main(String[] args) {
-        new App();
+        new Ronish32_App();
     }
 }
 ```
@@ -55,9 +55,10 @@ A window with two text fields for input. Pressing the mouse shows the sum; relea
 ## Conclusion
 Learned to implement MouseListener interface and handle mouse events in AWT.
 
----
+\newpage
 
-# Lab 2: Add Two Numbers
+
+# Lab 2: Swing Addition Calculator with GridLayout
 
 ## Objective
 Create a Swing JFrame with two input fields, a non-editable result field, and an "Add" button using GridLayout.
@@ -68,12 +69,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class App implements ActionListener {
+public class Ronish32_App implements ActionListener {
     JFrame f;
     JTextField t1, t2, result;
     JButton b;
 
-    public App() {
+    public Ronish32_App() {
         f = new JFrame("Add Two Numbers");
         t1 = new JTextField();
         t2 = new JTextField();
@@ -98,7 +99,7 @@ public class App implements ActionListener {
     }
 
     public static void main(String[] args) {
-        new App();
+        new Ronish32_App();
     }
 }
 ```
@@ -109,9 +110,10 @@ A 4x2 grid form. Entering two numbers and clicking "Add" displays the sum in the
 ## Conclusion
 Learned to use Swing components, GridLayout, and ActionListener for button click events.
 
----
+\newpage
 
-# Lab 3: Calculator Radio
+
+# Lab 3: Swing Arithmetic Calculator Using JRadioButton Operations
 
 ## Objective
 Create a Swing calculator using JRadioButtons for selecting operations (Add, Sub, Mul, Div) with a Calculate button.
@@ -122,13 +124,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class App implements ActionListener {
+public class Ronish32_App implements ActionListener {
     JFrame f;
     JTextField t1, t2, result;
     JRadioButton add, sub, mul, div;
     JButton calc;
 
-    public App() {
+    public Ronish32_App() {
         f = new JFrame("Calculator Radio");
         t1 = new JTextField();
         t2 = new JTextField();
@@ -170,7 +172,7 @@ public class App implements ActionListener {
     }
 
     public static void main(String[] args) {
-        new App();
+        new Ronish32_App();
     }
 }
 ```
@@ -181,9 +183,10 @@ A 6x2 grid with radio buttons for operation selection. Selecting an operation an
 ## Conclusion
 Learned to use JRadioButton with ButtonGroup and perform arithmetic operations based on selection.
 
----
+\newpage
 
-# Lab 4: Sum Diff Adapter
+
+# Lab 4: AWT MouseAdapter – Sum and Difference with Anonymous Class
 
 ## Objective
 Same as Lab 1 but using an anonymous MouseAdapter class instead of implementing MouseListener.
@@ -194,7 +197,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class App {
+public class Ronish32_App {
     public static void main(String[] args) {
         JFrame f = new JFrame("Sum Diff Adapter");
         f.setLayout(new GridLayout(3, 2));
@@ -233,9 +236,10 @@ A 3x2 grid layout. Mouse press shows sum, mouse release shows difference.
 ## Conclusion
 Learned to use MouseAdapter with anonymous class for cleaner event handling code.
 
----
+\newpage
 
-# Lab 5: Login GridLayout
+
+# Lab 5: Swing Login Form Using GridLayout
 
 ## Objective
 Create a Swing login form with username and password fields using GridLayout (no event handling).
@@ -245,7 +249,7 @@ Create a Swing login form with username and password fields using GridLayout (no
 import javax.swing.*;
 import java.awt.*;
 
-public class App {
+public class Ronish32_App {
     public static void main(String[] args) {
         JFrame f = new JFrame("Login GridLayout");
         f.setLayout(new GridLayout(3, 2));
@@ -268,9 +272,10 @@ A 3x2 grid with Username label and field, Password label and field, and a Login 
 ## Conclusion
 Learned to create a login form layout using GridLayout in Swing.
 
----
+\newpage
 
-# Lab 6: Login GridBagLayout
+
+# Lab 6: Swing Login Form Using GridBagLayout with Constraints
 
 ## Objective
 Create a Swing login form using GridBagLayout with proper spacing using GridBagConstraints.
@@ -280,7 +285,7 @@ Create a Swing login form using GridBagLayout with proper spacing using GridBagC
 import javax.swing.*;
 import java.awt.*;
 
-public class App {
+public class Ronish32_App {
     public static void main(String[] args) {
         JFrame f = new JFrame("Login GridBagLayout");
         f.setLayout(new GridBagLayout());
@@ -313,9 +318,10 @@ Login form with precise component positioning using GridBagLayout and 5px insets
 ## Conclusion
 Learned to use GridBagLayout and GridBagConstraints for flexible component placement.
 
----
+\newpage
 
-# Lab 7: Calculator BorderLayout
+
+# Lab 7: Swing Arithmetic Calculator Using BorderLayout and Nested Panels
 
 ## Objective
 Create a calculator using BorderLayout. NORTH has title, CENTER has number inputs, EAST has operation buttons.
@@ -326,12 +332,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class App implements ActionListener {
+public class Ronish32_App implements ActionListener {
     JFrame f;
     JTextField t1, t2, result;
     JButton add, sub, mul, div;
 
-    public App() {
+    public Ronish32_App() {
         f = new JFrame("Calculator BorderLayout");
         f.setLayout(new BorderLayout());
 
@@ -370,7 +376,7 @@ public class App implements ActionListener {
     }
 
     public static void main(String[] args) {
-        new App();
+        new Ronish32_App();
     }
 }
 ```
@@ -381,9 +387,10 @@ BorderLayout with title at top, inputs in center, operation buttons on the right
 ## Conclusion
 Learned to combine BorderLayout with nested JPanels using GridLayout for complex layouts.
 
----
+\newpage
 
-# Lab 8a: Button Color
+
+# Lab 8a: Dynamic Button Background Color Change on Click
 
 ## Objective
 Create a JFrame with three buttons. Clicking a button changes that button's background color (RED/BLUE/GREEN).
@@ -394,11 +401,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class App implements ActionListener {
+public class Ronish32_App implements ActionListener {
     JFrame f;
     JButton red, blue, green;
 
-    public App() {
+    public Ronish32_App() {
         f = new JFrame("Button Color");
         f.setLayout(new FlowLayout());
         red = new JButton("RED");
@@ -420,7 +427,7 @@ public class App implements ActionListener {
     }
 
     public static void main(String[] args) {
-        new App();
+        new Ronish32_App();
     }
 }
 ```
@@ -431,9 +438,10 @@ Three buttons in a row. Clicking "RED" turns the red button red, and similarly f
 ## Conclusion
 Learned to change component background colors dynamically on button click.
 
----
+\newpage
 
-# Lab 8b: Form Background Color
+
+# Lab 8b: Dynamic Form Background Color Change Using Content Pane
 
 ## Objective
 Create a JFrame with three buttons. Clicking a button changes the content pane's background color.
@@ -444,11 +452,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class App implements ActionListener {
+public class Ronish32_App implements ActionListener {
     JFrame f;
     JButton red, blue, green;
 
-    public App() {
+    public Ronish32_App() {
         f = new JFrame("Form Background Color");
         f.setLayout(new FlowLayout());
         red = new JButton("RED");
@@ -470,7 +478,7 @@ public class App implements ActionListener {
     }
 
     public static void main(String[] args) {
-        new App();
+        new Ronish32_App();
     }
 }
 ```
@@ -481,9 +489,10 @@ Three buttons. Clicking "RED" turns the entire form background red, and similarl
 ## Conclusion
 Learned to change the content pane background of a JFrame dynamically.
 
----
+\newpage
 
-# Lab 9: Layout Manager Demo
+
+# Lab 9: Combined Layout Managers – Student Info with Login Form
 
 ## Objective
 Create a JFrame using BorderLayout with NORTH (labels), CENTER (login form), and SOUTH (Reset/Exit buttons).
@@ -494,13 +503,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class App implements ActionListener {
+public class Ronish32_App implements ActionListener {
     JFrame f;
     JTextField username;
     JPasswordField password;
     JCheckBox remember;
 
-    public App() {
+    public Ronish32_App() {
         f = new JFrame("Layout Manager Demo");
         f.setLayout(new BorderLayout());
 
@@ -550,7 +559,7 @@ public class App implements ActionListener {
     }
 
     public static void main(String[] args) {
-        new App();
+        new Ronish32_App();
     }
 }
 ```
@@ -561,9 +570,10 @@ Top panel shows student info, center has login form with Remember Me checkbox, b
 ## Conclusion
 Learned to combine multiple layout managers (BorderLayout, FlowLayout, GridLayout) in a single application.
 
----
+\newpage
 
-# Lab 10: Shape Drawer
+
+# Lab 10: Canvas Shape Drawing – Circle, Square, and Triangle
 
 ## Objective
 Create a Canvas with Circle, Square, and Triangle buttons. Clicking a button draws the corresponding shape.
@@ -574,10 +584,10 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class App extends Canvas implements ActionListener {
+public class Ronish32_App extends Canvas implements ActionListener {
     String shape = "";
 
-    public App() {
+    public Ronish32_App() {
         JFrame f = new JFrame("Shape Drawer");
         f.setLayout(new BorderLayout());
 
@@ -620,7 +630,7 @@ public class App extends Canvas implements ActionListener {
     }
 
     public static void main(String[] args) {
-        new App();
+        new Ronish32_App();
     }
 }
 ```
@@ -631,9 +641,10 @@ Three buttons at top. Clicking Circle draws a red circle, Square draws a blue sq
 ## Conclusion
 Learned to use Canvas, override paint(Graphics), and draw shapes using fillOval, fillRect, and fillPolygon.
 
----
+\newpage
 
-# Lab 11: Color Changer Radio
+
+# Lab 11: Background Color Changer Using JRadioButton and ItemListener
 
 ## Objective
 Create a JFrame with three JRadioButtons (Red, Green, Blue) using ItemListener to change the content pane background.
@@ -644,11 +655,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class App implements ItemListener {
+public class Ronish32_App implements ItemListener {
     JFrame f;
     JRadioButton red, green, blue;
 
-    public App() {
+    public Ronish32_App() {
         f = new JFrame("Color Changer Radio");
         f.setLayout(new FlowLayout());
         red = new JRadioButton("Red");
@@ -672,7 +683,7 @@ public class App implements ItemListener {
     }
 
     public static void main(String[] args) {
-        new App();
+        new Ronish32_App();
     }
 }
 ```
@@ -683,9 +694,10 @@ Three radio buttons. Selecting Red turns the background red, Green turns it gree
 ## Conclusion
 Learned to use JRadioButton with ButtonGroup and ItemListener for selection-based actions.
 
----
+\newpage
 
-# Lab 12: Toolbar Icons
+
+# Lab 12: JToolBar with Programmatically Generated Icon Buttons
 
 ## Objective
 Create a JToolBar with programmatically generated colored circle icons and tooltip text.
@@ -697,10 +709,10 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
-public class App implements ActionListener {
+public class Ronish32_App implements ActionListener {
     JFrame f;
 
-    public App() {
+    public Ronish32_App() {
         f = new JFrame("Toolbar Icons");
         f.setLayout(new BorderLayout());
 
@@ -743,7 +755,7 @@ public class App implements ActionListener {
     }
 
     public static void main(String[] args) {
-        new App();
+        new Ronish32_App();
     }
 }
 ```
@@ -754,9 +766,10 @@ A toolbar with three colored circle buttons. Green shows "New File Created", Blu
 ## Conclusion
 Learned to create icons programmatically using BufferedImage and use JToolBar with tooltips.
 
----
+\newpage
 
-# Lab 13: JDBC Insert Students
+
+# Lab 13: JDBC PreparedStatement – Insert and Display Student Records
 
 ## Objective
 Insert 5 student records using PreparedStatement and display them sorted by name.
@@ -765,7 +778,7 @@ Insert 5 student records using PreparedStatement and display them sorted by name
 ```java
 import java.sql.*;
 
-public class App {
+public class Ronish32_App {
     public static void main(String[] args) throws Exception {
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection con = DriverManager.getConnection(
@@ -817,9 +830,10 @@ ID      Name            Gender          Address
 ## Conclusion
 Learned to use PreparedStatement for parameterized queries and ResultSet for displaying data.
 
----
+\newpage
 
-# Lab 14: JDBC Update Salary
+
+# Lab 14: JDBC Update Query – Salary Increment by Percentage
 
 ## Objective
 Update salary by 15% for employees with salary less than 20000.
@@ -828,7 +842,7 @@ Update salary by 15% for employees with salary less than 20000.
 ```java
 import java.sql.*;
 
-public class App {
+public class Ronish32_App {
     public static void main(String[] args) throws Exception {
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection con = DriverManager.getConnection(
@@ -869,9 +883,10 @@ Shows salary records before and after the 15% increment for employees with salar
 ## Conclusion
 Learned to execute UPDATE queries and display before/after results using JDBC.
 
----
+\newpage
 
-# Lab 15: JDBC Create Table
+
+# Lab 15: JDBC Create Table and Insert Record Using PreparedStatement
 
 ## Objective
 Create a table tblStudent with id, name, email columns and insert a record.
@@ -880,7 +895,7 @@ Create a table tblStudent with id, name, email columns and insert a record.
 ```java
 import java.sql.*;
 
-public class App {
+public class Ronish32_App {
     public static void main(String[] args) throws Exception {
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection con = DriverManager.getConnection(
@@ -927,9 +942,10 @@ ID      Name            Email
 ## Conclusion
 Learned to use CREATE TABLE IF NOT EXISTS and insert records using PreparedStatement.
 
----
+\newpage
 
-# Lab 16: JDBC ResultSet Navigation
+
+# Lab 16: Scrollable ResultSet Navigation – first, last, previous, beforeFirst
 
 ## Objective
 Demonstrate scrollable ResultSet navigation (first, last, previous, beforeFirst, next) using TYPE_SCROLL_INSENSITIVE.
@@ -938,7 +954,7 @@ Demonstrate scrollable ResultSet navigation (first, last, previous, beforeFirst,
 ```java
 import java.sql.*;
 
-public class App {
+public class Ronish32_App {
     public static void main(String[] args) throws Exception {
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection con = DriverManager.getConnection(
@@ -977,9 +993,10 @@ Demonstrates navigation through emp table records using first(), last(), previou
 ## Conclusion
 Learned to use scrollable ResultSet with TYPE_SCROLL_INSENSITIVE for flexible cursor navigation.
 
----
+\newpage
 
-# Lab 17: JDBC Updatable ResultSet
+
+# Lab 17: Updatable ResultSet – In-Place Record Update via ResultSet
 
 ## Objective
 Use CONCUR_UPDATABLE ResultSet to update employee name and show before/after values.
@@ -988,7 +1005,7 @@ Use CONCUR_UPDATABLE ResultSet to update employee name and show before/after val
 ```java
 import java.sql.*;
 
-public class App {
+public class Ronish32_App {
     public static void main(String[] args) throws Exception {
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection con = DriverManager.getConnection(
@@ -1030,9 +1047,10 @@ ID: 1, Name: UpdatedName
 ## Conclusion
 Learned to use CONCUR_UPDATABLE ResultSet to update records directly through the result set.
 
----
+\newpage
 
-# Lab 18: Servlet Lifecycle
+
+# Lab 18: Servlet Lifecycle – Demonstrating init, service, and destroy Methods
 
 ## Objective
 Implement the Servlet interface and demonstrate init, service, and destroy lifecycle methods.
@@ -1107,9 +1125,10 @@ Console shows "in init" (once), "in service" (on each request). Browser displays
 ## Conclusion
 Learned the servlet lifecycle: init(), service(), and destroy() methods.
 
----
+\newpage
 
-# Lab 19: Servlet Session
+
+# Lab 19: HttpSession – Sharing Data Across Multiple Servlets
 
 ## Objective
 Demonstrate HttpSession by setting an attribute in one servlet and reading it in another.
@@ -1197,9 +1216,10 @@ Clicking "store" sets session attribute and shows a link to "view". Clicking "vi
 ## Conclusion
 Learned to use HttpSession to share data across multiple servlets for the same user session.
 
----
+\newpage
 
-# Lab 20: Servlet Cookies
+
+# Lab 20: Servlet Cookie Handling – Login Form with Cookie Storage
 
 ## Objective
 Demonstrate cookies by storing username/password in LoginServlet and reading them in ViewCookiesServlet.
@@ -1297,9 +1317,10 @@ Login form submits to /login, sets cookies, then clicking "View Cookies" shows u
 ## Conclusion
 Learned to create and read cookies in servlets for client-side data storage.
 
----
+\newpage
 
-# Lab 21: JSP Cookies
+
+# Lab 21: JSP Cookie Management Using Scriptlets
 
 ## Objective
 Create cookies in JSP from form parameters and display them on another JSP page.
@@ -1363,9 +1384,10 @@ Form → welcome.jsp creates cookies → display.jsp shows "userName: value" and
 ## Conclusion
 Learned to work with cookies in JSP using scriptlets and the request/response implicit objects.
 
----
+\newpage
 
-# Lab 22: JSP Form Display
+
+# Lab 22: JSP Form Submission and Table Display of Student Data
 
 ## Objective
 Create a student form and display the submitted data in an HTML table using JSP.
@@ -1410,9 +1432,10 @@ Student form submits to displayStudent.jsp which shows a bordered HTML table wit
 ## Conclusion
 Learned to use JSP expressions and request.getParameter to process and display form data.
 
----
+\newpage
 
-# Lab 23: JSP Simple Interest
+
+# Lab 23: JSP Simple Interest Calculator with Form Input and Result Table
 
 ## Objective
 Calculate simple interest using JSP. Input principal, time, and rate; display inputs and result in a table.
@@ -1462,9 +1485,10 @@ Form for principal, time, rate. Submitting shows a table with inputs and the cal
 ## Conclusion
 Learned to perform arithmetic calculations in JSP scriptlets and display results using expressions.
 
----
+\newpage
 
-# Lab 24: RMI Adder
+
+# Lab 24: RMI Remote Method Invocation – Distributed Addition Service
 
 ## Objective
 Create a remote interface Adder, implement it in a server, and call it from a client.
@@ -1521,7 +1545,7 @@ public class MyClient {
 
 ### App.java
 ```java
-public class App {
+public class Ronish32_App {
     public static void main(String[] args) {
         System.out.println("Run MyServer first, then MyClient.");
     }
@@ -1540,6 +1564,7 @@ Sum = 50
 ## Conclusion
 Learned RMI architecture: remote interface, server implementation with UnicastRemoteObject, and client lookup.
 
----
+\newpage
+
 
 
