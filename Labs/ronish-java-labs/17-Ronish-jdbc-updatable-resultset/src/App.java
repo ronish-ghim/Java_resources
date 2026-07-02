@@ -7,7 +7,7 @@ public class App {
             "jdbc:mysql://localhost:3306/javasamriddhi", "root", "");
 
         PreparedStatement ps = con.prepareStatement(
-            "SELECT * FROM emp WHERE id = ?",
+            "SELECT * FROM tblEmployee WHERE id = ?",
             ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         ps.setInt(1, 1);
         ResultSet rs = ps.executeQuery();
@@ -16,7 +16,7 @@ public class App {
             System.out.println("Before Update:");
             System.out.println("ID: " + rs.getInt("id") + ", Name: " + rs.getString("name"));
 
-            rs.updateString("name", "UpdatedName");
+            rs.updateString("name", "Rons");
             rs.updateRow();
 
             System.out.println("\nAfter Update:");

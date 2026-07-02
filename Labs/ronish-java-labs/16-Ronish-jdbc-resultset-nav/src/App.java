@@ -8,7 +8,7 @@ public class App {
 
         Statement st = con.createStatement(
             ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-        ResultSet rs = st.executeQuery("SELECT * FROM emp");
+        ResultSet rs = st.executeQuery("SELECT * FROM tblEmployee");
 
         System.out.println("--- first() ---");
         rs.first();

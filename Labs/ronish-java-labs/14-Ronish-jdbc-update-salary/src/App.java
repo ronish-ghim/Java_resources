@@ -9,7 +9,7 @@ public class App {
         Statement st = con.createStatement();
 
         System.out.println("Before Update:");
-        ResultSet rs = st.executeQuery("SELECT * FROM student");
+        ResultSet rs = st.executeQuery("SELECT * FROM tblEmployee");
         System.out.println("ID\tName\t\tSalary");
         System.out.println("---------------------------");
         while (rs.next()) {
@@ -18,11 +18,11 @@ public class App {
         }
 
         int updated = st.executeUpdate(
-            "UPDATE student SET salary = salary + (salary * 15 / 100) WHERE salary < 20000");
+            "UPDATE tblEmployee SET salary = salary + (salary * 15 / 100) WHERE salary < 20000");
         System.out.println("\nRows updated: " + updated);
 
         System.out.println("\nAfter Update:");
-        rs = st.executeQuery("SELECT * FROM student");
+        rs = st.executeQuery("SELECT * FROM tblEmployee");
         System.out.println("ID\tName\t\tSalary");
         System.out.println("---------------------------");
         while (rs.next()) {

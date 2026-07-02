@@ -24,3 +24,4 @@ config.properties
 temp/**/bin/
 
 Hangman-Java-Football-Edition/
+/New Folder/test/nbproject/private/
