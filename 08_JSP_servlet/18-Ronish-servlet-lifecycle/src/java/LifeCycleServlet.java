@@ -1,8 +1,6 @@
 import javax.servlet.*;
 import java.io.*;
-import javax.servlet.annotation.WebServlet;
 
-@WebServlet("/lifecycle")
 public class LifeCycleServlet implements Servlet {
     private ServletConfig config;
 
