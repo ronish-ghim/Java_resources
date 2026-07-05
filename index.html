@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     *,
     *::before,
@@ -25,7 +26,8 @@
       --gradient-1: #38bdf8;
       --gradient-2: #818cf8;
       --radius: 14px;
-      --nav-height: 64px;
+      --nav-height: 56px;
+      --sidebar-width: 280px;
     }
 
     html { scroll-behavior: smooth; }
@@ -55,105 +57,225 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 2rem;
+      padding: 0 1.25rem;
       z-index: 100;
     }
 
     .navbar .logo {
       font-weight: 700;
-      font-size: 1.15rem;
+      font-size: 1rem;
       color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+    }
+
+    .navbar .logo svg { flex-shrink: 0; }
+
+    .navbar .nav-start {
       display: flex;
       align-items: center;
       gap: 0.5rem;
     }
 
-    .navbar .logo svg { flex-shrink: 0; }
-
-    .navbar .nav-links {
+    .navbar .nav-end {
       display: flex;
-      gap: 1.75rem;
+      gap: 0.75rem;
       align-items: center;
     }
 
-    .navbar .nav-links a {
-      font-size: 0.875rem;
-      font-weight: 500;
+    .nav-toggle {
+      background: none;
+      border: 1px solid var(--border);
       color: var(--text-muted);
-      position: relative;
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+    .nav-toggle:hover { background: var(--surface-hover); }
+
+    /* ─── Layout ─── */
+    .layout {
+      display: flex;
+      padding-top: var(--nav-height);
+      min-height: calc(100vh - var(--nav-height));
     }
 
-    .navbar .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
+    /* ─── Sidebar ─── */
+    .sidebar {
+      position: fixed;
+      top: var(--nav-height);
       left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--accent);
-      transition: width 0.25s;
+      bottom: 0;
+      width: var(--sidebar-width);
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      padding: 0.75rem 0;
+      z-index: 90;
+      transition: transform 0.3s;
     }
 
-    .navbar .nav-links a:hover::after { width: 100%; }
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-track { background: transparent; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 
-    .navbar .nav-links a:hover { color: var(--text); }
+    .sidebar-group {
+      margin-bottom: 0.25rem;
+    }
 
-    /* ─── Hero ─── */
-    .hero {
-      padding: calc(var(--nav-height) + 4rem) 2rem 4rem;
+    .sidebar-group summary {
+      cursor: pointer;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.55rem 1rem 0.55rem 1.25rem;
+      color: var(--text-dim);
+      user-select: none;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .sidebar-group summary::-webkit-details-marker { display: none; }
+
+    .sidebar-group summary:hover { color: var(--text-muted); }
+
+    .sidebar-group summary::before {
+      content: '\25B6';
+      font-size: 0.55rem;
+      transition: transform 0.2s;
+    }
+
+    .sidebar-group[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    .sidebar-item {
+      display: block;
+      padding: 0.35rem 1rem 0.35rem 2rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      border-left: 2px solid transparent;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+
+    .sidebar-item:hover {
+      background: var(--surface-hover);
+      color: var(--text);
+    }
+
+    .sidebar-item.active {
+      color: var(--accent);
+      border-left-color: var(--accent);
+      background: var(--accent-glow);
+    }
+
+    .sidebar-item.lab-group {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.75rem 1rem 0.3rem 2rem;
+      color: var(--text-dim);
+      pointer-events: none;
+    }
+
+    /* ─── Main Content ─── */
+    .main {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      min-width: 0;
+    }
+
+    #content {
+      display: none;
+      max-width: 960px;
+      padding: 2.5rem 3rem;
+    }
+
+    #content.loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+    }
+
+    #content.md-content {
+      display: block;
+    }
+
+    /* ─── Welcome / Default View ─── */
+    .welcome {
+      display: none;
+      max-width: 960px;
+      padding: 2.5rem 3rem;
+    }
+
+    .welcome.visible {
+      display: block;
+    }
+
+    .welcome .hero {
       text-align: center;
+      padding: 3rem 0 2.5rem;
       position: relative;
       overflow: hidden;
     }
 
-    .hero::before {
+    .welcome .hero::before {
       content: '';
       position: absolute;
       top: -40%;
       left: 50%;
       translate: -50% 0;
-      width: 800px;
-      height: 800px;
+      width: 700px;
+      height: 700px;
       background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%);
       pointer-events: none;
     }
 
-    .hero h1 {
-      font-size: clamp(2.2rem, 6vw, 4rem);
+    .welcome .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
       font-weight: 800;
       letter-spacing: -0.03em;
       background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.6rem;
       position: relative;
     }
 
-    .hero .tagline {
-      font-size: clamp(1rem, 2vw, 1.2rem);
+    .welcome .hero .tagline {
+      font-size: clamp(0.9rem, 1.8vw, 1.1rem);
       color: var(--text-muted);
-      max-width: 600px;
+      max-width: 560px;
       margin: 0 auto 0.5rem;
       position: relative;
     }
 
-    .hero .badge-row {
+    .welcome .hero .badge-row {
       display: flex;
       justify-content: center;
-      gap: 0.75rem;
+      gap: 0.6rem;
       flex-wrap: wrap;
-      margin-top: 1.5rem;
+      margin-top: 1.25rem;
       position: relative;
     }
 
     .badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
-      font-size: 0.8rem;
+      gap: 0.3rem;
+      font-size: 0.75rem;
       font-weight: 500;
-      padding: 0.35rem 0.85rem;
+      padding: 0.3rem 0.75rem;
       border-radius: 999px;
       background: var(--surface);
       border: 1px solid var(--border);
@@ -169,13 +291,13 @@
     .download-btn {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.7rem 1.5rem;
+      gap: 0.45rem;
+      padding: 0.65rem 1.4rem;
       border-radius: 999px;
       background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
       color: #fff;
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       border: none;
       cursor: pointer;
       transition: transform 0.2s, box-shadow 0.2s;
@@ -187,48 +309,39 @@
       color: #fff;
     }
 
-    /* ─── Sections ─── */
-    .section {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 3rem 2rem;
+    .welcome .section {
+      padding: 2.5rem 0;
     }
 
-    .section-header {
-      margin-bottom: 2rem;
+    .welcome .section-header {
+      margin-bottom: 1.5rem;
     }
 
-    .section-header h2 {
-      font-size: 1.6rem;
+    .welcome .section-header h2 {
+      font-size: 1.4rem;
       font-weight: 700;
       letter-spacing: -0.02em;
-      margin-bottom: 0.35rem;
+      margin-bottom: 0.3rem;
     }
 
-    .section-header p {
+    .welcome .section-header p {
       color: var(--text-muted);
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
 
-    /* ─── Card Grid ─── */
     .card-grid {
       display: grid;
-      gap: 1.25rem;
+      gap: 1rem;
     }
 
-    .card-grid.modules {
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    }
-
-    .card-grid.highlights {
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    }
+    .card-grid.modules { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+    .card-grid.highlights { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
 
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 1.5rem;
+      padding: 1.25rem;
       transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
       position: relative;
       overflow: hidden;
@@ -246,7 +359,7 @@
     }
 
     .card:hover {
-      transform: translateY(-4px);
+      transform: translateY(-3px);
       box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
       border-color: rgba(56, 189, 248, 0.3);
     }
@@ -254,14 +367,14 @@
     .card:hover::before { opacity: 1; }
 
     .card .icon {
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.3rem;
-      margin-bottom: 1rem;
+      font-size: 1.2rem;
+      margin-bottom: 0.85rem;
       background: var(--accent-glow);
       color: var(--accent);
     }
@@ -271,28 +384,28 @@
     .card .icon.notes { background: rgba(129, 140, 248, 0.15); color: #818cf8; }
 
     .card h3 {
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 600;
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.35rem;
     }
 
     .card p {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: var(--text-muted);
       margin-bottom: 0.5rem;
-      line-height: 1.55;
+      line-height: 1.5;
     }
 
     .card .topics {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.35rem;
-      margin-bottom: 1rem;
+      gap: 0.3rem;
+      margin-bottom: 0.85rem;
     }
 
     .card .topics span {
-      font-size: 0.72rem;
-      padding: 0.2rem 0.55rem;
+      font-size: 0.68rem;
+      padding: 0.2rem 0.5rem;
       border-radius: 6px;
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(255, 255, 255, 0.06);
@@ -302,38 +415,25 @@
     .card .card-link {
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      font-size: 0.85rem;
+      gap: 0.35rem;
+      font-size: 0.8rem;
       font-weight: 500;
       color: var(--accent);
-      margin-top: 0.25rem;
     }
 
-    .card .card-link svg {
-      transition: transform 0.2s;
-    }
-
-    .card:hover .card-link svg {
-      transform: translateX(3px);
-    }
-
-    /* ─── Spring Boot Cards (taller highlight) ─── */
-    .card.highlight {
-      display: flex;
-      flex-direction: column;
-    }
+    .card.highlight { display: flex; flex-direction: column; }
 
     .card.highlight .meta-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.35rem;
+      gap: 0.3rem;
       margin-top: auto;
       padding-top: 0.75rem;
     }
 
     .card.highlight .meta-tags span {
-      font-size: 0.7rem;
-      padding: 0.2rem 0.5rem;
+      font-size: 0.65rem;
+      padding: 0.2rem 0.45rem;
       border-radius: 5px;
       background: var(--accent-glow);
       border: 1px solid rgba(56, 189, 248, 0.15);
@@ -341,19 +441,18 @@
       font-weight: 500;
     }
 
-    /* ─── Full-width highlight cards ─── */
     .card.full {
       display: flex;
       align-items: flex-start;
-      gap: 1.25rem;
+      gap: 1rem;
     }
 
     .card.full .icon { flex-shrink: 0; margin-bottom: 0; }
     .card.full .card-body { flex: 1; }
-    .card.full .card-body h3 { margin-bottom: 0.3rem; }
-    .card.full .card-body p { margin-bottom: 0.6rem; }
+    .card.full .card-body h3 { margin-bottom: 0.25rem; }
+    .card.full .card-body p { margin-bottom: 0.5rem; }
     .card.full .count {
-      font-size: 2.5rem;
+      font-size: 2.2rem;
       font-weight: 800;
       color: var(--accent);
       opacity: 0.3;
@@ -361,11 +460,132 @@
       flex-shrink: 0;
     }
 
+    /* ─── Markdown Content ─── */
+    .md-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: 1rem 0;
+    }
+
+    .md-content pre {
+      background: #0d1424;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      overflow-x: auto;
+      font-size: 0.82rem;
+      line-height: 1.55;
+      margin: 1rem 0;
+    }
+
+    .md-content pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      background: none;
+      padding: 0;
+      color: #e2e8f0;
+    }
+
+    .md-content code {
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.82rem;
+    }
+
+    .md-content table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 1rem 0;
+    }
+
+    .md-content th,
+    .md-content td {
+      border: 1px solid var(--border);
+      padding: 0.5rem 0.75rem;
+      text-align: left;
+    }
+
+    .md-content th {
+      background: var(--surface);
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .md-content td { color: var(--text-muted); }
+
+    .md-content h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-top: 2.5rem;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .md-content h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .md-content h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .md-content h1:first-child {
+      margin-top: 0;
+    }
+
+    .md-content p {
+      line-height: 1.7;
+      margin-bottom: 1rem;
+      color: var(--text-muted);
+    }
+
+    .md-content ul,
+    .md-content ol {
+      margin-bottom: 1rem;
+      padding-left: 1.5rem;
+    }
+
+    .md-content li {
+      margin-bottom: 0.25rem;
+      color: var(--text-muted);
+    }
+
+    .md-content blockquote {
+      border-left: 3px solid var(--accent);
+      background: var(--accent-glow);
+      padding: 0.75rem 1rem;
+      margin-bottom: 1rem;
+      border-radius: 0 6px 6px 0;
+    }
+
+    .md-content blockquote p { color: var(--text); margin-bottom: 0; }
+
+    .md-content hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    .md-content a { color: var(--accent); }
+
+    .md-content .task-list-item { list-style: none; margin-left: -1.5rem; }
+    .md-content .task-list-item input { margin-right: 0.5rem; }
+
     /* ─── Footer ─── */
     footer {
       margin-top: 2rem;
       border-top: 1px solid var(--border);
-      padding: 2.5rem 2rem;
+      padding: 2rem 0;
       text-align: center;
     }
 
@@ -373,275 +593,488 @@
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1.25rem;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
     }
 
     footer .prereqs span {
-      font-size: 0.78rem;
-      padding: 0.3rem 0.7rem;
+      font-size: 0.72rem;
+      padding: 0.25rem 0.6rem;
       border-radius: 8px;
       background: var(--surface);
       border: 1px solid var(--border);
       color: var(--text-muted);
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
+      gap: 0.3rem;
     }
 
     footer .copyright {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: var(--text-dim);
     }
 
-    footer .copyright strong {
-      color: var(--text-muted);
-    }
+    footer .copyright strong { color: var(--text-muted); }
 
     /* ─── Responsive ─── */
+    @media (max-width: 1024px) {
+      #content { padding: 1.5rem; }
+    }
+
     @media (max-width: 768px) {
-      .navbar { padding: 0 1rem; }
-      .navbar .nav-links { gap: 1rem; }
-      .section { padding: 2rem 1rem; }
+      .sidebar {
+        transform: translateX(-100%);
+        width: 260px;
+      }
+
+      .sidebar.open { transform: translateX(0); }
+
+      .main { margin-left: 0; }
+
+      #content { padding: 1.25rem; }
+
+      .card-grid.modules { grid-template-columns: 1fr; }
+      .card-grid.highlights { grid-template-columns: 1fr; }
       .card.full { flex-direction: column; }
       .card.full .count { align-self: flex-end; }
     }
 
-    @media (max-width: 480px) {
-      .navbar .nav-links a:not(.badge) { display: none; }
-      .hero { padding-top: calc(var(--nav-height) + 2rem); padding-left: 1rem; padding-right: 1rem; }
+    /* ─── Sidebar Collapse Button ─── */
+    .sidebar-collapse {
+      position: absolute;
+      top: 50%;
+      right: -18px;
+      translate: 0 -50%;
+      width: 24px;
+      height: 48px;
+      border-radius: 0 6px 6px 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.65rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 91;
+      transition: right 0.3s, background 0.2s;
+      padding: 0;
+      line-height: 1;
     }
+
+    .sidebar-collapse:hover { background: var(--surface-hover); color: var(--text); }
+
+    .sidebar.collapsed { width: 0; overflow: hidden; border-right: none; }
+    .sidebar.collapsed ~ .main { margin-left: 0; }
+    .sidebar.collapsed .sidebar-collapse { right: 0; border-radius: 0; border: 1px solid var(--border); }
+
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 89;
+    }
+
+    .sidebar-overlay.show { display: block; }
   </style>
 </head>
 <body>
 
   <!-- ═══ Navbar ═══ -->
   <nav class="navbar">
-    <div class="logo">
-      <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
-        <rect x="2" y="2" width="22" height="22" rx="6" stroke="#38bdf8" stroke-width="2" fill="none"/>
-        <path d="M8 13l3 3 7-7" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      Java Lab
+    <div class="nav-start">
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle sidebar">☰</button>
+      <div class="logo" id="homeLink">
+        <svg width="22" height="22" viewBox="0 0 26 26" fill="none">
+          <rect x="2" y="2" width="22" height="22" rx="6" stroke="#38bdf8" stroke-width="2" fill="none"/>
+          <path d="M8 13l3 3 7-7" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Java Lab
+      </div>
     </div>
-    <div class="nav-links">
-      <a href="#modules">Modules</a>
-      <a href="#spring">Spring Boot</a>
-      <a href="#labs">Labs</a>
-      <a href="Sunil_sir_notes/index.html">Notes</a>
+    <div class="nav-end">
       <a href="https://github.com/ronishg27/java-code-files" target="_blank" class="badge">GitHub</a>
     </div>
   </nav>
 
-  <!-- ═══ Hero ═══ -->
-  <section class="hero">
-    <h1>Advanced Java Programming</h1>
-    <p class="tagline">Lab programs, course notes, and Spring Boot projects for B.Sc. CSIT 7th Semester — IOST syllabus.</p>
-    <div class="badge-row">
-      <span class="badge accent">CSC409</span>
-      <span class="badge">Semester VII</span>
-      <span class="badge">Java 21+</span>
-      <span class="badge">Spring Boot</span>
-      <span class="badge">MySQL</span>
-      <span class="badge">24 Labs</span>
+  <!-- ═══ Overlay ═══ -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ═══ Sidebar ═══ -->
+  <aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-group" open>
+      <summary>Home</summary>
+      <a class="sidebar-item active" href="#" data-md="">Home</a>
     </div>
-    <div style="margin-top: 2rem; position: relative;">
-      <a href="mysql-connector-j-9.6.0.zip" class="download-btn" download>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Download MySQL Connector JAR
-      </a>
+
+    <div class="sidebar-group" open>
+      <summary>Course Notes</summary>
+      <a class="sidebar-item" href="#" data-md="Sunil_sir_notes/chapters/Chapter-01_Java-Fundamentals.md">Ch 1 &middot; Java Fundamentals</a>
+      <a class="sidebar-item" href="#" data-md="Sunil_sir_notes/chapters/Chapter-02_AWT-Swing.md">Ch 2 &middot; AWT / Swing</a>
+      <a class="sidebar-item" href="#" data-md="Sunil_sir_notes/chapters/Chapter-03_Event-Handling.md">Ch 3 &middot; Event Handling</a>
+      <a class="sidebar-item" href="#" data-md="Sunil_sir_notes/chapters/Chapter-04_JDBC.md">Ch 4 &middot; Database (JDBC)</a>
+      <a class="sidebar-item" href="#" data-md="Sunil_sir_notes/chapters/Chapter-05_Network-Programming.md">Ch 5 &middot; Network Programming</a>
+      <a class="sidebar-item" href="#" data-md="Sunil_sir_notes/chapters/Chapter-06_JavaFX.md">Ch 6 &middot; JavaFX</a>
+      <a class="sidebar-item" href="#" data-md="Sunil_sir_notes/chapters/Chapter-07_Servlets.md">Ch 7 &middot; Servlets &amp; JSP</a>
+      <a class="sidebar-item" href="#" data-md="Sunil_sir_notes/chapters/Chapter-08_RMI.md">Ch 8 &middot; RMI &amp; CORBA</a>
     </div>
-  </section>
 
-  <!-- ═══ Modules 01–07 ═══ -->
-  <section class="section" id="modules">
-    <div class="section-header">
-      <h2>Core Modules</h2>
-      <p>Seven modules covering the Java programming spectrum — from language fundamentals to JDBC.</p>
+    <div class="sidebar-group" open>
+      <summary>Lab Reports</summary>
+      <div class="sidebar-item lab-group">Group A &mdash; AWT / Swing</div>
+      <a class="sidebar-item" href="#" data-md="Labs/ronish-java-labs/01-Ronish-mouse-sum-diff/report.md">Lab 1 &middot; Mouse Sum Diff</a>
+      <a class="sidebar-item" href="#" data-md="Labs/ronish-java-labs/02-Ronish-add-two-numbers/report.md">Lab 2 &middot; Add Two Numbers</a>
+      <a class="sidebar-item" href="#" data-md="Labs/ronish-java-labs/03-Ronish-calculator-radio/report.md">Lab 3 &middot; Calculator Radio</a>
+      <a class="sidebar-item" href="#" data-md="Labs/ronish-java-labs/04-Ronish-sum-diff-adapter/report.md">Lab 4 &middot; Sum Diff Adapter</a>
+      <a class="sidebar-item" href="#" data-md="Labs/ronish-java-labs/05-Ronish-login-gridlayout/report.md">Lab 5 &middot; Login GridLayout</a>
+      <a class="sidebar-item" href="#" data-md="Labs/ronish-java-labs/06-Ronish-login-gridbaglayout/report.md">Lab 6 &middot; Login GridBagLayout</a>
+      <a class="sidebar-item" href="#" data-md="Labs/ronish-java-labs/07-Ronish-calculator-borderlayout/report.md">Lab 7 &middot; Calculator BorderLayout</a>
+      <a class="sidebar-item" href="#" data-md="Labs/ronish-java-labs/08a-Ronish-button-color/report.md">Lab 8a &middot; Button Color</a>
+      <a class="sidebar-item" href="#" data-md="Labs/ronish-java-labs/08b-Ronish-form-background-color/report.md">Lab 8b &middot; Form Background Color</a>
+      <a class="sidebar-item" href="#" data-md="Labs/ronish-java-labs/09-Ronish-layout-manager-demo/report.md">Lab 9 &middot; Layout Manager Demo</a>
+      <a class="sidebar-item" href="#" data-md="Labs/ronish-java-labs/10-Ronish-shape-drawer/report.md">Lab 10 &middot; Shape Drawer</a>
+      <a class="sidebar-item" href="#" data-md="Labs/ronish-java-labs/11-Ronish-color-changer-radio/report.md">Lab 11 &middot; Color Changer Radio</a>
+      <a class="sidebar-item" href="#" data-md="Labs/ronish-java-labs/12-Ronish-toolbar-icons/report.md">Lab 12 &middot; Toolbar Icons</a>
+      <div class="sidebar-item lab-group">Group B &mdash; JDBC</div>
+      <a class="sidebar-item" href="#" data-md="Labs/ronish-java-labs/13-Ronish-jdbc-insert-students/report.md">Lab 13 &middot; JDBC Insert Students</a>
+      <a class="sidebar-item" href="#" data-md="Labs/ronish-java-labs/14-Ronish-jdbc-update-salary/report.md">Lab 14 &middot; JDBC Update Salary</a>
+      <a class="sidebar-item" href="#" data-md="Labs/ronish-java-labs/15-Ronish-jdbc-create-table/report.md">Lab 15 &middot; JDBC Create Table</a>
+      <a class="sidebar-item" href="#" data-md="Labs/ronish-java-labs/16-Ronish-jdbc-resultset-nav/report.md">Lab 16 &middot; ResultSet Navigation</a>
+      <a class="sidebar-item" href="#" data-md="Labs/ronish-java-labs/17-Ronish-jdbc-updatable-resultset/report.md">Lab 17 &middot; Updatable ResultSet</a>
+      <div class="sidebar-item lab-group">Group C &mdash; Servlet / JSP</div>
+      <a class="sidebar-item" href="#" data-md="Labs/ronish-java-labs/18-Ronish-servlet-lifecycle/report.md">Lab 18 &middot; Servlet Lifecycle</a>
+      <a class="sidebar-item" href="#" data-md="Labs/ronish-java-labs/19-Ronish-servlet-session/report.md">Lab 19 &middot; Servlet Session</a>
+      <a class="sidebar-item" href="#" data-md="Labs/ronish-java-labs/20-Ronish-servlet-cookies/report.md">Lab 20 &middot; Servlet Cookies</a>
+      <a class="sidebar-item" href="#" data-md="Labs/ronish-java-labs/21-Ronish-jsp-cookies/report.md">Lab 21 &middot; JSP Cookies</a>
+      <a class="sidebar-item" href="#" data-md="Labs/ronish-java-labs/22-Ronish-jsp-form-display/report.md">Lab 22 &middot; JSP Form Display</a>
+      <a class="sidebar-item" href="#" data-md="Labs/ronish-java-labs/23-Ronish-jsp-simple-interest/report.md">Lab 23 &middot; JSP Simple Interest</a>
+      <div class="sidebar-item lab-group">Group D &mdash; RMI</div>
+      <a class="sidebar-item" href="#" data-md="Labs/ronish-java-labs/24-Ronish-rmi-adder/report.md">Lab 24 &middot; RMI Adder</a>
     </div>
-    <div class="card-grid modules">
 
-      <!-- 01 -->
-      <a class="card" href="01_Java_Class/">
-        <div class="icon">☕</div>
-        <h3>01 &middot; Java Core</h3>
-        <p>Fundamentals of the Java language — OOP, inheritance, exceptions, threads, and file I/O.</p>
-        <div class="topics">
-          <span>HelloWorld</span><span>Calculator</span><span>Prime</span>
-          <span>ClassTypes</span><span>Exception</span><span>Threads</span><span>File I/O</span>
-        </div>
-        <span class="card-link">Explore <span>&rarr;</span></span>
-      </a>
+    <div class="sidebar-group">
+      <summary>Programs 01–08</summary>
 
-      <!-- 02 -->
-      <a class="card" href="02_SpringBoot/">
-        <div class="icon">🍃</div>
-        <h3>02 &middot; Spring Boot</h3>
-        <p>Enterprise applications with Spring Boot — REST APIs, JPA, Flyway migrations, and Actuator.</p>
-        <div class="topics">
-          <span>e-commerce</span><span>store</span><span>Maven</span>
-        </div>
-        <span class="card-link">Explore <span>&rarr;</span></span>
-      </a>
+      <div class="sidebar-item lab-group">Module Overview (all source code)</div>
+      <a class="sidebar-item" href="#" data-md="01_Java_Class/README.md">01 &middot; Java Core</a>
+      <a class="sidebar-item" href="#" data-md="02_SpringBoot/README.md">02 &middot; Spring Boot</a>
+      <a class="sidebar-item" href="#" data-md="03_Swing/README.md">03 &middot; AWT / Swing</a>
+      <a class="sidebar-item" href="#" data-md="04_Events/README.md">04 &middot; Event Handling</a>
+      <a class="sidebar-item" href="#" data-md="05_Socket/README.md">05 &middot; Networking</a>
+      <a class="sidebar-item" href="#" data-md="06_RMI/README.md">06 &middot; RMI</a>
+      <a class="sidebar-item" href="#" data-md="07_Database/README.md">07 &middot; JDBC</a>
+      <a class="sidebar-item" href="#" data-md="08_JSP_servlet/README.md">08 &middot; Servlet / JSP</a>
 
-      <!-- 03 -->
-      <a class="card" href="03_Swing/">
-        <div class="icon">🖥️</div>
-        <h3>03 &middot; AWT / Swing</h3>
-        <p>Desktop GUI development with AWT and Swing — layout managers, dialogs, and form controls.</p>
-        <div class="topics">
-          <span>FlowLayout</span><span>BorderLayout</span><span>GridLayout</span>
-          <span>GridBagLayout</span><span>Calculator</span><span>Registration</span>
-        </div>
-        <span class="card-link">Explore <span>&rarr;</span></span>
-      </a>
+      <div class="sidebar-item lab-group">Individual Programs</div>
+      <a class="sidebar-item" href="#" data-md="01_Java_Class/01_HelloWorld/README.md">01 &middot; Java Core &mdash; HelloWorld</a>
+      <a class="sidebar-item" href="#" data-md="01_Java_Class/02_SimpleCalc/README.md">01 &middot; Java Core &mdash; SimpleCalc</a>
+      <a class="sidebar-item" href="#" data-md="01_Java_Class/03_IsPrime/README.md">01 &middot; Java Core &mdash; IsPrime</a>
+      <a class="sidebar-item" href="#" data-md="01_Java_Class/04_ClassTypes/README.md">01 &middot; Java Core &mdash; ClassTypes</a>
+      <a class="sidebar-item" href="#" data-md="01_Java_Class/05_Exception/ArithmeticException/README.md">01 &middot; Exception &mdash; Arithmetic</a>
+      <a class="sidebar-item" href="#" data-md="01_Java_Class/05_Exception/ClassNotFoundException/README.md">01 &middot; Exception &mdash; ClassNotFound</a>
+      <a class="sidebar-item" href="#" data-md="01_Java_Class/05_Exception/FileNotFoundException/README.md">01 &middot; Exception &mdash; FileNotFound</a>
+      <a class="sidebar-item" href="#" data-md="01_Java_Class/05_Exception/IndexOutOfBoundsException/README.md">01 &middot; Exception &mdash; IndexOutOfBounds</a>
+      <a class="sidebar-item" href="#" data-md="01_Java_Class/05_Exception/NullPointerException/README.md">01 &middot; Exception &mdash; NullPointer</a>
+      <a class="sidebar-item" href="#" data-md="01_Java_Class/06_Threads/SynchronizedBlock/README.md">01 &middot; Threads &mdash; Synchronized</a>
+      <a class="sidebar-item" href="#" data-md="01_Java_Class/06_Threads/Test_Concurrency/README.md">01 &middot; Threads &mdash; Concurrency</a>
+      <a class="sidebar-item" href="#" data-md="01_Java_Class/06_Threads/ThreadPriority/README.md">01 &middot; Threads &mdash; Priority</a>
+      <a class="sidebar-item" href="#" data-md="01_Java_Class/07_File/FileInputOutput/README.md">01 &middot; File &mdash; InputOutput</a>
+      <a class="sidebar-item" href="#" data-md="01_Java_Class/07_File/FilesSorter/README.md">01 &middot; File &mdash; FilesSorter</a>
+      <a class="sidebar-item" href="#" data-md="01_Java_Class/07_File/InputClassification/README.md">01 &middot; File &mdash; Classification</a>
+      <a class="sidebar-item" href="#" data-md="01_Java_Class/07_File/ListDir/README.md">01 &middot; File &mdash; ListDir</a>
+      <a class="sidebar-item" href="#" data-md="01_Java_Class/07_File/Serialization/README.md">01 &middot; File &mdash; Serialization</a>
+      <a class="sidebar-item" href="#" data-md="01_Java_Class/07_File/VowelConsonantSeparation/README.md">01 &middot; File &mdash; VowelConsonant</a>
 
-      <!-- 04 -->
-      <a class="card" href="04_Events/">
-        <div class="icon">🎯</div>
-        <h3>04 &middot; Event Handling</h3>
-        <p>Delegation event model — listeners, adapters, and event-driven GUI programming.</p>
-        <div class="topics">
-          <span>ActionListener</span><span>Mouse</span><span>Key</span><span>CalculatorComboBox</span>
-        </div>
-        <span class="card-link">Explore <span>&rarr;</span></span>
-      </a>
+      <a class="sidebar-item" href="#" data-md="02_SpringBoot/e-commerce/README.md">02 &middot; Spring &mdash; e-commerce</a>
+      <a class="sidebar-item" href="#" data-md="02_SpringBoot/store/store/README.md">02 &middot; Spring &mdash; store</a>
 
-      <!-- 05 -->
-      <a class="card" href="05_Socket/">
-        <div class="icon">🌐</div>
-        <h3>05 &middot; Networking</h3>
-        <p>TCP/UDP sockets, multi-client chat, URL processing, and SMTP email with Jakarta Mail.</p>
-        <div class="topics">
-          <span>TCP ChatApp</span><span>UDP</span><span>URL</span><span>SMTP</span>
-        </div>
-        <span class="card-link">Explore <span>&rarr;</span></span>
-      </a>
+      <a class="sidebar-item" href="#" data-md="03_Swing/00_TestProject/README.md">03 &middot; Swing &mdash; TestProject</a>
+      <a class="sidebar-item" href="#" data-md="03_Swing/01_AWT_Frame/README.md">03 &middot; Swing &mdash; AWT Frame</a>
+      <a class="sidebar-item" href="#" data-md="03_Swing/02_FlowLayout/README.md">03 &middot; Swing &mdash; FlowLayout</a>
+      <a class="sidebar-item" href="#" data-md="03_Swing/03_BorderLayout/README.md">03 &middot; Swing &mdash; BorderLayout</a>
+      <a class="sidebar-item" href="#" data-md="03_Swing/04_GridLayout/README.md">03 &middot; Swing &mdash; GridLayout</a>
+      <a class="sidebar-item" href="#" data-md="03_Swing/05_Calculator/README.md">03 &middot; Swing &mdash; Calculator</a>
+      <a class="sidebar-item" href="#" data-md="03_Swing/06_RegistrationForm/README.md">03 &middot; Swing &mdash; Registration</a>
+      <a class="sidebar-item" href="#" data-md="03_Swing/07_GridBagLayout/README.md">03 &middot; Swing &mdash; GridBagLayout</a>
+      <a class="sidebar-item" href="#" data-md="03_Swing/Labs/01_MouseEventSumDifference/README.md">03 &middot; Swing &mdash; MouseSumDiff</a>
 
-      <!-- 06 -->
-      <a class="card" href="06_RMI/">
-        <div class="icon">📡</div>
-        <h3>06 &middot; RMI</h3>
-        <p>Remote Method Invocation — distributed object communication via stub/skeleton on port 5000.</p>
-        <div class="topics">
-          <span>Adder</span><span>MyServer</span><span>MyClient</span><span>rmiregistry</span>
-        </div>
-        <span class="card-link">Explore <span>&rarr;</span></span>
-      </a>
+      <a class="sidebar-item" href="#" data-md="04_Events/01_HelloWorldEvent/README.md">04 &middot; Events &mdash; HelloWorld</a>
+      <a class="sidebar-item" href="#" data-md="04_Events/02_CalculatorComboBox/README.md">04 &middot; Events &mdash; CalculatorCombo</a>
+      <a class="sidebar-item" href="#" data-md="04_Events/03_MouseEvents/README.md">04 &middot; Events &mdash; MouseEvents</a>
+      <a class="sidebar-item" href="#" data-md="04_Events/04_MouseMotionEvents/README.md">04 &middot; Events &mdash; MouseMotion</a>
+      <a class="sidebar-item" href="#" data-md="04_Events/05_KeyPressEvent/README.md">04 &middot; Events &mdash; KeyPress</a>
+      <a class="sidebar-item" href="#" data-md="04_Events/New folder/02_Calculator/README.md">04 &middot; Events &mdash; Calculator (extra)</a>
 
-      <!-- 07 -->
-      <a class="card" href="07_Database/">
-        <div class="icon">🗄️</div>
-        <h3>07 &middot; JDBC</h3>
-        <p>Database connectivity with MySQL — connection, login, DDL, CRUD, and ResultSet navigation.</p>
-        <div class="topics">
-          <span>Connection</span><span>Login</span><span>DDL</span><span>CRUD</span><span>ResultSet</span>
-        </div>
-        <span class="card-link">Explore <span>&rarr;</span></span>
-      </a>
+      <a class="sidebar-item" href="#" data-md="05_Socket/TCP/01_ChatApp/README.md">05 &middot; Socket &mdash; TCP ChatApp</a>
+      <a class="sidebar-item" href="#" data-md="05_Socket/UDP/01_UDP_Demo/README.md">05 &middot; Socket &mdash; UDP Demo</a>
+      <a class="sidebar-item" href="#" data-md="05_Socket/URL/01_FetchSiteContent/README.md">05 &middot; Socket &mdash; URL Fetch</a>
+      <a class="sidebar-item" href="#" data-md="05_Socket/mail/01_SMTP_GMAIL/README.md">05 &middot; Socket &mdash; SMTP Gmail</a>
+      <a class="sidebar-item" href="#" data-md="05_Socket/mail/gmail_smtp/README.md">05 &middot; Socket &mdash; Gmail SMTP (Maven)</a>
 
+      <a class="sidebar-item" href="#" data-md="06_RMI/01_Adder/README.md">06 &middot; RMI &mdash; Adder 01</a>
+      <a class="sidebar-item" href="#" data-md="06_RMI/02_Adder/README.md">06 &middot; RMI &mdash; Adder 02</a>
+
+      <a class="sidebar-item" href="#" data-md="07_Database/01_SQL_Connection/README.md">07 &middot; JDBC &mdash; SQL Connection</a>
+      <a class="sidebar-item" href="#" data-md="07_Database/02_Login/02_Login/README.md">07 &middot; JDBC &mdash; Login</a>
+      <a class="sidebar-item" href="#" data-md="07_Database/03_DDL_Operation/README.md">07 &middot; JDBC &mdash; DDL Operation</a>
+      <a class="sidebar-item" href="#" data-md="07_Database/04_Student_DB/README.md">07 &middot; JDBC &mdash; Student DB</a>
+      <a class="sidebar-item" href="#" data-md="07_Database/05_Table/README.md">07 &middot; JDBC &mdash; Table</a>
+
+      <a class="sidebar-item" href="#" data-md="08_JSP_servlet/18-Ronish-servlet-lifecycle/README.md">08 &middot; Servlet &mdash; Lifecycle</a>
+      <a class="sidebar-item" href="#" data-md="08_JSP_servlet/19-Ronish-servlet-session/README.md">08 &middot; Servlet &mdash; Session</a>
+      <a class="sidebar-item" href="#" data-md="08_JSP_servlet/20-Ronish-servlet-cookies/README.md">08 &middot; Servlet &mdash; Cookies</a>
+      <a class="sidebar-item" href="#" data-md="08_JSP_servlet/21-Ronish-jsp-cookies/README.md">08 &middot; JSP &mdash; Cookies</a>
+      <a class="sidebar-item" href="#" data-md="08_JSP_servlet/22-Ronish-jsp-form-display/README.md">08 &middot; JSP &mdash; Form Display</a>
+      <a class="sidebar-item" href="#" data-md="08_JSP_servlet/23-Ronish-jsp-simple-interest/README.md">08 &middot; JSP &mdash; Simple Interest</a>
+      <a class="sidebar-item" href="#" data-md="08_JSP_servlet/test/README.md">08 &middot; Servlet &mdash; Test</a>
     </div>
-  </section>
 
-  <!-- ═══ Spring Boot Highlight ═══ -->
-  <section class="section" id="spring">
-    <div class="section-header">
-      <h2>Spring Boot</h2>
-      <p>Two production-grade Maven projects with modern Java toolchains.</p>
+    <div class="sidebar-group">
+      <summary>Reference</summary>
+      <a class="sidebar-item" href="#" data-md="README.md">README</a>
     </div>
-    <div class="card-grid highlights">
 
-      <a class="card highlight" href="02_SpringBoot/e-commerce/">
-        <div class="icon spring">SB</div>
-        <h3>e-commerce API</h3>
-        <p>Spring Boot 3.4.1 RESTful service — Web, JPA, MySQL, and Flyway for schema migrations.</p>
-        <div class="meta-tags">
-          <span>Java 23</span>
-          <span>Spring Boot 3.4.1</span>
-          <span>JPA</span>
-          <span>MySQL</span>
-          <span>Flyway</span>
+    <button class="sidebar-collapse" id="sidebarCollapse" title="Collapse sidebar">◀</button>
+  </aside>
+
+  <!-- ═══ Main Content ═══ -->
+  <div class="main">
+
+    <!-- ═══ Welcome / Default View (OUTSIDE content — never destroyed) ═══ -->
+    <div class="welcome visible" id="welcome">
+      <div class="hero">
+        <h1>Advanced Java Programming</h1>
+        <p class="tagline">Lab programs, course notes, and Spring Boot projects for B.Sc. CSIT 7th Semester — IOST syllabus.</p>
+        <div class="badge-row">
+          <span class="badge accent">CSC419</span>
+          <span class="badge">Semester VII</span>
+          <span class="badge">Java 21+</span>
+          <span class="badge">Spring Boot</span>
+          <span class="badge">MySQL</span>
+          <span class="badge">24 Labs</span>
         </div>
-      </a>
-
-      <a class="card highlight" href="02_SpringBoot/store/store/">
-        <div class="icon spring">SB</div>
-        <h3>Store Service</h3>
-        <p>Spring Boot 4.0.1 web service with Actuator for production monitoring and management.</p>
-        <div class="meta-tags">
-          <span>Java 21</span>
-          <span>Spring Boot 4.0.1</span>
-          <span>Web</span>
-          <span>Actuator</span>
+        <div style="margin-top: 1.5rem; position: relative;">
+          <a href="mysql-connector-j-9.6.0.zip" class="download-btn" download>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download MySQL Connector JAR
+          </a>
         </div>
-      </a>
+      </div>
 
-    </div>
-  </section>
-
-  <!-- ═══ Labs + Notes ═══ -->
-  <section class="section" id="labs">
-    <div class="section-header">
-      <h2>Lab Assignments &amp; Notes</h2>
-      <p>24 lab programs plus 8 chapters of course notes aligned to the CSC409 syllabus.</p>
-    </div>
-    <div class="card-grid highlights">
-
-      <a class="card full" href="Labs/todo-all-labs.md">
-        <div class="icon labs">📝</div>
-        <div class="card-body">
-          <h3>24 Lab Assignments</h3>
-          <p>Complete set of lab works across four groups — AWT/Swing, JDBC, Servlet/JSP, and RMI. Each lab includes source code and a detailed report.</p>
-          <span class="card-link">View status &rarr;</span>
+      <div class="section">
+        <div class="section-header">
+          <h2>Core Modules</h2>
+          <p>Seven modules covering the Java programming spectrum — from language fundamentals to JDBC.</p>
         </div>
-        <div class="count">24</div>
-      </a>
-
-      <a class="card full" href="Sunil_sir_notes/index.html">
-        <div class="icon notes">📖</div>
-        <div class="card-body">
-          <h3>Course Notes</h3>
-          <p>8 chapters of lecture notes covering the full CSC409 syllabus — from Java fundamentals to RMI &amp; CORBA. Includes diagrams and code examples.</p>
-          <span class="card-link">Read notes &rarr;</span>
+        <div class="card-grid modules">
+          <a class="card" href="01_Java_Class/">
+            <div class="icon">☕</div>
+            <h3>01 &middot; Java Core</h3>
+            <p>Fundamentals — OOP, inheritance, exceptions, threads, file I/O.</p>
+            <div class="topics"><span>HelloWorld</span><span>Calculator</span><span>Prime</span><span>ClassTypes</span><span>Exception</span><span>Threads</span><span>File I/O</span></div>
+            <span class="card-link">Explore &rarr;</span>
+          </a>
+          <a class="card" href="02_SpringBoot/">
+            <div class="icon">🍃</div>
+            <h3>02 &middot; Spring Boot</h3>
+            <p>Enterprise apps — REST APIs, JPA, Flyway migrations, Actuator.</p>
+            <div class="topics"><span>e-commerce</span><span>store</span><span>Maven</span></div>
+            <span class="card-link">Explore &rarr;</span>
+          </a>
+          <a class="card" href="03_Swing/">
+            <div class="icon">🖥️</div>
+            <h3>03 &middot; AWT / Swing</h3>
+            <p>Desktop GUI — layouts, dialogs, forms, and controls.</p>
+            <div class="topics"><span>FlowLayout</span><span>BorderLayout</span><span>GridLayout</span><span>GridBagLayout</span><span>Calculator</span><span>Registration</span></div>
+            <span class="card-link">Explore &rarr;</span>
+          </a>
+          <a class="card" href="04_Events/">
+            <div class="icon">🎯</div>
+            <h3>04 &middot; Event Handling</h3>
+            <p>Delegation model — listeners, adapters, event-driven GUI.</p>
+            <div class="topics"><span>ActionListener</span><span>Mouse</span><span>Key</span><span>CalculatorComboBox</span></div>
+            <span class="card-link">Explore &rarr;</span>
+          </a>
+          <a class="card" href="05_Socket/">
+            <div class="icon">🌐</div>
+            <h3>05 &middot; Networking</h3>
+            <p>TCP/UDP sockets, chat, URL processing, SMTP email.</p>
+            <div class="topics"><span>TCP ChatApp</span><span>UDP</span><span>URL</span><span>SMTP</span></div>
+            <span class="card-link">Explore &rarr;</span>
+          </a>
+          <a class="card" href="06_RMI/">
+            <div class="icon">📡</div>
+            <h3>06 &middot; RMI</h3>
+            <p>Remote Method Invocation — stub/skeleton on port 5000.</p>
+            <div class="topics"><span>Adder</span><span>MyServer</span><span>MyClient</span><span>rmiregistry</span></div>
+            <span class="card-link">Explore &rarr;</span>
+          </a>
+          <a class="card" href="07_Database/">
+            <div class="icon">🗄️</div>
+            <h3>07 &middot; JDBC</h3>
+            <p>MySQL connectivity — connection, login, DDL, CRUD, ResultSet.</p>
+            <div class="topics"><span>Connection</span><span>Login</span><span>DDL</span><span>CRUD</span><span>ResultSet</span></div>
+            <span class="card-link">Explore &rarr;</span>
+          </a>
         </div>
-        <div class="count">8</div>
-      </a>
+      </div>
 
-    </div>
-  </section>
+      <div class="section">
+        <div class="section-header">
+          <h2>Spring Boot</h2>
+          <p>Two production-grade Maven projects with modern Java toolchains.</p>
+        </div>
+        <div class="card-grid highlights">
+          <a class="card highlight" href="02_SpringBoot/e-commerce/">
+            <div class="icon spring">SB</div>
+            <h3>e-commerce API</h3>
+            <p>Spring Boot 3.4.1 — Web, JPA, MySQL, Flyway.</p>
+            <div class="meta-tags"><span>Java 23</span><span>Spring Boot 3.4.1</span><span>JPA</span><span>MySQL</span><span>Flyway</span></div>
+          </a>
+          <a class="card highlight" href="02_SpringBoot/store/store/">
+            <div class="icon spring">SB</div>
+            <h3>Store Service</h3>
+            <p>Spring Boot 4.0.1 — Web, Actuator.</p>
+            <div class="meta-tags"><span>Java 21</span><span>Spring Boot 4.0.1</span><span>Web</span><span>Actuator</span></div>
+          </a>
+        </div>
+      </div>
 
-  <!-- ═══ Footer ═══ -->
-  <footer>
-    <div class="prereqs">
-      <span>☕ Java 21+</span>
-      <span>🛠️ VS Code + Java Extension Pack</span>
-      <span>🐬 MySQL 8+</span>
-      <span>📦 Maven Wrapper</span>
-      <span>🔗 mysql-connector-j</span>
-      <span>📄 Pandoc</span>
+      <footer>
+        <div class="prereqs">
+          <span>☕ Java 21+</span>
+          <span>🛠️ VS Code + Java Extension Pack</span>
+          <span>🐬 MySQL 8+</span>
+          <span>📦 Maven Wrapper</span>
+          <span>🔗 mysql-connector-j</span>
+          <span>📄 Pandoc</span>
+        </div>
+        <div class="copyright">
+          &copy; 2026 <strong>Ronish</strong> &middot; B.Sc. CSIT 7th Semester &middot; CSC419 Advanced Java Programming
+        </div>
+      </footer>
     </div>
-    <div class="copyright">
-      &copy; 2026 <strong>Ronish Sanyal</strong> &middot; B.Sc. CSIT 7th Semester &middot; CSC409 Advanced Java Programming
-    </div>
-  </footer>
+    <!-- /welcome -->
+
+    <div id="content"></div>
+  </div>
 
   <script>
-    // Highlight active nav link on scroll
-    const sections = document.querySelectorAll('.section[id]');
-    const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+    const content = document.getElementById('content');
+    const welcome = document.getElementById('welcome');
+    const sidebar = document.getElementById('sidebar');
+    const navToggle = document.getElementById('navToggle');
+    const overlay = document.getElementById('sidebarOverlay');
 
-    function onScroll() {
-      let current = '';
-      sections.forEach(s => {
-        const top = s.getBoundingClientRect().top;
-        if (top <= 150) current = s.id;
-      });
-      navLinks.forEach(a => {
-        a.style.color = a.getAttribute('href') === '#' + current ? 'var(--text)' : '';
-      });
+    function toggleSidebar() {
+      if (window.innerWidth > 768) {
+        sidebar.classList.toggle('collapsed');
+        const cb = document.getElementById('sidebarCollapse');
+        if (cb) cb.textContent = sidebar.classList.contains('collapsed') ? '▶' : '◀';
+      } else {
+        sidebar.classList.remove('collapsed');
+        sidebar.classList.toggle('open');
+        overlay.classList.toggle('show');
+      }
     }
 
-    window.addEventListener('scroll', onScroll, { passive: true });
+    function collapseSidebar() {
+      sidebar.classList.toggle('collapsed');
+      const cb = document.getElementById('sidebarCollapse');
+      if (cb) cb.textContent = sidebar.classList.contains('collapsed') ? '▶' : '◀';
+    }
+
+    navToggle.addEventListener('click', toggleSidebar);
+    overlay.addEventListener('click', () => {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('show');
+    });
+
+    const collapseBtn = document.getElementById('sidebarCollapse');
+    if (collapseBtn) collapseBtn.addEventListener('click', collapseSidebar);
+
+    document.querySelectorAll('.sidebar-item').forEach(item => {
+      item.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+          sidebar.classList.remove('open');
+          overlay.classList.remove('show');
+        }
+      });
+    });
+
+    function setView(view) {
+      welcome.classList.toggle('visible', view === 'welcome');
+      content.classList.toggle('md-content', view === 'content');
+      content.classList.toggle('loading', view === 'loading');
+    }
+
+    async function loadFile(path) {
+      document.querySelectorAll('.sidebar-item').forEach(x => x.classList.remove('active'));
+
+      if (!path) {
+        document.querySelector('.sidebar-item[data-md=""]').classList.add('active');
+        setView('welcome');
+        return;
+      }
+
+      const link = document.querySelector(`.sidebar-item[data-md="${path}"]`);
+      if (link) link.classList.add('active');
+
+      setView('loading');
+      content.innerHTML = '<p style="padding: 4rem 0; text-align: center; color: var(--text-muted);">Loading...</p>';
+
+      const [file, ...hashParts] = path.split('#');
+      const hash = hashParts.join('#');
+
+      try {
+        const res = await fetch(file);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        let md = await res.text();
+        const dir = file.includes('/') ? file.substring(0, file.lastIndexOf('/') + 1) : '';
+
+        let html = marked.parse(md);
+        if (dir) {
+          html = html.replace(/(<(?:img|source)[^>]+src=")(?!https?:\/\/|\/\/|\/|data:)/gi, '$1' + dir);
+          html = html.replace(/(<a[^>]+href=")(?!https?:\/\/|\/\/|\/|data:|#|mailto:)/gi, '$1' + dir);
+        }
+
+        setView('content');
+        content.innerHTML = html;
+
+        if (hash) {
+          const el = document.getElementById(hash);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+          else window.location.hash = hash;
+        } else {
+          window.scrollTo(0, 0);
+        }
+      } catch (e) {
+        setView('content');
+        content.innerHTML = `<div style="text-align:center;padding:4rem 2rem;color:#dc2626;"><p>Failed to load ${file}: ${e.message}</p></div>`;
+      }
+    }
+
+    document.querySelectorAll('.sidebar-item[data-md]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        loadFile(a.dataset.md);
+      });
+    });
+
+    document.getElementById('homeLink').addEventListener('click', () => {
+      loadFile('');
+    });
+
+    const currentPath = window.location.hash.slice(1);
+    if (currentPath) {
+      const target = document.querySelector(`.sidebar-item[data-md="${currentPath}"]`);
+      if (target) {
+        loadFile(currentPath);
+      }
+    }
   </script>
 
 </body>

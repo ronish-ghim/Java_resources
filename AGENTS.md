@@ -71,7 +71,7 @@ Two SMTP projects exist:
 
 ## Notes (`Sunil_sir_notes/`)
 
-- Course notes for **Advanced Java Programming** (CSC409): 8 chapters + appendix + images
+- Course notes for **Advanced Java Programming** (CSC419): 8 chapters + appendix + images
 - Start at `Sunil_sir_notes/readme.md` (syllabus-aligned table of contents)
 
 ## .gitignore

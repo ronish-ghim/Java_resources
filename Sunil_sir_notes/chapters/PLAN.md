@@ -52,7 +52,7 @@ Organize 16 `.docx` files into **8 chapters** as merged markdown files.
 
 ---
 
-## Syllabus Mapping (TU B.Sc. CSIT Sem VII — CSC409)
+## Syllabus Mapping (TU B.Sc. CSIT Sem VII — CSC419)
 
 The notes correspond to **Advanced Java Programming** course. Mapping:
 

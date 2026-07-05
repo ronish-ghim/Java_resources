@@ -513,8 +513,8 @@ Syntax:
 dataType[][] arrayRefVar; 
 ```java
 Instantiate Multidimensional Array
- int[][] arr=new int[2][2]{{1,2},{4,5}};//2 row and 2 column
-int[,] arr=new int[2,2]{{1,2},{4,5}};
+ int[][] arr = new int[2][2]{ {1,2},{4,5} }; // 2 row and 2 column
+int[,] arr = new int[2,2]{ {1,2},{4,5} };
 ```
 
 Example of Multidimensional Java Array

@@ -1,4 +1,4 @@
-# Java Lab Programs — B.Sc. CSIT 7th Semester (CSC409)
+# Java Lab Programs — B.Sc. CSIT 7th Semester (CSC419)
 
 Advanced Java Programming coursework: class practice, lab assignments, and college notes — IOST syllabus.
 
@@ -49,7 +49,7 @@ cd 02_SpringBoot/store/store && ./mvnw spring-boot:run
 
 ## Course notes (`Sunil_sir_notes/`)
 
-Lecture notes compiled from Sunil Sir's original `.docx` files for **CSC409: Advanced Java Programming** (B.Sc. CSIT 7th Sem, TU). Each chapter covers one syllabus unit with diagrams, code examples, and explanations.
+Lecture notes compiled from Sunil Sir's original `.docx` files for **CSC419: Advanced Java Programming** (B.Sc. CSIT 7th Sem, TU). Each chapter covers one syllabus unit with diagrams, code examples, and explanations.
 
 | # | Unit | File |
 |---|------|------|
