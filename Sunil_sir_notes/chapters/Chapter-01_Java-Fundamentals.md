@@ -518,6 +518,7 @@ int[,] arr = new int[2,2]{ {1,2},{4,5} };
 ```
 
 Example of Multidimensional Java Array
+{% raw %}
 ```java
 public class App {
     public static void main(String[] args) throws Exception {
@@ -535,12 +536,14 @@ public class App {
 }
 }
 ```
+{% endraw %}
 
 **Jagged Array in Java**
 If we are creating odd number of columns in a 2D array, it is known as a jagged array. In other words, it is an array of arrays with different number of columns.
 
 ![Figure](images/Ch01_012.png)
 
+{% raw %}
 ```java
 public class App {
     public static void main(String[] args) throws Exception {
@@ -560,6 +563,7 @@ Output:
 4 5 6 7
 8 9
 ```
+{% endraw %}
 
 ```java
 Lab: Write a Java program to initialize and display jagged array elements with sum of each row.
@@ -570,9 +574,11 @@ public class App {
     public static void main(String[] args) throws Exception {
 ```
 
+{% raw %}
 ```java
         int[][] matrix = new int[][]{{1, 2, 3}, {4, 5, 6, 7}, {8, 9}};
 ```
+{% endraw %}
 
 ```java
         for (int i = 0; i < matrix.length; i++) //row
@@ -595,9 +601,11 @@ public class App {
     public static void main(String[] args) throws Exception {
 ```
 
+{% raw %}
 ```java
         int[][] matrix = new int[][]{{1, 2, 3}, {4, 5, 6, 7}, {8, 9}};
 ```
+{% endraw %}
 
 ```java
         for (int i = 0; i < matrix.length; i++) // row
