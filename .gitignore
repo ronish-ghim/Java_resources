@@ -31,3 +31,9 @@ Hangman-Java-Football-Edition/
 /08_JSP_servlet/20-Ronish-servlet-cookies/build/
 /08_JSP_servlet/21-Ronish-jsp-cookies/nbproject/private/
 /08_JSP_servlet/21-Ronish-jsp-cookies/build/
+
+# NetBeans project private config (machine-specific paths)
+**/nbproject/private/
+**/build/
+
+!JDBC_lib\mysql-connector-j-9.6.0\src\build
