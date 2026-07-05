@@ -36,4 +36,4 @@ Hangman-Java-Football-Edition/
 **/nbproject/private/
 **/build/
 
-!JDBC_lib\mysql-connector-j-9.6.0\src\build
+!JDBC_lib\mysql-connector-j-9.6.0\src\build 

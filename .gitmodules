@@ -1,0 +1,3 @@
+[submodule "02_SpringBoot/e-commerce"]
+	path = 02_SpringBoot/e-commerce
+	url = https://github.com/mosh-hamedani/spring-api-starter

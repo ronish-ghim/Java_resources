@@ -2,6 +2,8 @@
 
 Advanced Java Programming coursework: class practice, lab assignments, and college notes — IOST syllabus.
 
+[![GitHub](https://img.shields.io/badge/GitHub-ronishg27%2Fjava--code--files-181717?logo=github)](https://github.com/ronishg27/java-code-files)
+
 ## Structure
 
 | Directory | Description |
@@ -24,7 +26,7 @@ Advanced Java Programming coursework: class practice, lab assignments, and colle
 - Java 21+ (for numbered modules)
 - VS Code with Java Extension Pack (recommended)
 - MySQL 8+ on `localhost:3306`, database `javasamriddhi`, user `root`, empty password
-- `mysql-connector-j` JAR (JDBC modules reference it via absolute path)
+- `mysql-connector-j` JAR — download [`mysql-connector-j-9.6.0.zip`](mysql-connector-j-9.6.0.zip) from the root (JDBC modules reference it via absolute path)
 - Maven wrapper included for Spring Boot sub-projects
 - Pandoc (for DOCX conversion)
 
