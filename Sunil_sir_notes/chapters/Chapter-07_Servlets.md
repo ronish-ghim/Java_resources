@@ -1,4 +1,4 @@
-# Chapter 7_Servlets
+﻿# Chapter 7 Servlets
 
 > *Source: Sunil Sir's Lecture Notes — B.Sc. CSIT (Tribhuvan University)*
 
@@ -10,7 +10,7 @@
 
 > 📷 *This document contains images/diagrams — see the original .docx for visual content*
 
-UNIT-7
+### UNIT-7
 
 ### What is a Servlet?
 
@@ -59,22 +59,17 @@ javax.servlet(Basic)
 javax.servlet.http(Advance)
 Various classes and interfaces present in these packages are: 
 
-### Web container:
+### Web container
 
 A **web container** is the component of a **web server** that interacts with **Java servlets**.
-```java
-A web container manages the life cycle of servlets;
-It maps a URL to a particular servlet while ensuring that the requester has relevant access-rights.
-```
+A web container manages the life cycle of servlets; It maps a URL to a particular servlet while ensuring that the requester has relevant access-rights.
 
 
 ![Figure](images/Ch07_002.png)
 
-```java
-Java servlets do not have a defined main() method, so a container is required to load them. The servlet gets deployed on the container.
-```
+Java servlets do not have a defined `main()` method, so a container is required to load them. The servlet gets deployed on the container.
 
-**Servlet Life Cycle**
+### Servlet Life Cycle
 There are three life cycle methods of a Servlet :
 init()
 service()
@@ -82,36 +77,37 @@ destroy()
 
 ![Figure](images/Ch07_003.png)
 
-**init()**
+### init()
+
 The **Servlet.init()** method is called by the Servlet container to indicate that this Servlet instance is instantiated successfully and is about to put into service.
 ```java
-//init() method
-public class MyServlet implements Servlet{
-   public void init(ServletConfig config) throws ServletException {
-        //initialization code
-   }
-    //rest of code
+public void init(ServletConfig config) throws ServletException {
+    //initialization code
 }
-service():
- The service() method of the Servlet is invoked to inform the Servlet about the client requests.
-This method uses ServletRequest object to collect the data requested by the client.
-This method uses ServletResponse object to generate the output content.
-// service() method
-public class MyServlet implements Servlet{
-    public void service(ServletRequest res, ServletResponse res)
-    throws ServletException, IOException {
-            // request handling code
-    }
-    // rest of code
-}
-destroy(): 
-The destroy() method runs only once during the lifetime of a Servlet and signals the end of the Servlet instance.
-//destroy() method
-public void destroy()
-As soon as the destroy() method is activated, the Servlet container releases the Servlet instance.
 ```
 
-**Writing Servlet Programs**
+### service()
+
+The service() method of the Servlet is invoked to inform the Servlet about the client requests. This method uses ServletRequest object to collect the data requested by the client. This method uses ServletResponse object to generate the output content.
+
+```java
+public void service(ServletRequest req, ServletResponse res)
+    throws ServletException, IOException {
+    // request handling code
+}
+```
+
+### destroy()
+
+The destroy() method runs only once during the lifetime of a Servlet and signals the end of the Servlet instance.
+
+```java
+public void destroy()
+```
+
+As soon as the destroy() method is activated, the Servlet container releases the Servlet instance.
+
+### Writing Servlet Programs
 To get started with Servlets, let’s first start with a simple Servlet application *i.e* **LifeCycle** application, that will demonstrate the implementation of the **init()**, **service()** and **destroy()** methods.
 First of all it is important to understand that if we are developing any Servlet application, it will handle some client’s request so, whenever we talk about Servlets we need to develop a index.html page (can be any other name also) which will request a particular Servlet to handle the request made by the client (in this case index.html page).
 To be simple, lets first describe the steps to develop the **LifeCycle** application : 
@@ -122,17 +118,16 @@ Creating deployment descriptor
 ### Creating the index.html page
 
 For the sake of simplicity, this page will just have a **button invoke life cycle**. When you will click this button it will call **LifeCycleServlet** (which is mapped according to the entry in web.xml file). 
-```java
+```html
     <form action="myServlet">
         <input type="submit" value="invoke life cycle servlet">
     </form>
 ```
 
-```java
-The name of the Servlet is given in action attribute of form tag to which the request will be send on clicking the button, in this case FirstServlet.
-```
+The name of the Servlet is given in action attribute of form tag to which the request will be send on clicking the button, in this case FirstServlet.
 
-**Creating the Servlet (FirstServlet)**
+### Creating the Servlet (FirstServlet)
+
 Now, its time to create the LifeCycleServlet which implements **init(),** **service()** and **destroy()** methods to demonstrate the lifecycle of a Servlet.
 ```java
 // importing the javax.servlet package
@@ -143,7 +138,7 @@ import java.io.*;
 public class LifeCycleServlet implements Servlet {
     ServletConfig config = null; 
     // init method
-|    public void init(ServletConfig sc)
+    public void init(ServletConfig sc)
     {
         config = sc;
         System.out.println("in init");
@@ -177,11 +172,9 @@ Output:
 
 ![Figure](images/Ch07_004.png)
 
-```java
 Write a program to demonstrate life cycle of servlet.
-```
 
-**Reading Form Parameters:**
+### Reading Form Parameters
 
 ### GET Method
 
@@ -208,19 +201,17 @@ Servlets handles form data parsing automatically using the following methods dep
 
 ![Figure](images/Ch07_005.jpeg)
 
-### HTML: Code
+### HTML Code
 
-### <html>
+```html
+<html>
     <head>
         <title>TODO supply a title</title>
-
-**<meta charset="UTF-8">
+        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-   **
-
-**   <form method="GET" action="myNewServlet">
+        <form method="GET" action="myNewServlet">
         <table align="center">
        <tr>
         <td>Name : </td>
@@ -231,181 +222,151 @@ Servlets handles form data parsing automatically using the following methods dep
         <td><input type="text" name="location"/></td>
         </tr>
         <tr>
-        <td colspan="2"><input type="submit" name="Submit" value="Submit"/></td>        </tr>
+        <td colspan="2"><input type="submit" name="Submit" value="Submit"/></td>
+        </tr>
         </table>
         </form>
     </body>
-|</html>**
+</html>
+```
+
+### Servlet File (getParameterExample.java)
 
 ```java
-Servlet File(getParameterExample.java)
 protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( 
-            PrintWriter out = response.getWriter()) {       
+        try (PrintWriter out = response.getWriter()) {       
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
             out.println("<title>Servlet getParameterExample</title>");       
-           out.println("</head>");
+            out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet getParameterExample</h1>");
             out.println("<ul>");
-            out.println("<li>"+request.getParameter("name")+"</li");
-            out.println("<li>"+request.getParameter("location")+"</li");
+            out.println("<li>"+request.getParameter("name")+"</li>");
+            out.println("<li>"+request.getParameter("location")+"</li>");
             out.println("</ul>");
-          out.println("</body>");
+            out.println("</body>");
             out.println("</html>");
+        }
+    }
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
 ```
-
-**        }**
-**    }**
-**protected void doGet(HttpServletRequest request, HttpServletResponse response)**
-**            throws ServletException, IOException {**
-**        processRequest(request, response);**
-**    }**
 
 ![Figure](images/Ch07_006.jpeg)
 
-### POST Method Example Using Form:
+### POST Method Example Using Form
 
-### Similar to Get Method:
+### Similar to Get Method
 
-### <form method="POST" action="getParameterExample">
+```html
+<form method="POST" action="getParameterExample">
+<table align="center">
+<tr>
+<td>Name : </td>
+<td><input type="text" name="name"/></td>
+</tr>
+<tr>
+<td>Location : </td>
+<td><input type="text" name="location"/></td>
+</tr>
+<tr>
+<td colspan="2"><input type="submit" name="Submit" value="Submit"/></td>
+</tr>
+</table>
+</form>
+```
 
-### <table align="center">
-
-### <tr>
-
-### <td>Name : </td>
-
-### <td><input type="text" name="name"/></td>
-
-### </tr>
-
-### <tr>
-
-### <td>Location : </td>
-
-### <td><input type="text" name="location"/></td>
-
-### </tr>
-
-### <tr>
-
-### <td colspan="2"><input type="submit" name="Submit" value="Submit"/></td>
-
-### </tr>
-
-### </table>
-
-### </form>
-
-### Servlet File(getParameterExample.java)
+### Servlet File (getParameterExample.java)
 
 ```java
 protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet getParameterExample</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ParameterExample </h1>");
+            out.println("<ul>");
+            out.println("<li>"+request.getParameter("name")+"</li>");
+            out.println("<li>"+request.getParameter("location")+"</li>");
+            out.println("</ul>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    }
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+}
 ```
-
-**            throws ServletException, IOException {**
-**        response.setContentType("text/html;charset=UTF-8");**
-
-### try (
-
-**            PrintWriter out = response.getWriter()) {           **
-**            out.println("<!DOCTYPE html>");**
-**            out.println("<html>");**
-**            out.println("<head>");**
-**            out.println("<title>Servlet getParameterExample</title>");            **
-**            out.println("</head>");**
-**            out.println("<body>");**
-**            out.println("<h1>Servlet ParameterExample </h1>");**
-**            out.println("<ul>");**
-**            out.println("<li>"+request.getParameter("name")+"</li");**
-**            out.println("<li>"+request.getParameter("location")+"</li");**
-**            out.println("</ul>");**
-
-**            out.println("</body>");**
-**            out.println("</html>");**
-**        }**
-**    }**
-**protected void doPost(HttpServletRequest request, HttpServletResponse response)**
-**            throws ServletException, IOException {**
-**        processRequest(request, response);**
-
-**}**
 
 ### DataAccess In Servlet
 
 ### Index.html
 
-```java
+```html
 <form method="POST" action="DataAccssController">
-    <table align="center">
-        <tr>
-    <td>ID : </td>
-    <td><input type="text" name="id"/></td>
-    </tr>
-    <tr>
-    <td>Name : </td>
-    <td><input type="text" name="name"/></td>
-    </tr>
-     <tr>
-    <td>Email : </td>
-    <td><input type="text" name="email"/></td>
-    </tr>
-    <tr>
-    <td>Address : </td>
-    <td><input type="text" name="address"/></td>
-    </tr>
-    <tr>
+     <table align="center">
+         <tr>
+     <td>ID : </td>
+     <td><input type="text" name="id"/></td>
+     </tr>
+     <tr>
+     <td>Name : </td>
+     <td><input type="text" name="name"/></td>
+     </tr>
+      <tr>
+     <td>Email : </td>
+     <td><input type="text" name="email"/></td>
+     </tr>
+     <tr>
+     <td>Address : </td>
+     <td><input type="text" name="address"/></td>
+     </tr>
+     <tr>
+     <td colspan="2"><input type="submit" name="Submit" value="Submit"/></td>
+     </tr>
+     </table>
+     </form>
 ```
 
-```java
-    <td colspan="2"><input type="submit" name="Submit" value="Submit"/></td>
-    </tr>
-    </table>
-    </form>
-```
+### DataAccessController (Servlet)
 
-**DataAccessController(Servlet)**
 ```java
 protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-```
-
-**            throws ServletException, IOException, ClassNotFoundException { **
-**        try{**
-**            Class.forName("com.mysql.jdbc.Driver"); **
-```java
+            throws ServletException, IOException, ClassNotFoundException {
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
             Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/samriddhidb","root","root");
+            String sql="insert into emp(Name,Email,Address) values(?,?,?)";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1,Integer.valueOf(request.getParameter("id")));
+            ps.setString(2, request.getParameter("name"));
+            ps.setString(3, request.getParameter("email"));
+            ps.setString(4, request.getParameter("address"));
+            ps.executeUpdate();
+            con.close();
+            PrintWriter out = response.getWriter();
+            out.println("<html><body><b>Successfully Inserted" + "</b></body></html>");
+        } catch(SQLException ex) {
+        }
+    }
 ```
-
-**            String sql="insert into emp(Name,Email,Address) values(?,?,?)";**
-**            PreparedStatement ps = con.prepareStatement(sql);**
-
-**            ps.setInt(1,Integer.valueOf(request.getParameter("id")));**
-**            ps.setString(2, request.getParameter("name"));**
-**            ps.setString(3, request.getParameter("email"));**
-**            ps.setString(4, request.getParameter("address"));**
-**            ps.executeUpdate();**
-**            con.close();**
-**          PrintWriter out = response.getWriter();**
-**            out.println("<html><body><b>Successfully Inserted" + "</b></body></html>");**
-**        }**
-
-### catch(SQLException  ex)
-
-**        {**
-
-**        }**
-
-**    }**
 
 
 ![Figure](images/Ch07_007.jpeg)
 
-**Process to deploy the servlet.**
+### Process to deploy the servlet
 After installing Tomcat Server on your machine follow the below mentioned steps :
 Create directory structure for your application.
 Create a Servlet
@@ -413,7 +374,7 @@ Compile the Servlet
 Create Deployement Descriptor for your application
 Start the server and deploy the application
 
-### Session in Servlet:
+### Session in Servlet
 
 The **HttpSession **object is used for session management. A session contains information specific to a particular user across the whole application. 
 We all know that **HTTP** is a **stateless** protocol. All **requests** and **responses** are independent. But sometimes you need to keep track of client's activity across multiple requests. For eg. When a User logs into your website, not matter on which web page he visits after logging in, his credentials will be with the server, until he logs out. So this is managed by creating a session.
@@ -421,17 +382,23 @@ We all know that **HTTP** is a **stateless** protocol. All **requests** and **
 
 ![Figure](images/Ch07_008.png)
 
-### Session Example:
+### Session Example
 
-**Write a program to store and retrieve session in servlet.**
-*Index.html*
-```java
+### Write a program to store and retrieve session in servlet
+
+### index.html
+
+```html
 <form action="login">
   User Name:<input type="text" name="userName"/><br/>
   Password:<input type="password" name="userPassword"/><br/>
   <input type="submit" value="submit"/>
 </form>
-MyServlet1.java
+```
+
+### MyServlet1.java
+
+```java
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -440,16 +407,10 @@ public class MyServlet1 extends HttpServlet {
      try{
       response.setContentType("text/html");
       PrintWriter pwriter = response.getWriter();
-```
-
-```java
       String name = request.getParameter("userName");
       String password = request.getParameter("userPassword");
       pwriter.print("Hello "+name);
       pwriter.print("Your Password is: "+password);
-```
-
-```java
       HttpSession session=request.getSession();//Creating session
       session.setAttribute("uname",name);//Adding session with key value
       session.setAttribute("upass",password);
@@ -460,7 +421,10 @@ public class MyServlet1 extends HttpServlet {
      }
   }
 }
-MyServlet2.java
+```
+
+### MyServlet2.java
+```java
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -469,12 +433,9 @@ public class MyServlet2 extends HttpServlet {
   try{
       response.setContentType("text/html");
       PrintWriter pwriter = response.getWriter();
-```
-
-```java
       HttpSession session=request.getSession(false);
-// The FALSE parameter indicates that you do not want to create a new session if one doesn’t already exist.
-      String myName=(String)session.getAttribute("uname");//retrieving value from session using keyname “uname”
+// The FALSE parameter indicates that you do not want to create a new session if one doesn't already exist.
+      String myName=(String)session.getAttribute("uname");
       String myPass=(String)session.getAttribute("upass");
       pwriter.print("Name: "+myName+" Pass: "+myPass);
       pwriter.close();
@@ -484,9 +445,13 @@ public class MyServlet2 extends HttpServlet {
   }
 }
 ```
+  }
+}
+```
 
-***Webapp.xml***
-```java
+### web.xml
+
+```xml
 <web-app>
 <servlet>
    <servlet-name>Servlet1</servlet-name>
@@ -507,7 +472,7 @@ public class MyServlet2 extends HttpServlet {
 </web-app>
 ```
 
-***Output:***
+**Output:**
 
 ![Figure](images/Ch07_009.jpeg)
 
@@ -557,117 +522,26 @@ Constructor of Cookie class
 Useful Methods of Cookie class
 There are given some commonly used methods of the Cookie class.
 
-**Step to Create Cookie.**
+### Step to Create Cookie
+
 1) Create a Cookie object:
 ```java
 Cookie c = new Cookie("userName","Sunil");
+```
 2) Set the maximum Age:
+```java
 c.setMaxAge(1800);
+```
 3) Place the Cookie in HTTP response header:
+```java
 response.addCookie(c);
 ```
 
-**Example of Cookies in java servlet**
-*Index.html*
-```java
-<form action="login">
- User Name:<input type="text" name="userName"/><br/>
- Password:<input type="password" name="userPassword"/><br/>
- <input type="submit" value="submit"/>
-</form>
-MyServlet1.java
-import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-public class MyServlet1 extends HttpServlet
-{
-   public void doGet(HttpServletRequest request,
-      HttpServletResponse response) {
-      try{
-          response.setContentType("text/html");
-          PrintWriter pwriter = response.getWriter();
-```
-
-```java
-          String name = request.getParameter("userName");
-          String password = request.getParameter("userPassword");
-          pwriter.print("Hello "+name);
-          pwriter.print("Your Password is: "+password);
-```
-
-```java
-          //Creating two cookies
-          Cookie c1=new Cookie("userName",name);
-          Cookie c2=new Cookie("userPassword",password);
-```
-
-```java
-          //Adding the cookies to response header
-          response.addCookie(c1);
-          response.addCookie(c2);
-          pwriter.print("<br><a href='welcome'>View Details</a>");
-          pwriter.close();
-   }catch(Exception exp){
-       System.out.println(exp);
-    }
-  }
-}
-MyServlet2.java
-import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-public class MyServlet2 extends HttpServlet {
- public void doGet(HttpServletRequest request,
-    HttpServletResponse response){
-    try{
-       response.setContentType("text/html");
-       PrintWriter pwriter = response.getWriter();
-```
-
-```java
-       //Reading cookies
-       Cookie c[]=request.getCookies();
-       //Displaying User name value from cookie
-       pwriter.print("Name: "+c[1].getValue());
-       //Displaying user password value from cookie
-       pwriter.print("Password: "+c[2].getValue());
-```
-
-```java
-       pwriter.close();
-    }catch(Exception exp){
-       System.out.println(exp);
-     }
-  }
-}
-web.xml
-1) Create a Cookie object:
-Cookie c = new Cookie("userName","Chaitanya");
-2) Set the maximum Age:
-By using setMaxAge () method we can set the maximum age for the particular cookie in seconds.
-c.setMaxAge(1800);
-```
-
-3) Place the Cookie in HTTP response header:
-```java
-We can send the cookie to the client browser through response.addCookie() method.
-response.addCookie(c);
-```
-
-**How to read cookies**
-```java
-Cookie c[]=request.getCookies();
-//c.length gives the cookie count
-for(int i=0;i<c.length;i++){
- out.print("Name: "+c[i].getName()+" & Value: "+c[i].getValue());
-}
-```
-
-**Example of Cookies in java servlet**
+### Example of Cookies in java servlet
 
 ### index.html
 
-```java
+```html
 <form action="login">
  User Name:<input type="text" name="userName"/><br/>
  Password:<input type="password" name="userPassword"/><br/>
@@ -675,7 +549,8 @@ for(int i=0;i<c.length;i++){
 </form>
 ```
 
-**MyServlet1.java**
+### MyServlet1.java
+
 ```java
 import java.io.*;
 import javax.servlet.*;
@@ -687,22 +562,13 @@ public class MyServlet1 extends HttpServlet
       try{
           response.setContentType("text/html");
           PrintWriter pwriter = response.getWriter();
-```
-
-```java
           String name = request.getParameter("userName");
           String password = request.getParameter("userPassword");
           pwriter.print("Hello "+name);
           pwriter.print("Your Password is: "+password);
-```
-
-```java
           //Creating two cookies
           Cookie c1=new Cookie("userName",name);
           Cookie c2=new Cookie("userPassword",password);
-```
-
-```java
           //Adding the cookies to response header
           response.addCookie(c1);
           response.addCookie(c2);
@@ -715,7 +581,8 @@ public class MyServlet1 extends HttpServlet
 }
 ```
 
-**MyServlet2.java**
+### MyServlet2.java
+
 ```java
 import java.io.*;
 import javax.servlet.*;
@@ -726,30 +593,24 @@ public class MyServlet2 extends HttpServlet {
     try{
        response.setContentType("text/html");
        PrintWriter pwriter = response.getWriter();
-```
-
-```java
        //Reading cookies
        Cookie c[]=request.getCookies();
        //Displaying User name value from cookie
        pwriter.print("Name: "+c[1].getValue());
        //Displaying user password value from cookie
        pwriter.print("Password: "+c[2].getValue());
-```
-
-```java
        pwriter.close();
     }catch(Exception exp){
        System.out.println(exp);
      }
   }
 }
-web.xml
+```
+
+### web.xml
+
+```xml
 <web-app>
-<display-name>SwastikExample</display-name>
- <welcome-file-list>
- <welcome-file>index.html</welcome-file>
- </welcome-file-list>
 <servlet>
  <servlet-name>Servlet1</servlet-name>
  <servlet-class>MyServlet1</servlet-class>
@@ -769,7 +630,23 @@ web.xml
 </web-app>
 ```
 
-**Write a program to store, retrieve and delete cookies**
+### How to read cookies
+```java
+Cookie c[]=request.getCookies();
+//c.length gives the cookie count
+for(int i=0;i<c.length;i++){
+ out.print("Name: "+c[i].getName()+" & Value: "+c[i].getValue());
+}
+```
+
+
+```
+
+
+
+
+
+### Write a program to store, retrieve and delete cookies
 
 ### How to create Cookie?
 
@@ -779,81 +656,77 @@ Cookie ck=new Cookie("user","sunil chaudhary");//creating cookie object
 response.addCookie(ck);//adding cookie in the response
 ```
 
-**How to delete Cookie?**
+### How to delete Cookie
 ```java
 Cookie ck=new Cookie("user","");//deleting value of cookie
 ck.setMaxAge(0);//changing the maximum age to 0 seconds
 response.addCookie(ck);//adding cookie in the response
 ```
 
-**How to get Cookies?**
+### How to get Cookies
+
 ```java
-Cookie ck[]=request.getCookies();
-for(int i=0;i<ck.length;i++){
- out.print("<br>"+ck[i].getName()+" "+ck[i].getValue());//printing name and value of cookie
+Cookie ck[]=request.getCookies();
+for(int i=0;i<ck.length;i++){
+ out.print("<br>"+ck[i].getName()+" "+ck[i].getValue());//printing name and value of cookie
 }
 ```
 
-```java
-Example:
-```
+### Example
 
-**Index.html**
-<form action="servlet1" method="post">  
-Name:<input type="text" name="userName"/><br/>  
-<input type="submit" value="go"/>  
+### Index.html
+```html
+<form action="servlet1" method="post">  
+Name:<input type="text" name="userName"/><br/>  
+<input type="submit" value="go"/>  
 </form>
+```
 
 ### FirstServlet.java
 
 ```java
-import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-public class FirstServlet extends HttpServlet {
-  public void doPost(HttpServletRequest request, HttpServletResponse response){
-    try{
-    response.setContentType("text/html");
-    PrintWriter out = response.getWriter();
-    String n=request.getParameter("userName");
-    out.print("Welcome "+n);
-    Cookie ck=new Cookie("uname",n);//creating cookie object
-    response.addCookie(ck);//adding cookie in the response
-    //creating submit button
-    out.print("<form action='servlet2'>");
-    out.print("<input type='submit' value='go'>");
-    out.print("</form>");
-    out.close();
-```
-
-```java
-        }catch(Exception e){System.out.println(e);}
-  }
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+public class FirstServlet extends HttpServlet {
+  public void doPost(HttpServletRequest request, HttpServletResponse response){
+    try{
+    response.setContentType("text/html");
+    PrintWriter out = response.getWriter();
+    String n=request.getParameter("userName");
+    out.print("Welcome "+n);
+    Cookie ck=new Cookie("uname",n);//creating cookie object
+    response.addCookie(ck);//adding cookie in the response
+    //creating submit button
+    out.print("<form action='servlet2'>");
+    out.print("<input type='submit' value='go'>");
+    out.print("</form>");
+    out.close();
+    }catch(Exception e){System.out.println(e);}
+  }
 }
 ```
 
-**SecondServlet.java**
-```java
-import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-public class SecondServlet extends HttpServlet {
-public void doPost(HttpServletRequest request, HttpServletResponse response){
-    try{
-    response.setContentType("text/html");
-    PrintWriter out = response.getWriter();
-    Cookie ck[]=request.getCookies();
-    out.print("Hello "+ck[0].getValue());
-    out.close();
-         }catch(Exception e){System.out.println(e);}
-    }
-```
+### SecondServlet.java
 
 ```java
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+public class SecondServlet extends HttpServlet {
+public void doPost(HttpServletRequest request, HttpServletResponse response){
+    try{
+    response.setContentType("text/html");
+    PrintWriter out = response.getWriter();
+    Cookie ck[]=request.getCookies();
+    out.print("Hello "+ck[0].getValue());
+    out.close();
+         }catch(Exception e){System.out.println(e);}
+    }
 }
 ```
 
-**Introduction to JSP:**
+### Introduction to JSP
 It stands for **Java Server Pages**.
 It is a server side technology.
 It is used for creating web application.
@@ -864,7 +737,7 @@ It is a Web based technology helps us to create dynamic and platform independent
 In this, Java code can be inserted in HTML/ XML pages or both.
 JSP is first converted into servlet by JSP container before processing the client’s request.
 
-### JAVA Beans:
+### JAVA Beans
 
 Java Beans is a reusable software component that can be visually manipulated in builder tool.
 Their primary goal of java bean is WORA(Write once run anywhere)
@@ -891,25 +764,27 @@ public String getName(){return name;}
 }
 ```
 
-**How to access the JavaBean class?**
+### How to access the JavaBean class
+
 ```java
-public class Test{
-public static void main(String args[]){
-Employee e=new Employee();//object is created
-e.setName("Arjun");//setting value to the object
+public class Test{
+public static void main(String args[]){
+Employee e=new Employee();//object is created
+e.setName("Arjun");//setting value to the object
 System.out.println(e.getName());
 }}
-A JavaBean property may be read, write, read-only, or write-only. JavaBean features are accessed through two methods in the JavaBean's implementation class:
 ```
+
+A JavaBean property may be read, write, read-only, or write-only. JavaBean features are accessed through two methods in the JavaBean's implementation class:
 
 1. getPropertyName ()
 For example, if the property name is firstName, the method name would be getFirstName() to read that property. This method is called the accessor.
 
-### 2. setPropertyName ()
+2. setPropertyName ()
 
 For example, if the property name is firstName, the method name would be setFirstName() to write that property. This method is called the mutator.
 
-**Design patterns for JavaBean Properties:-**
+### Design patterns for JavaBean Properties
 A property is a subset of a Bean’s state. A bean property is a named attribute of a bean that can affect its behavior or appearance. Examples of bean properties include color, label, font, font size, and display size. Properties are the private data members of the JavaBean classes. Properties are used to accept input from an end user in order to customize a JavaBean. Properties can retrieve and specify the values of various attributes, which determine the behavior of a JavaBean.
 
 ### Types of JavaBeans Properties
@@ -918,13 +793,16 @@ Simple properties
 Boolean properties
 Indexed properties
 
-### Simple Properties:
+### Simple Properties
 
 Simple properties are read/write with getter, setter methods. The naming convention is:
 ```java
 T getX();
 void setX(T arg);
-Example:
+```
+### Example
+
+```java
 class MyDriver{
    private String name;
    // ...
@@ -938,7 +816,7 @@ class MyDriver{
 }
 ```
 
-**Boolean Properties: **
+### Boolean Properties
 A Boolean property is a property which is used to represent the values True or False.
 Syntax:
 ```java
@@ -960,7 +838,7 @@ this.dotted = dotted;
 }
 ```
 
-**Indexed Properties**
+### Indexed Properties
 If the property contains multiple values, the pattern followed is this:
 ```java
 private String data[];
@@ -982,13 +860,13 @@ private String data[];
 }
 ```
 
-**JavaBeans Vs Java Class**
+### JavaBeans Vs Java Class
 A JavaBean is basically a Java class which satisfies a few simple rules (it must have a public no-arg constructor, no public instance variables, properties have getters and setters; actually, you can get around the last rule by supplying a BeanInfo object for your bean). JavaBeans were originally conceived for graphical application builder tools, but that emphasis has shifted considerably and they're now used almost everywhere.
 A Bean can have associated support classes: a BeanInfo class providing information about the bean, its properties and its events, and also property editors and a graphical customizer.
 A Bean is a Java class, but a Java class does not have to be a bean. In other words a bean in a specific Java class and has rules that have to be followed before you have a bean.
 A **class** is nothing but a blueprint or a template for creating different objects which defines its properties and behaviors. **Java class** objects exhibit the properties and behaviors defined by its **class**. A **class** can contain fields and methods to describe the behavior of an object.
 
-### JSP Access Model:
+### JSP Access Model
 
 Before developing the web applications, we need to have idea about design models. There are two types of programming models (design models)
 Model 1 Architecture
@@ -1029,47 +907,57 @@ We need to write the controller code self. If we change the controller code, we 
 
 ### JSP Syntax:
 
-**Declaration Tag** :-It is used to declare variables.
-Syntax:- 
-<%!  Dec var  %>
-Example:-
-```java
+### Declaration Tag
+
+It is used to declare variables.
+Syntax: `<%! declaration %>`
+Example:
+```jsp
 <%! int var=10; %>
-Java Scriplets :- It allows us to add any number of JAVA code, variables and expressions.
-Syntax:-
-<%= expression %>
- Example:-
+```
+
+### Java Scriplets
+
+It allows us to add any number of JAVA code, variables and expressions.
+Syntax: `<% code %>`
+Example:
+```jsp
 <% num1 = num1+num2 %>
 ```
 
-```java
-JAVA Comments :- It contains the text that is added for information which has to be ignored.
-Syntax:-
-<% -- JSP Comments %>
+### JSP Comments
+
+JAVA Comments contain the text that is added for information which has to be ignored.
+Syntax:
+```jsp
+<%-- JSP Comments --%>
 ```
 
-**JSP Declarations**
+### JSP Declarations
+
 A declaration declares one or more variables or methods that you can use in Java code later in the JSP file. You must declare the variable or method before you use it in the JSP file.
-```java
+```jsp
 <%! declaration; [ declaration; ]+ ... %>
 ```
 
-**JSP Expression**
+### JSP Expression
+
 A JSP expression element contains a scripting language expression that is evaluated, converted to a String, and inserted where the expression appears in the JSP file.
 Because the value of an expression is converted to a String, you can use an expression within a line of text, whether or not it is tagged with HTML, in a JSP file.
 The expression element can contain any expression that is valid according to the Java Language Specification but you cannot use a semicolon to end an expression.
-```java
+```jsp
 <%= expression %>
 ```
 
-**JSP Directives**
-A JSP directive affects the overall structure of the servlet class. It usually has the following form −
-```java
-<%@ directive attribute="value" %>
-There are three types of directive tag –
-```
+### JSP Directives
 
-**Steps for Execution of JSP are following:-**
+A JSP directive affects the overall structure of the servlet class. It usually has the following form −
+```jsp
+<%@ directive attribute="value" %>
+```
+There are three types of directive tag –
+
+### Steps for Execution of JSP
 Create html page from where request will be sent to server eg try.html.
 To handle to request of user next is to create .jsp file Eg. new.jsp
 Create project folder structure.
@@ -1082,7 +970,7 @@ Run Application
 
 ### demo.jsp
 
-```java
+```jsp
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -1094,17 +982,16 @@ Run Application
 </html>
 ```
 
-**JSP Implicit Objects**
+### JSP Implicit Objects
+
 JSP supports nine automatically defined variables, which are also called implicit objects. These variables are –
 
-The **if...else** block starts out like an ordinary Scriptlet, but the Scriptlet is closed at each line with HTML text included between the Scriptlet tags.
-```java
+### if...else Example
+
+```jsp
 <%! int day = 3; %>
 <html>
    <head><title>IF...ELSE Example</title></head>
-```
-
-```java
    <body>
       <% if (day == 1 || day == 7) { %>
          <p> Today is weekend</p>
@@ -1113,14 +1000,15 @@ The **if...else** block starts out like an ordinary Scriptlet, but the Scriptl
       <% } %>
    </body>
 </html>
+```
 Output: Today is not weekend
-switch...case block which has been written a bit differentlty using out.println() and inside Scriptletas –
+
+### switch...case Example
+
+```jsp
 <%! int day = 3; %>
 <html>
    <head><title>SWITCH...CASE Example</title></head>
-```
-
-```java
    <body>
       <%
          switch(day) {
@@ -1148,14 +1036,15 @@ switch...case block which has been written a bit differentlty using out.printl
       %>
    </body>
 </html>
+```
 Output: It's Wednesday.
-three basic types of looping blocks in Java: for, while, and do…while blocks in your JSP programming.
+
+### for Loop Example
+
+```jsp
 <%! int fontSize; %>
 <html>
    <head><title>FOR LOOP Example</title></head>
-```
-
-```java
    <body>
       <%for ( fontSize = 1; fontSize <= 3; fontSize++){ %>
          <font color = "green" size = "<%= fontSize %>">
@@ -1164,13 +1053,14 @@ three basic types of looping blocks in Java: for, while, and do…while blocks
       <%}%>
    </body>
 </html>
-while loop
+```
+
+### while Loop Example
+
+```jsp
 <%! int fontSize; %>
 <html>
    <head><title>WHILE LOOP Example</title></head>
-```
-
-```java
    <body>
       <%while ( fontSize <= 3){ %>
          <font color = "green" size = "<%= fontSize %>">
@@ -1180,8 +1070,9 @@ while loop
       <%}%>
    </body>
 </html>
-JSP Scopes:
 ```
+
+### JSP Scopes
 
 Type of Scopes in JSP:
 JSP provides 4 scopes to a variable. Developer can assign any one of them to a variable.
@@ -1190,7 +1081,7 @@ Request Scope.
 Session Scope.
 Application Scope.
 
-### JSP Page Scope Example
+### JSP Page Scope Example
 
 Page Scope makes variable available to the developer for the **current page only**. Once the current page is closed by user or forwarded internally by application or redirected by application, than the **variables having page scope will not be accessible on next page**.
 
@@ -1208,16 +1099,17 @@ The JSP Standard Tag Library (JSTL) represents a set of tags to simplify the JSP
 
 ### Edit in pom.xml
 
-
+```xml
     <dependency>
             <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
+```
 
 ### Index.jsp
 
-```java
+```jsp
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -1237,15 +1129,13 @@ Local Variable: Dinesh
 Test Page
 ```
 
-**Second JSP File(test.jsp):**
-```java
+### Second JSP File (test.jsp)
+
+```jsp
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-```
-
-```java
 <html>
 <head>
   <title>JSP Page Scope Example</title>
@@ -1254,15 +1144,16 @@ Test Page
  Variable From previous page : <c:out value="${name}" />
 </body>
 </html>
-Output: Variable from previous page:
+Output: Variable from previous page:
 ```
 
-**JSP *Request Scop*e Example**
-request Scope makes variable available to the developer for the current request only. Once the current request is over, than the variables having request scope will not be accessible on next request. Single request may include multiple pages using forward.
+### JSP Request Scope Example
+
+Request Scope makes variable available to the developer for the current request only. Once the current request is over, than the variables having request scope will not be accessible on next request. Single request may include multiple pages using forward.
 
 ### Index.jsp
 
-```java
+```jsp
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -1278,8 +1169,9 @@ request Scope makes variable available to the developer for the current request 
 </html>
 ```
 
-**Test,jsp**
-```java
+### Test.jsp
+
+```jsp
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -1292,15 +1184,16 @@ request Scope makes variable available to the developer for the current request 
  Variable From previous page : <c:out value="${name}" />
 </body>
 </html>
-Output: Variable from previous page: Dinesh
+Output: Variable from previous page: Dinesh
 ```
 
-**JSP Session Scope Example**
+### JSP Session Scope Example
+
 Session Scope makes variable available to the developer for the current session only. Once the current session is over or timed out, than the variables having session scope will not be accessible on next session.
 
 ### Index.jsp
 
-```java
+```jsp
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -1320,15 +1213,13 @@ Local Variable: Dinesh
 Test Page
 ```
 
-**Test.jsp**
-```java
+### Test.jsp
+
+```jsp
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-```
-
-```java
 <html>
 <head>
   <title>JSP Session Scope Example</title>
@@ -1337,13 +1228,16 @@ Test Page
  Variable From previous page : <c:out value="${name}" />
 </body>
 </html>
-Output: Variable from previous page: Dinesh
+Output: Variable from previous page: Dinesh
 ```
 
-**JSP Application Scope Example**
+### JSP Application Scope Example
+
 Application Scope makes variable available to the developer for the full application. It remains available till application is running on server.
-Index.jsp
-```java
+
+### Index.jsp
+
+```jsp
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -1363,15 +1257,13 @@ Local Variable: Dinesh
 Test Page
 ```
 
-**Test.jsp**
-```java
+### Test.jsp
+
+```jsp
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-```
-
-```java
 <html>
 <head>
   <title>JSP Application Scope Example</title>
@@ -1380,41 +1272,33 @@ Test Page
  Variable From previous page : <c:out value="${name}" />
 </body>
 </html>
-Output: Variable from previous page: Dinesh
+Output: Variable from previous page: Dinesh
 ```
 
-**JSP Form Processing:**
+### JSP Form Processing
 
 ### Index.jsp
 
-```java
+```jsp
 <html>
    <body>
-```
-
-```java
       <form action = "main.jsp" method = "GET">
          First Name: <input type = "text" name = "first_name">
          <br />
          Last Name: <input type = "text" name = "last_name" />
          <input type = "submit" value = "Submit" />
       </form>
-```
-
-```java
    </body>
 </html>
 ```
 
-**Main.jsp**
-```java
+### Main.jsp
+
+```jsp
 <html>
    <head>
       <title>Using GET Method to Read Form Data</title>
    </head>
-```
-
-```java
    <body>
       <h1>Using GET Method to Read Form Data</h1>
       <ul>
@@ -1425,48 +1309,35 @@ Output: Variable from previous page: Dinesh
             <%= request.getParameter("last_name")%>
          </p></li>
       </ul>
-```
-
-```java
    </body>
 </html>
 ```
 
-**POST:**
-```java
+### POST
+
+```jsp
 <html>
    <body>
-```
-
-```java
       <form action = "main.jsp" method = "POST">
          First Name: <input type = "text" name = "first_name">
          <br />
          Last Name: <input type = "text" name = "last_name" />
          <input type = "submit" value = "Submit" />
       </form>
-```
-
-```java
    </body>
 </html>
 ```
 
-**Main.jsp**
-```java
+### Main.jsp
+
+```jsp
 <html>
    <head>
       <title>Using GET and POST Method to Read Form Data</title>
    </head>
-```
-
-```java
    <body>
       <center>
       <h1>Using POST Method to Read Form Data</h1>
-```
-
-```java
       <ul>
          <li><p><b>First Name:</b>
             <%= request.getParameter("first_name")%>
@@ -1475,32 +1346,34 @@ Output: Variable from previous page: Dinesh
             <%= request.getParameter("last_name")%>
          </p></li>
       </ul>
-```
-
-```java
    </body>
 </html>
 ```
 
-**Exam Asked Question:**
+### Exam Asked Question
+
 *Write a program to a JSP web form to take input of a student and submit it to second JSP file which may simply print the values of form submission*
-*Create index.jsp and PrintForm.jsp***
+*Create `index.jsp` and `PrintForm.jsp`*
 
 ### index.jsp
 
+```jsp
 <form action="PrintForm.jsp" method="POST">
             Name: <input type="text" name="name"><br><br>
             Roll No.: <input type="text" name="roll"><br><br>
             Address: <input type="text" name="address"><br><br>
             <input type="submit" value="Submit">   
 </form>
+```
 
 ### PrintForm.jsp
 
+```jsp
   <h1>Student Details!</h1>
         Name: <%= request.getParameter("name") %><br>
         Roll No.: <%= request.getParameter("roll") %><br>
         Address: <%= request.getParameter("address") %><br>
+```
 
 ### What is Framework in Java
 
@@ -1520,15 +1393,15 @@ Quarkus
 
 ### Spring
 
-It is a light-weighted, powerful Java application development framework. It is used for JEE. Its other modules are **Spring Security, , Spring Batch, Spring ORM,  and ** etc.
+It is a light-weighted, powerful Java application development framework. It is used for JEE. Its other modules are **Spring Security, Spring Batch, Spring ORM**, and others.
 
 ### Hibernate
 
- is ORM (Object-Relation Mapping) framework that allows us establish communication between Java programming language and the RDBMS.
+**Hibernate** is an ORM (Object-Relation Mapping) framework that allows us to establish communication between the Java programming language and the RDBMS.
 
 ### Grails
 
-It is a dynamic framework created by using the . It is an OOPs language. Its purpose is to enhance the productivity. The syntax of Grails is matched with Java and the code is compiled to . It also works with Java, JEE, Spring and Hibernate.
+It is a dynamic framework created by using Groovy. It is an OOPs language. Its purpose is to enhance the productivity. The syntax of Grails is matched with Java and the code is compiled to JVM bytecode. It also works with Java, JEE, Spring and Hibernate.
 
 ### Play
 
@@ -1536,15 +1409,13 @@ It is a unique Java framework because it does not follow JEE standards. It follo
 
 ### JavaServer Faces
 
-It stands for JavaServer Faces. It is a component-based UI framework developed by Oracle that is used to build user interfaces for Java-based applications. It follows MVC design pattern. The application developed using  has an architecture that defines a distinction
+It stands for JavaServer Faces. It is a component-based UI framework developed by Oracle that is used to build user interfaces for Java-based applications. It follows MVC design pattern. The application developed using JSF has an architecture that defines a distinction
 
 ### Google Web Toolkit (GWT)
 
-It is an open-source framework that allows developers to write client-side Java code. With the help of GWT, we can rapidly develop complex browse application. The advantages to use  is that we can easily develop and debug Ajax application. the product of Google, such as Google AdSense, Blogger are developed using GWT.
+It is an open-source framework that allows developers to write client-side Java code. With the help of GWT, we can rapidly develop complex browse application. The advantages to use GWT is that we can easily develop and debug Ajax application. The products of Google, such as Google AdSense, Blogger are developed using GWT.
 
-Top of Form
-Bottom of Form
-Bottom of Form
+
 
 ---
 

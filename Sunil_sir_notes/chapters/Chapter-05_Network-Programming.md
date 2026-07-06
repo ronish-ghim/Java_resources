@@ -1,4 +1,4 @@
-# Chapter 5_Network Programming
+# Chapter 5 Network Programming
 
 > *Source: Sunil Sir's Lecture Notes — B.Sc. CSIT (Tribhuvan University)*
 
@@ -55,7 +55,7 @@ UDP enables continuous data transmission (i.e., response) without acknowledging 
 As with TCP, its purpose is to send and receive messages, so its functioning is similar to the transmission control protocol. What is distinctive about UDP is that it is **not connection-based**. In this case, “**connectionless**” refers to the fact that no connection is established before communication occurs. 
 Furthermore, **it does not ensure the delivery of the data packets from the server**. It is commonly referred to as the “**fire-and-forget**” protocol because it is not concerned about whether or not the client receives the data.
 In most cases, **UDP is faster than TCP** because it does not assure delivery of the packets as TCP does.
-The UDP protocol is not suitable for sending **, **viewing a web page, or downloading a file. However, it is preferred mainly for real-time applications like broadcasting or multitasking network traffic.
+The UDP protocol is not suitable for sending, viewing a web page, or downloading a file. However, it is preferred mainly for real-time applications like broadcasting or multitasking network traffic.
 
 ### Ports:
 
@@ -65,16 +65,14 @@ Data transmitted over the Internet is accompanied by addressing information that
 An Internet Protocol address (IP address) is the logical address of our network hardware by which other devices identify it in a network. IP address stands for Internet Protocol address which is an unique number or a numerical representation that uniquely identifies a specific interface on the network. Each device that is connected to internet an IP address is assigned to it for its unique identification.
 Addresses in IPv4 are 32-bits long example, 
  
-```java
-12.244.233.165
-And Addresses in IPv6 are 128-bits example,
-2001:0db8:0000:0000:0000:ff00:0042:7879
-2. Port Number : 
+`12.244.233.165`
+And Addresses in IPv6 are 128-bits example:
+`2001:0db8:0000:0000:0000:ff00:0042:7879`
+2. Port Number : 
 Port number is the part of the addressing information used to identify the senders and receivers of messages in computer networking. Different port numbers are used to determine what protocol incoming traffic should be directed to. Port number identifies a specific process to which an Internet or other network message is to be forwarded when it arrives at a server. Ports are identified for each protocol and It is considered as a communication endpoint.
 Difference Between IP Address and Port Number
-```
 
-**Network Classes in JDK**
+### Network Classes in JDK
 
 What is a Socket in Java?
 A **socket **in  is one endpoint of a two-way communication link between two programs running on the network. A **socket** is bound to a port number so that the TCP layer can identify the application that data is destined to be sent to.
@@ -94,20 +92,22 @@ In order to initiate a client’s request, you need to follow the below mentione
 Establish a Socket Connection 
 To connect to another machine we need a socket connection. A socket connection means the two machines have information about each other’s network location (IP Address) and TCP port. The **java.net.Socket** class represents a Socket. To open a socket: 
 ```java
-Socket socket = new Socket(“127.0.0.1”, 5000)
-The first argument – IP address of Server. (127.0.0.1  is the IP address of localhost, where code will run on the single stand-alone machine).
-The second argument – TCP Port. (Just a number representing which application to run on a server. For example, HTTP runs on port 80. Port number can be from 0 to 65535)
+Socket socket = new Socket("127.0.0.1", 5000)
 ```
 
-```java
-Communication
+The first argument – IP address of Server. (127.0.0.1 is the IP address of localhost, where code will run on the single stand-alone machine).
+The second argument – TCP Port. (Just a number representing which application to run on a server. For example, HTTP runs on port 80. Port number can be from 0 to 65535)
+
+**Communication:**
 To communicate over a socket connection, streams are used to both input and output the data.
-Closing the connection
-The socket connection is closed explicitly once the message to the server is sent.
-Write a simple client and server socket program to read data from client and print in server.
-```
 
-**Client.java**
+**Closing the connection:**
+The socket connection is closed explicitly once the message to the server is sent.
+
+Write a simple client and server socket program to read data from client and print in server.
+
+### Client.java
+
 ```java
 import java.net.*;
 import java.io.*;
@@ -122,7 +122,7 @@ public class client {
 }
 ```
 
-**Server Programming**
+### Server Programming
 
 ### 1.Establish a Socket Connection
 
@@ -135,9 +135,6 @@ getOutputStream() method is used to send the output through the socket.
 After finishing,  it is important to close the connection by closing the socket as well as input/output streams.
 ```java
 // File Name server.java
-```
-
-```java
 import java.net.*;
 import java.io.*;
 public class server {
@@ -146,25 +143,22 @@ public class server {
         Socket s=ss.accept();
         System.out.println("Client Connected");
         InputStreamReader in=new InputStreamReader(s.getInputStream());
-        BufferedReader bf=new BufferedReader(in);
-```
-
-```java
-        String str=bf.readLine();
-        System.out.println("Client: "+str);
-        s.close();
-        ss.close();
-    }
+        BufferedReader bf=new BufferedReader(in);
+        String str=bf.readLine();
+        System.out.println("Client: "+str);
+        s.close();
+        ss.close();
+    }
 }
-```
 
-**Output:**
-```java
+### Output
+
+```
 Client Connected
 Client: hello
 ```
 
-**InetAddress Class:**
+### InetAddress Class
 The **java.net.InetAddress** class is Java’s high-level representation of an IP address, both IPv4 and IPv6.
 The **InetAddress** class is used to encapsulate both the numerical IP address and the domain name for that address.  Example:www.*google.com*
 There are two types of address: **Unicast**, **Multicast and Broadcast**
@@ -188,18 +182,25 @@ InetAddress can handle both IPv4(32bit) and IPv6 (128bit)
 ### Steps to Create new InetAddress Object
 
 Create a java file named: **InetAddressExample.java**
+Add header `import java.net.*;`
+Declare object of InetAddress with calling `getByName("google.com")` static method.
+
 ```java
-Add header import java.net.*;
-Declare object of InetAddress with calling getByName(“google.com”) static method.
 InetAddress address = InetAddress.getByName("www.google.com");
 Print the result using
 System.out.println(address);
-You can also do a reverse lookup by IP address. For example, if you want the hostname for the address 208.201.239.100, pass the dotted quad address to InetAddress.getByName()
-InetAddress address = InetAddress.getByName("208.201.239.100"); System.out.println(address.getHostName());
-Output: 208.201.239.100
 ```
 
-**Example 1. Find the address of the local machine**
+You can also do a reverse lookup by IP address. For example, if you want the hostname for the address 208.201.239.100, pass the dotted quad address to `InetAddress.getByName()`.
+
+```java
+InetAddress address = InetAddress.getByName("208.201.239.100");
+System.out.println(address.getHostName());
+```
+
+Output: 208.201.239.100
+
+### Example 1. Find the address of the local machine
 ```java
     public static void main(String[] args)
     {
@@ -213,8 +214,11 @@ Output: 208.201.239.100
     }
 ```
 
-**Output:**
+### Output
+
+```
 DESKTOP-3EMMN99/192.168.1.68
+```
 If, for some reason, you need all the addresses of a host, call **getAllByName()** instead, which returns an array:
 ```java
 InetAddress[] addresses = InetAddress.getAllByName("www.google.com");
@@ -227,7 +231,8 @@ www.google.com/142.250.192.164
 www.google.com/2404:6800:4002:816:0:0:0:2004
 ```
 
-**Java URL**
+### Java URL
+
 The **Java URL** class represents an URL. URL is an acronym for Uniform Resource Locator. It points to a resource on the World Wide Web. For example:
 https://samriddhicollege.edu.np/bsccsit-college-in-bhaktapur-nepal/
 *Protocol**   **Domain**                    **File*
@@ -245,8 +250,9 @@ It consists of multiple parts including protocols, IP address, path and port t
 URLs use protocol such as http:// and ftp:// to identify the resource
 The syntax of a URL is: 
 
-### protocol://userInfo@host:port/path?query#fragment
-
+```
+protocol://userInfo@host:port/path?query#fragment
+```
 
 ![Figure](images/Ch05_010.png)
 
@@ -289,28 +295,19 @@ The java.net.URL class provides many methods. The important methods of URL class
 import java.net.*;
 public class App {
     public static void main(String[] args) throws Exception {
-```
-
-```java
         try{
             URL url=new URL("http://www.samriddhicollege.com/jbsccsit-college-in-bhaktapur-nepal");
-```
-
-```java
             System.out.println("Protocol: "+url.getProtocol());
             System.out.println("Host Name: "+url.getHost());
             System.out.println("Port Number: "+url.getPort());
             System.out.println("File Name: "+url.getFile());
-```
-
-```java
             }catch(Exception e){System.out.println(e);}
-```
-
-```java
     }
 }
+```
+
 Output:
+```
 Protocol: http
 Host Name: www.samriddhicollege.com
 Port Number: -1
@@ -318,11 +315,9 @@ File Name: /jbsccsit-college-in-bhaktapur-nepal
 ```
 
 ***Example:***
-```java
-public static void main(String[] args) throws MalformedURLException {
-```
 
 ```java
+public static void main(String[] args) throws MalformedURLException {
         String baseurl="https://samriddhicollege.edu.np/wp-content/uploads/2019/09/";
         String relativeUrl="Networking_Programming-Syllabus.zip";
         URL baseUrl=new URL(baseurl);
@@ -333,14 +328,14 @@ public static void main(String[] args) throws MalformedURLException {
         }
 ```
 
-```java
 Output:
+```
 BaseUrl:https://samriddhicollege.edu.np/wp-content/uploads/2019/09/
 Relative Url:Networking_Programming-Syllabus.zip
 Resolved Relative Url:https://samriddhicollege.edu.np/wp-content/uploads/2019/09/Networking_Programming-Syllabus.zip
 ```
 
-**Splitting a URL into Pieces:**
+### Splitting a URL into Pieces
 URLs are composed of five pieces:
 The scheme, also known as the protocol
 The authority
@@ -384,8 +379,9 @@ public class App {
 }
 ```
 
-**Output:**
-```java
+### Output
+
+```
 The URL is ftp://mp3:mp3@138.247.121.61:21000/c%3a/
 The scheme is ftp
 The user info is mp3:mp3
@@ -394,44 +390,38 @@ The port is 21000
 The path is /c%3a/
 The ref is null
 The query string is null
-Lab: write a java program to split different component of url from given url: (https://www.example.com:8080/path/to/resource?key1=value1&key2=value2#section2)
-Example: 
-    public static void main(String[] args) throws MalformedURLException {
+```
+
+Lab: write a java program to split different component of url from given url: `https://www.example.com:8080/path/to/resource?key1=value1&key2=value2#section2`
+
+Example:
+```java
+public static void main(String[] args) throws MalformedURLException {
 URL url1 = new URL("https://www.example.com:8080/path/to/resource?key1=value1&key2=value2#section2");
         System.out.println(url1.toString());
         System.out.println();
-        System.out.println(
-            "Different components of the URL1-");
+        System.out.println("Different components of the URL1-");
        System.out.println("Protocol:- " + url1.getProtocol());
         System.out.println("Hostname:- " + url1.getHost()); System.out.println("Default port:- "+ url1.getDefaultPort());
-        // Retrieving the query part of URL
         System.out.println("Query:- " + url1.getQuery());
-        // Retrieving the path of URL
         System.out.println("Path:- " + url1.getPath());
-        // Retrieving the file name
         System.out.println("File:- " + url1.getFile());
-        // Retrieving the reference
         System.out.println("Reference:- " + url1.getRef());
         }
 ```
 
 ***Output:***
 
-### Different components of the URL1-
-
-### Protocol:- https
-
-### Hostname:- www.example.com
-
-### Default port:- 443
-
-### Query:- key1=value1&key2=value2
-
-### Path:- /path/to/resource
-
-### File:- /path/to/resource?key1=value1&key2=value2
-
-### Reference:- section2
+```
+Different components of the URL1-
+Protocol:- https
+Hostname:- www.example.com
+Default port:- 443
+Query:- key1=value1&key2=value2
+Path:- /path/to/resource
+File:- /path/to/resource?key1=value1&key2=value2
+Reference:- section2
+```
 
 ### Java URLConnection Class:
 
@@ -462,9 +452,6 @@ import java.net.*;
 import java.io.*;
 public class App {
     public static void main(String[] args) throws Exception {
-```
-
-```java
         try{
             URL url=new URL("http://www.samriddhicollege.com/jbsccsit-college-in-bhaktapur-nepal");
             URLConnection urlcon=url.openConnection();
@@ -474,14 +461,11 @@ public class App {
             System.out.print((char)i);
             }
             }catch(Exception e){System.out.println(e);}
-```
-
-```java
     }
 }
 ```
 
-**Java Mail API**
+### Java Mail API
 The **JavaMail** is an API that is used to compose, write and read electronic messages (emails).
 The JavaMail API provides protocol-independent and plateform-independent framework for sending and receiving mails.
 The **javax.mail** and **javax.mail.activation** packages contains the core classes of JavaMail API.
@@ -516,7 +500,7 @@ You can use one of the following techniques to get the SMTP server:
 Install and use any SMTP server such as Postcast server, Apache James server, cmail server etc. (or)
 Use the SMTP server provided by the host provider e.g. my SMTP server is mail.samriddhi.com.np (or)
 Use the SMTP Server provided by other companies e.g. gmail etc.
-Setting Less Secure Appp In Gmail
+Setting Less Secure App In Gmail
 
 ![Figure](images/Ch05_012.png)
 
@@ -540,8 +524,6 @@ Go to Security
 
 ### send the message
 
-### mzdf orxd klmn dimr
-
 Example:
 
 ### Sending Email in Java through Gmail Server
@@ -551,9 +533,6 @@ We can send email by using the SMTP server of gmail. It is good if you are don't
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
-```
-
-```java
 public class App {
     public static void main(String[] args) throws Exception {
         //Get properties object
@@ -562,21 +541,15 @@ public class App {
         prop.put("mail.smtp.starttls.enable", "true");
         prop.put("mail.smtp.host", "smtp.gmail.com");
         prop.put("mail.smtp.port", 587);
-```
-
-```java
         //get Session
-            Session session = Session.getDefaultInstance(prop,
-            new javax.mail.Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication()
-            {
-            return new PasswordAuthentication("Kamal.nialp@gmail.com","password");
-            }
-           });
-```
-
-```java
+        Session session = Session.getDefaultInstance(prop,
+        new javax.mail.Authenticator() {
+        @Override
+        protected PasswordAuthentication getPasswordAuthentication()
+        {
+        return new PasswordAuthentication("Kamal.nialp@gmail.com","password");
+        }
+       });
         try
         {
         //compose message
@@ -584,23 +557,19 @@ public class App {
         message.setFrom(new InternetAddress("Kamal.nialp@gmail.com"));
         message.addRecipient(Message.RecipientType.TO, new InternetAddress("suneel.em@gmail.com"));
         message.setSubject("Hello Samriddhi");
-        message.setText("Welcome to Samriddhi COllege");
+        message.setText("Welcome to Samriddhi College");
         //send message
         Transport.send(message);
         System.out.println("message sent successfully");
         } catch (MessagingException e) {throw new RuntimeException(e);}
-```
-
-```java
     }
-```
-
-```java
 }
-1.Write client and server programs in which a server program accepts a radius of a circle from the client program. Compute area in client side.
 ```
 
-**Client Side**
+1. Write client and server programs in which a server program accepts a radius of a circle from the client program. Compute area in client side.
+
+### Client Side
+
 *SamriddhiClient.java*
 ```java
 import java.io.*;
@@ -626,7 +595,7 @@ public class SamriddhiClient {
 }
 ```
 
-**ServerSide**
+### Server Side
 
 ***SamriddhiServer.java***
 ```java
@@ -650,21 +619,14 @@ class SamriddhiServer
          br.close();
          ps.close();
          s.close();
-         ss.close();
-```
-
-```java
-    }
-```
-
-```java
+          ss.close();
+    }
 }
-```
 
 
 ---
 
-**Table 1:**
+### Table 1
 
 | Full form | It stands for Transmission Control Protocol (TCP). | It stands for User Datagram Protocol. |
 | --- | --- | --- |
@@ -677,7 +639,7 @@ class SamriddhiServer
 | Applications | This protocol is mainly used where a secure and reliable communication process is required, like military services, web browsing, and e-mail. | This protocol is used where fast communication is required and does not care about the reliability like VoIP, game streaming, video and music streaming, etc. |
 
 
-**Table 2:**
+### Table 2
 
 | S.N. | IP address | Port Number |
 | --- | --- | --- |
@@ -689,7 +651,7 @@ class SamriddhiServer
 | 06. | 192.168.0.2, 172.16.0.2 are some of IP address examples. | 80 for HTTP, 123 for NTP, 67 and 68 for DHCP traffic, 22 for SSH etc. |
 
 
-**Table 3:**
+### Table 3
 
 | Class | Use |
 | --- | --- |
@@ -709,7 +671,7 @@ class SamriddhiServer
 | URLConnection | The abstract class URLConnection is the superclass of all classes that represent a communications link between the application and a URL. |
 
 
-**Table 4:**
+### Table 4
 
 | Method | Description |
 | --- | --- |
@@ -728,7 +690,7 @@ class SamriddhiServer
 | public URI toURI() | it returns a URI of the URL. |
 
 
-**Table 5:**
+### Table 5
 
 | There are some protocols that are used in JavaMail API.
 SMTP
@@ -739,7 +701,7 @@ NNTP and others |
 | --- |
 
 
-**Table 6:**
+### Table 6
 
 | Multiple Internet Mail Extension (MIME) tells the browser what is being sent e.g. attachment, format 
 of the messages etc. It is not known as mail transfer protocol but it is used by your mail program.
@@ -749,7 +711,7 @@ There are many protocols that are provided by third-party providers. Some of the
 | --- |
 
 
-**Table 7:**
+### Table 7
 
 | For better understanding of this example, learn the steps of sending email using JavaMail API first. |
 | --- |
@@ -766,7 +728,7 @@ activation.jar |
 
 > 📷 *This document contains images/diagrams — see the original .docx for visual content*
 
-### InetAddress Class: (Imp)
+### InetAddress Class
 
 It is part of **java.net** package used representation IP address, both IPv4 and IPv6.
 It can resolve **hostname** to **IP address** and vice versa.
@@ -778,41 +740,51 @@ It is designed to **send ** across the internet and ensure the **successful de
 **Ensuring** it gets delivered to the **destination** application or device that **IP has defined.**
 **IP** **(Internet Protocol**) **defines** how to **address** and **route** each packet to make sure it reaches the **right destination**. 
 Each gateway computer on the network  **to determine where to forward the message.**
-**Creating InetAddress Object
-**There are no public constructors in the **InetAddress** class. Instead, **InetAddress** has **Static Factory Methods** that connect to a **DNS** (Domain Name Server) server to resolve a **hostname **(IP address to Name). The most common is **InetAddress.getByName()**. For example, this is how you look up www.google.com: 
-**Import java.net.*;**
+
+### Creating InetAddress Object
+
+There are no public constructors in the **InetAddress** class. Instead, **InetAddress** has **Static Factory Methods** that connect to a **DNS** (Domain Name Server) server to resolve a **hostname **(IP address to Name). The most common is **InetAddress.getByName()**. For example, this is how you look up www.google.com:
+
+`import java.net.*;`
 ```java
 InetAddress obj=InetAddress.getByName("www.samriddhi.com.np");
       System.out.println(obj);//www.samriddhi.com.np/181.214.31.79
 ```
 
-** Output:**
+### Output
 
 
 ### Steps to Create new InetAddress Object
 
 Create a java file named: **InetAddressExample.java**
+Add header `import java.net.*;`
+Declare object of InetAddress with calling `getByName("www.samriddhi.com.np")` static method.
+
 ```java
-Add header import java.net.*;
-Declare object of InetAddress with calling getByName(“www.samriddhi.com.np”) static method.
 InetAddress address = InetAddress.getByName("www.samriddhi.com.np ");
-Print the result using
 System.out.println(address);
-You can also do a reverse lookup by IP address. For example, if you want the hostname for the address 181.214.31.79, pass the dotted quad address to InetAddress.getByName()
+```
+
+You can also do a reverse lookup by IP address. For example, if you want the hostname for the address 181.214.31.79, pass the dotted quad address to `InetAddress.getByName()`.
+
+```java
 import java.net.*;
 public class App {
     public static void main(String[] args) throws UnknownHostException {
       InetAddress obj=InetAddress.getByName("www.samriddhi.com.np");
       System.out.println(obj);//www.samriddhi.com.np/181.214.31.79
+
+    }
+}
 ```
 
-```java
-    }
-Output:
+### Output
+
+```
 www.samriddhi.com.np/181.214.31.79
 ```
 
-**Commonly used methods of InetAddress class:( important)**
+### Commonly used methods of InetAddress class
 
 ### Factory Method:
 
@@ -834,18 +806,21 @@ public class App {
 }
 ```
 
-**Example: InetAddress.getByName(String host)**
+### Example: InetAddress.getByName(String host)
+
 ```java
 import java.net.*;
 public class App {
     public static void main(String[] args) throws UnknownHostException {
-      InetAddressobj=InetAddress.getByName("www.samriddhi.com.np");//FactoryMetho
+      InetAddress obj = InetAddress.getByName("www.samriddhi.com.np"); //FactoryMethod
       System.out.println(obj);//www.samriddhi.com.np/181.214.31.79
+    }
+}
 ```
 
+### Example: InetAddress.getLocalHost()
+
 ```java
-    }
-Example: InetAddress.getLocalHost()
 import java.net.*;
 public class App {
     public static void main(String[] args) throws UnknownHostException {
@@ -856,7 +831,8 @@ System.out.println(address.getHostName());
 }
 ```
 
-**Example: InetAddress.getAllByName(String host)**
+### Example: InetAddress.getAllByName(String host)
+
 ```java
 import java.net.*;
 public class App {
@@ -868,12 +844,15 @@ public class App {
         }
     }
 }
+```
+
 Output:
+```
 www.google.com/142.250.192.164
 www.google.com/2404:6800:4002:816:0:0:0:2004
 ```
 
-**Getter Method:**
+### Getter Method
 The **InetAddress** class contains **four getter** methods that return the **hostname** as a string and the **IP address** as both a **string** and a **byte array**: 
  **getHostAddress():** it returns the IP address in string format.
 **getHostName():** it returns the host name of the IP address.
@@ -886,8 +865,9 @@ public byte[] getAddress() // returns a multiple the dotted quad format of the I
 public String getHostAddress()// return plain format ipaddress.
 ```
 
+**Lab 1.** Find the address and hostname of the local machine.
+
 ```java
-Lab 1. Find the address and hostname of the local machine.
 import java.net.*;
 public class App {
     public static void main(String[] args) throws Exception {
@@ -898,9 +878,13 @@ public class App {
 }
 ```
 
-**Output:**
+### Output
+
+```
 192.168.1.78
 LAPTOP-4ASDH0QE
+```
+
 2.Write a java program to find canonicalHostName, HostName, IpAddress of www.iost.com.np
 ```java
 import java.net.*;
@@ -917,7 +901,10 @@ public class App {
       }
     }
 }
+```
+
 Output:
+```
 maa05s20-in-f3.1e100.net
 142.250.182.67
 www.google.com.np
@@ -927,8 +914,9 @@ www.google.com.np
 67
 ```
 
+**Q.** Write a program to retrieve Hostname, IP Address and Mac Address of Local Machine.
+
 ```java
-Q. Write a program to retrieve Hostname, IP Address and Mac Address of Local Machine.
 import java.net.*;
 public class App {
     public static void main(String[] args) throws Exception {
@@ -950,7 +938,7 @@ public class App {
 }
 ```
 
-**SOCKET:**
+### Socket
 
 A socket is a mechanism for allowing communication between processes, be it programs running on the same machine or different computers connected on a network. 
 The socket provides bidirectional FIFO Communication facility over the network. 
@@ -972,7 +960,7 @@ Types of Sockets : There are two types of Sockets: the datagram socket and th
 **Datagram Socket :** A datagram socket uses the **User Datagram Protocol (UDP)** for sending messages. **UDP** is a much simpler protocol as it does not provide any of the delivery guarantees that TCP does. 
 **Stream Socket** A stream socket uses the **Transmission Control Protocol (TCP)** for sending messages.  network socket which provides a **connection-oriented, sequenced, and unique flow of data without record.** It is similar to phone. A connection is established between the phones (two ends) and a conversation (transfer of data) takes place.
 
-**Write a java program to write data to server using socket.**
+### Write a java program to write data to server using socket.
 
 ### MyClient.java
 
@@ -989,7 +977,8 @@ public class MyClient {
 }
 ```
 
-**MyServer.java**
+### MyServer.java
+
 ```java
 import java.io.*;
 import java.net.*;
@@ -998,45 +987,51 @@ public class MyServer {
         ServerSocket serverSocket = new ServerSocket(1234);
         Socket server = serverSocket.accept();
         System.out.println("Client Connected");
-               BufferedReader in = new BufferedReader(new InputStreamReader(server.getInputStream()));//read data so Inputstream
+        BufferedReader in = new BufferedReader(new InputStreamReader(server.getInputStream()));//read data so Inputstream
         String clientMessage = in.readLine();
         System.out.println("Client says: " + clientMessage);
         server.close();
         serverSocket.close();
-```
-
-```java
     }
 }
-Write a java program to read data from server using socket.
+```
+
+### Write a java program to read data from server using socket.
+
+**MyClient.java**
+```java
 import java.io.*;
 import java.net.*;
 public class MyClient {
     public static void main(String[] args) throws IOException{
         Socket client = new Socket("localhost", 1234);
        BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-        String serverMessage = in.readLine();
+        String serverMessage = in.readLine();
         System.out.println("Server says: " + serverMessage);
-        in.close();
+        in.close();
         client.close();
     }
 }
+```
+
+**MyServer.java**
+```java
 import java.io.*;
 import java.net.*;
 public class MyServer {
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = new ServerSocket(1234);
-        Socket server = serverSocket.accept();
-        PrintWriter out = new PrintWriter(server.getOutputStream(), true);
-        out.println("Hello from server");
-        out.close();
+        Socket server = serverSocket.accept();
+        PrintWriter out = new PrintWriter(server.getOutputStream(), true);
+        out.println("Hello from server");
+        out.close();
         server.close();
         serverSocket.close();
     }
 }
 ```
 
-**Write a program to perform basic two way operation between client and server**
+### Write a program to perform basic two way operation between client and server
 
 ### MyClient.java
 
@@ -1058,13 +1053,11 @@ public class MyClient {
 }
 ```
 
-**MyServer.java**
+### MyServer.java
+
 ```java
 import java.io.*;
 import java.net.*;
-```
-
-```java
 public class MyServer {
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = new ServerSocket(1234);
@@ -1084,13 +1077,11 @@ public class MyServer {
         clientSocket.close();
         serverSocket.close();
     }
-```
-
-```java
 }
 ```
 
-**URL(Uniform Resource Locator)**
+### URL (Uniform Resource Locator)
+
 It is string of characters refers to just the address.
 It is the most used way to locate resources on the web.
 
@@ -1101,7 +1092,9 @@ It consists of multiple parts including protocols, IP address, path and port t
 URL uses protocol such as **http://** and **ftp://** to identify the resource
 The syntax of a URL is: 
 
-### protocol://userInfo@host:port/path?query#fragment
+```
+protocol://userInfo@host:port/path?query#fragment
+```
 
 
 ![Figure](images/Ch05_017.jpeg)
@@ -1129,77 +1122,79 @@ The java.net.URL class is an abstraction of a Uniform Resource Locator such as h
 ### Creating New URLs
 
 Unlike the **InetAddress** objects, you can construct instances of **java.net.URL**. The constructors differ in the information they require:
+
 ```java
 public URL(String url) throws MalformedURLException
-(Creates an instance of a URL from the String representation.)
+```
+Creates an instance of a URL from the String representation.
 Example:
+```java
 URL url1 = new URL("https://samriddhicollege.edu.np/bca-college-in-kathmandu-valley/");
 ```
 
 ```java
-public URL(String protocol, String hostname, String file)
-throws MalformedURLException
-(Creates an instance of a URL from the given protocol name, host name, and file name.)
-Exammple:
-URL urlexample=new URL("Https", "samriddhicollege.edu.np", "/bca-college-in-kathmandu-valley/");
+public URL(String protocol, String hostname, String file) throws MalformedURLException
+```
+Creates an instance of a URL from the given protocol name, host name, and file name.
+Example:
+```java
+URL urlexample = new URL("https", "samriddhicollege.edu.np", "/bca-college-in-kathmandu-valley/");
 ```
 
 ```java
-public URL(String protocol, String host, int port, String file)
-throws MalformedURLException
-(Creates an instance of a URL from the given protocol, host, port number, and file.)
+public URL(String protocol, String host, int port, String file) throws MalformedURLException
+```
+Creates an instance of a URL from the given protocol, host, port number, and file.
 Example:
-URL urlexample=new URL("Https", "samriddhicollege.edu.np",443, "/bca-college-in-kathmandu-valley/");
+```java
+URL urlexample = new URL("https", "samriddhicollege.edu.np", 443, "/bca-college-in-kathmandu-valley/");
 ```
 
 ```java
 public URL(URL base, String relative) throws MalformedURLException
-(Creates an instance of a URL by parsing the given spec within a specified context.)
-URL u1=new URL("https://www.samriddhicollge.edu.np");
-  	URL u2=new URL(u1, "bca-college-in-kathmandu-valley");
+```
+Creates an instance of a URL by parsing the given spec within a specified context.
+```java
+URL u1 = new URL("https://www.samriddhicollege.edu.np");
+URL u2 = new URL(u1, "bca-college-in-kathmandu-valley");
 ```
 
-```java
-All these constructors throw a MalformedURLException if you try to create a URL for an unsupported protocol or if the URL is syntactically incorrect.
-Lab: write a java program to spit different component of url from given url: (https://www.example.com:8080/path/to/resource?key1=value1&key2=value2#section2)
+All these constructors throw a `MalformedURLException` if you try to create a URL for an unsupported protocol or if the URL is syntactically incorrect.
+
+Lab: write a java program to split different component of url from given url: `https://www.example.com:8080/path/to/resource?key1=value1&key2=value2#section2`
+
 Example:
-Import java.net.*;
-    public static void main(String[] args) throws MalformedURLException {
-URL url1 = new URL("https://www.example.com:8080/path/to/resource?key1=value1&key2=value2#section2");
-        System.out.println(url1.toString());
-        System.out.println();
-        System.out.println(
-            "Different components of the URL1-");
-       System.out.println("Protocol:- " + url1.getProtocol());
-        System.out.println("Hostname:- " + url1.getHost()); System.out.println("Default port:- "+ url1.getDefaultPort());
-        // Retrieving the query part of URL
-        System.out.println("Query:- " + url1.getQuery());
-        // Retrieving the path of URL
-        System.out.println("Path:- " + url1.getPath());
-        // Retrieving the file name
-        System.out.println("File:- " + url1.getFile());
-        // Retrieving the reference
-        System.out.println("Reference:- " + url1.getRef());
-        }
+```java
+import java.net.*;
+public class App {
+    public static void main(String[] args) throws MalformedURLException {
+        URL url1 = new URL("https://www.example.com:8080/path/to/resource?key1=value1&key2=value2#section2");
+        System.out.println(url1.toString());
+        System.out.println();
+        System.out.println("Different components of the URL1-");
+        System.out.println("Protocol:- " + url1.getProtocol());
+        System.out.println("Hostname:- " + url1.getHost());
+        System.out.println("Default port:- " + url1.getDefaultPort());
+        System.out.println("Query:- " + url1.getQuery());
+        System.out.println("Path:- " + url1.getPath());
+        System.out.println("File:- " + url1.getFile());
+        System.out.println("Reference:- " + url1.getRef());
+    }
+}
 ```
 
 ***Output:***
 
-### Different components of the URL1-
-
-### Protocol:- https
-
-### Hostname:- www.example.com
-
-### Default port:- 443
-
-### Query:- key1=value1&key2=value2
-
-### Path:- /path/to/resource
-
-### File:- /path/to/resource?key1=value1&key2=value2
-
-### Reference:- section2
+```
+Different components of the URL1-
+Protocol:- https
+Hostname:- www.example.com
+Default port:- 443
+Query:- key1=value1&key2=value2
+Path:- /path/to/resource
+File:- /path/to/resource?key1=value1&key2=value2
+Reference:- section2
+```
 
 ### Retrieving Data from a URL:
 
@@ -1213,12 +1208,13 @@ public Object getContent() throws IOException
 public Object getContent(Class[] classes) throws IOException
 ```
 
-**openStream():**
+### openStream()
+
 Method in Java is used to retrieve data from a URL. 
 It is a method of the **URL** class in the **java.net** package and returns an **InputStream** that can be used to read data from the url.
 It does not include any of the **HTTP headers** or any other **protocol-related information**.
 
-**Write a java program to read content of website name example.com.**
+### Write a java program to read content of website name example.com.
 
 ### OpenStream Example:
 
@@ -1232,28 +1228,29 @@ public class App {
             InputStream in = u.openStream();
             int c;
             while ((c = in.read()) != -1)
-{
-System.out.write(c);
-}
-in.close();
+            {
+                System.out.write(c);
+            }
+            in.close();
            }
-catch (IOException ex) {
+        catch (IOException ex) {
             System.err.println(ex);
            }
     }
 }
-	BufferedReader in = new BufferedReader(
-        new InputStreamReader(u.openStream()));
 ```
 
+Alternatively, using a BufferedReader:
 ```java
-        String inputLine;
-        while ((inputLine = in.readLine()) != null)
-            System.out.println(inputLine);
-        in.close();
+BufferedReader in = new BufferedReader(new InputStreamReader(u.openStream()));
+String inputLine;
+while ((inputLine = in.readLine()) != null)
+    System.out.println(inputLine);
+in.close();
 ```
 
-**openConnection():**
+### openConnection()
+
 The **URLConnection** gives you **access to everything sent by the server**: in addition to the document itself in its raw form (e.g., HTML, plain text, binary image data).
 Method used to create **URLConnection** object **access to everything from document raw** form (e.g., HTML, plain text, binary image data).
 It belongs to **URL** class in **java.net** package
@@ -1290,39 +1287,41 @@ public class App {
 }
 ```
 
-**getContent():**
-Method of **URLConnection** class used for retrieving the content of url in object form.
-Fetch data without **InputStream**
+### getContent()
 
-### GetContentExample:
+Method of **URLConnection** class used for retrieving the content of url in object form.
+Fetch data without **InputStream**.
+
+### GetContentExample
 
 ```java
 import java.net.*;
 public class App {
     public static void main(String[] args) throws Exception  {
-        URL url1=new URL("https://samriddhicollege.edu.np/contact-us/");
-        System.out.println(" Given Url is : "+url1);
-        System.out.println(" The content of given url is: "+url1.getContent());
+        URL url1 = new URL("https://samriddhicollege.edu.np/contact-us/");
+        System.out.println(" Given Url is : " + url1);
+        System.out.println(" The content of given url is: " + url1.getContent());
     }
-```
-
-```java
 }
-Output:
-Given Url is : https://www.ncell.com.np/en/about/career
- The content of given url is: sun.net.www.protocol.http.HttpURLConnection$HttpInputStream@ca263c2
 ```
 
+Output:
+```
+Given Url is : https://www.ncell.com.np/en/about/career
+The content of given url is: sun.net.www.protocol.http.HttpURLConnection$HttpInputStream@ca263c2
+```
+
+### Write a program to download HTML page.
+
 ```java
-Write a program to download HTML page.
 import java.io.*;
 import java.net.*;
 public class App {
-       public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
         String page = "index.html";
         try {
             URL url = new URL("https://example.com");
-            URLConnection connection = url.openConnection(); // Open connection
+            URLConnection connection = url.openConnection();
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             BufferedWriter writer = new BufferedWriter(new FileWriter(page));
             String line;
@@ -1340,7 +1339,7 @@ public class App {
 }
 ```
 
-**URL Connection: **
+### URL Connection
 
 ### Comparision:
 
@@ -1364,55 +1363,53 @@ Read the header fields.
 Get an input stream and read data.
 Get an output stream and write data.
 Close the connection.
-```java
+
 The single constructor for the URLConnection class is protected:
+
+```java
 protected URLConnection(URL url)
+```
+
+Example:
+```java
 try {
-            URL u = new URL("http://www.google.com/");
-            URLConnection uc = u.openConnection();
-            // read from the URL...
-            } catch (MalformedURLException ex) {
-            System.err.println(ex);
-            } catch (IOException ex) {
-            System.err.println(ex);
-            }
+    URL u = new URL("http://www.google.com/");
+    URLConnection uc = u.openConnection();
+    // read from the URL...
+} catch (MalformedURLException ex) {
+    System.err.println(ex);
+} catch (IOException ex) {
+    System.err.println(ex);
+}
 ```
 
 ```java
 public abstract void connect() throws IOException
 ```
 
-```java
-When a URLConnection is first constructed, it is unconnected; that is, the local and
-remote host cannot send and receive data. There is no socket connecting the two hosts.
-The connect() method establishes a connection—normally using TCP sockets.
-```
+When a URLConnection is first constructed, it is unconnected; that is, the local and remote host cannot send and receive data. There is no socket connecting the two hosts. The `connect()` method establishes a connection — normally using TCP sockets.
+
+### Write a Java program to retrieving Specific Header Fields from URL using URLConnection Class.
 
 ```java
-Write a Java program to retrieving Specific Header Fields from URL using URLConnection Class.
 import java.net.*;
 import java.sql.*;
 public class App {
     public static void main(String[] args) throws Exception {
-```
-
-```java
-          URL u = new URL("https://samriddhicollege.edu.np/contact-us/");
-          URLConnection uc = u.openConnection();
-            System.out.println("Content-type: " + uc.getContentType());
-            System.out.println("Content-encoding: " + uc.getContentEncoding());
-            System.out.println("Date: " + new Date(uc.getDate()));
-            System.out.println("Last modified: " + new Date(uc.getLastModified()));
-            System.out.println("Expiration date: "+ new Date(uc.getExpiration()));
-            System.out.println("Content-length: " + uc.getContentLength());
-```
-
-```java
+        URL u = new URL("https://samriddhicollege.edu.np/contact-us/");
+        URLConnection uc = u.openConnection();
+        System.out.println("Content-type: " + uc.getContentType());
+        System.out.println("Content-encoding: " + uc.getContentEncoding());
+        System.out.println("Date: " + new Date(uc.getDate()));
+        System.out.println("Last modified: " + new Date(uc.getLastModified()));
+        System.out.println("Expiration date: " + new Date(uc.getExpiration()));
+        System.out.println("Content-length: " + uc.getContentLength());
     }
 }
 ```
 
-**UDP (User Datagram Packet) Protocol:**
+### UDP (User Datagram Packet) Protocol
+
 **Connection-less Protocol** faster than TCP(connection oriented protocol)
 Using User Datagram Protocol, Applications can send data/message to the other hosts without communications or channel or path.
 Even if the destination host is not available, application can send data
@@ -1468,8 +1465,8 @@ public class App {
 }
 ```
 
+**UDPServer.java**
 ```java
-UDPServer.java
 import java.net.*;
 public class UDPServer {
      public static void main(String[] args) {
@@ -1492,8 +1489,9 @@ public class UDPServer {
         }
     }
 }
-Write a UDP client and server socket program in which server identifies the number sent by client either even or odd and replies the client accordingly
 ```
+
+Write a UDP client and server socket program in which server identifies the number sent by client either even or odd and replies the client accordingly.
 
 
 ![Figure](images/Ch05_019.png)
@@ -1504,7 +1502,7 @@ Write a UDP client and server socket program in which server identifies the numb
 
 ---
 
-**Table 1:**
+### Table 1
 
 | Method | Description |
 | --- | --- |
@@ -1572,27 +1570,23 @@ public class App {
       reader.close();//4. close the stream
       socket.close();//5. Close the socket
       System.out.println(time);
-```
-
-```java
     }
-```
-
-```java
 }
 ```
 
-```java
 Output:
+```
 60058 23-04-24 05:04:08 50 0 0 131.2 UTC(NIST) *
 ```
 
-**Another Example:**
-**Lab27: Write a Java program to read data from server using socket.**
+### Another Example
+
+### Lab27: Write a Java program to read data from server using socket.
 
 ### Reading from Server
 
 Create MyClient.java class
+
 ```java
 import java.io.*;
 import java.net.*;
@@ -1601,18 +1595,19 @@ public class MyClient {
         // Create a socket to connect to the server
         Socket clientSocket = new Socket("localhost", 1234);
         // Create input stream to read data from the server
-        BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));//read data so InputStream
+        BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         // Read data from the server
         String serverResponse = in.readLine();
         System.out.println("Server says: " + serverResponse);
         // Close the connection
         clientSocket.close();
     }
+}
 ```
 
-```java
-}
 Create MyServer.java
+
+```java
 import java.io.*;
 import java.net.*;
 public class MyServer {
@@ -1623,7 +1618,7 @@ public class MyServer {
         Socket clientSocket = serverSocket.accept();
         System.out.println("Connected to Client");
         // Create output stream to send data to the client
-        PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true); //send data so output Stream
+        PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
         // Send the current date and time to the client
         out.println("Hello from server");
         // Close the connection
@@ -1633,23 +1628,16 @@ public class MyServer {
 }
 ```
 
-```java
-    }
-```
+### Output
 
-```java
-    }
-}
 ```
-
-```java
-Output:
 Connected to localhost on port 1234
 Server says: Hello from server
 ```
 
-**Writing to Server with Socket**
-**Lab28: Write a java program to write data to server using socket.**
+### Writing to Server with Socket
+
+### Lab28: Write a java program to write data to server using socket.
 
 ### MyClient.java
 
@@ -1691,12 +1679,12 @@ public class MyServer {
         serverSocket.close();
 ```
 
-```java
     }
 }
-33.Lab: Write a java program to perform basic two-way operation between client and server using TCP.
-34.Lab: Write a simple chat application using TCP Socket.
 ```
+
+33. Lab: Write a java program to perform basic two-way operation between client and server using TCP.
+34. Lab: Write a simple chat application using TCP Socket.
 
 **MyClient.java**
 ```java
@@ -1741,13 +1729,10 @@ public class MyServer {
         clientSocket.close();
         serverSocket.close();
     }
-```
-
-```java
 }
 ```
 
-**UDP (User Datagram Packet) Protocol:**
+### UDP (User Datagram Packet) Protocol (cont.)
 **Connection-less Protocol** faster than TCP(connection oriented protocol)
 Using User Datagram Protocol, Applications can send data/message to the other hosts without communications or channel or path.
 Even if the destination host is not available, application can send data
@@ -1780,8 +1765,7 @@ The UDP client sends data to a UDP server.
 Unlike TCP, UDP does not establish a connection before sending data.
 The client creates a **DatagramSocket** to handle sending and receiving data packets.
 The client prepares the data, wraps it in a **DatagramPacket**, and sends it to the server's address and port.
-The client can use any available port for sending data, and the system assigns this port automatically.**
-**
+The client can use any available port for sending data, and the system assigns this port automatically.
 
 ### Simple UDP Client:
 
@@ -1814,7 +1798,7 @@ public class App {
 }
 ```
 
-**Step to create UDP Client Socket**
+### Step to create UDP Client Socket
 Creates a **DatagramSocket**.
 
 Converts the message to **bytes**.
@@ -1834,7 +1818,7 @@ The server creates a **DatagramSocket** bound to the specific port to receive in
 The server waits for incoming packets, processes the received data, and optionally sends a response back to the client.
 The server uses a **blocking call** to wait for data, meaning it will pause and wait until a packet arrives.
 
-UDPServer.java
+**UDPServer.java**
 ```java
 import java.net.*;
 public class UDPServer {
@@ -1858,106 +1842,13 @@ public class UDPServer {
         }
     }
 }
-39Lab: write a simple UDP java program to send data from client to server.
-40Lab: Write a UDP client and server socket program in which server identifies the number sent by client either even or odd and replies the client accordingly.(2024)
-41Lab:Write a UDP client-server socket program where the client sends a number to the server. The server checks whether the number is prime or not.
-42Lab:Write a UDP client-server program where the client requests the current time, and the server responds with the system's current time.
 ```
 
-
-![Figure](images/Ch05_019.png)
-
-
-![Figure](images/Ch05_020.png)
-
-**URL(Uniform Resource Locator)**
-It is string of characters refers to just the address.
-It is the most used way to locate resources on the web.
-
-![Figure](images/Ch05_017.jpeg)
-
-The **URL** Class is the simplest way for a java program to **locate** and **retrieve** information form the network.
-It consists of multiple parts including protocols, IP address, path and port to locate the information and the mechanism for retrieving it.
-URL uses protocol such as **http://** and **ftp://** to identify the resource
-The syntax of a URL is: 
-
-### protocol://userInfo@host:port/path?query#fragment
-
-
-![Figure](images/Ch05_018.jpeg)
-
-**URL-** Accessing resources 
-URN- Identifying resources
-
-### URN (Uniform Resource Name)
-
-A URN identifies a resource by name, not by where it’s located.
-A URN is like a person’s name — it identifies who they are, not where they live.
-
-### Component of URL
-
-
-![Figure](images/Ch05_018.jpeg)
-
-The **Scheme**, which is the **protocol** that you’re using to interact.
-The **Authority**, which is **the target you’re accessing**. This breaks down into **userinfo**, **host**, and **port**.
-The **Path**, which is **the resource** you’re requesting on the host.
-The **Query**, which are the **parameters** being used within the web application.
-The **Fragment**, which is the target to jump to **within a given page**.
-
-```java
-Lab: write a java program to spit different component of url from given url: (https://www.example.com:8080/path/to/resource?key1=value1&key2=value2#section2)
-Example:
-Import java.net.*;
-    public static void main(String[] args) throws MalformedURLException {
-URL url1 = new URL("https://www.example.com:8080/path/to/resource?key1=value1&key2=value2#section2");
-        System.out.println(url1.toString());
-        System.out.println();
-        System.out.println(
-            "Different components of the URL1-");
-       System.out.println("Protocol:- " + url1.getProtocol());
-        System.out.println("Hostname:- " + url1.getHost()); System.out.println("Default port:- "+ url1.getDefaultPort());
-        // Retrieving the query part of URL
-        System.out.println("Query:- " + url1.getQuery());
-        // Retrieving the path of URL
-        System.out.println("Path:- " + url1.getPath());
-        // Retrieving the file name
-        System.out.println("File:- " + url1.getFile());
-        // Retrieving the reference
-        System.out.println("Reference:- " + url1.getRef());
-        }
-```
-
-***Output:***
-
-### Different components of the URL1-
-
-### Protocol:- https
-
-### Hostname:- www.example.com
-
-### Default port:- 443
-
-### Query:- key1=value1&key2=value2
-
-### Path:- /path/to/resource
-
-### File:- /path/to/resource?key1=value1&key2=value2
-
-### Reference:- section2
-
-### InetAddress Class: (Imp)
-
-It is part of **java.net** package used representation IP address, both IPv4 and IPv6.
-It can resolve **hostname** to **IP address** and vice versa.
-
-**Creating InetAddress Object
-**There are no public constructors in the **InetAddress** class. Instead, **InetAddress** has **Static Factory Methods** that connect to a **DNS** (Domain Name Server) server to resolve a **hostname **(IP address to Name). The most common is **InetAddress.getByName()**. For example, this is how you look up www.google.com: 
-**Import java.net.*;**
-```java
-InetAddress obj=InetAddress.getByName("www.samriddhi.com.np");
-System.out.println(obj);//www.samriddhi.com.np/181.214.31.79
-```
-
+39. Lab: Write a simple UDP java program to send data from client to server.
+40. Lab: Write a UDP client and server socket program in which server identifies the number sent by client either even or odd and replies the client accordingly.
+41. Lab: Write a UDP client-server socket program where the client sends a number to the server. The server checks whether the number is prime or not.
+42. Lab: Write a UDP client-server program where the client requests the current time, and the server responds with the system's current time.
 
 ---
+
+
