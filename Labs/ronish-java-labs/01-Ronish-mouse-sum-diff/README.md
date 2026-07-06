@@ -1,18 +1,60 @@
-﻿## Getting Started
+# Lab 01: Ronish mouse sum diff
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+## Source Code
 
-## Folder Structure
+### App.java
 
-The workspace contains two folders by default, where:
+```java
+import java.awt.*;
+import java.awt.event.*;
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+public class App extends Frame implements MouseListener {
+    TextField t1, t2, result;
+    Label l1, l2, l;
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+    public App() {
+        setLayout(new FlowLayout());
+        l1 = new Label("Number 1");
+        l2 = new Label("Number 2");
+        t1 = new TextField(10);
+        t2 = new TextField(10);
+        result = new TextField(10);
+        l = new Label("Result");
+        add(l1);
+        add(t1);
+        add(l2);
+        add(t2);
+        add(l);
+        add(result);
+        addMouseListener(this);
+        setSize(300, 200);
+        setTitle("Ronish 32");
+        setVisible(true);
+    }
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+    public void mousePressed(MouseEvent e) {
+        int a = Integer.parseInt(t1.getText());
+        int b = Integer.parseInt(t2.getText());
+        result.setText(String.valueOf(a + b));
+    }
 
-## Dependency Management
+    public void mouseReleased(MouseEvent e) {
+        int a = Integer.parseInt(t1.getText());
+        int b = Integer.parseInt(t2.getText());
+        result.setText(String.valueOf(a - b));
+    }
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+    public void mouseClicked(MouseEvent e) {
+    }
+
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    public void mouseExited(MouseEvent e) {
+    }
+
+    public static void main(String[] args) {
+        new App();
+    }
+}
+```

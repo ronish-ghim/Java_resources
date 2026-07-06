@@ -1,18 +1,57 @@
-﻿## Getting Started
+# Lab 21: Ronish jsp cookies
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+## Source Code
 
-## Folder Structure
+### display.jsp
 
-The workspace contains two folders by default, where:
+```jsp
+<html>
+<body>
+<h2>All Cookies:</h2>
+<%
+    Cookie[] cookies = request.getCookies();
+    if (cookies != null) {
+        for (Cookie c : cookies) {
+            out.println("<p>" + c.getName() + ": " + c.getValue() + "</p>");
+        }
+    } else {
+        out.println("<p>No cookies found</p>");
+    }
+%>
+</body>
+</html>
+```
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+### index.jsp
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+```jsp
+<html>
+<body>
+    <form action="welcome.jsp" method="post">
+        Username: <input type="text" name="userName"><br>
+        Password: <input type="password" name="userPassword"><br>
+        <input type="submit" value="Login">
+    </form>
+</body>
+</html>
+```
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+### welcome.jsp
 
-## Dependency Management
+```jsp
+<html>
+<body>
+<%
+    String userName = request.getParameter("userName");
+    String userPassword = request.getParameter("userPassword");
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+    Cookie c1 = new Cookie("userName", userName);
+    Cookie c2 = new Cookie("userPassword", userPassword);
+    response.addCookie(c1);
+    response.addCookie(c2);
+%>
+<h2>Cookies set successfully</h2>
+<a href="display.jsp">View Cookies</a>
+</body>
+</html>
+```

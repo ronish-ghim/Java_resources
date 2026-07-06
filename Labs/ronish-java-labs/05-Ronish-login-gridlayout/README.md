@@ -1,18 +1,26 @@
-﻿## Getting Started
+# Lab 05: Ronish login gridlayout
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+## Source Code
 
-## Folder Structure
+### App.java
 
-The workspace contains two folders by default, where:
+```java
+import javax.swing.*;
+import java.awt.*;
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+public class App {
+    public static void main(String[] args) {
+        JFrame f = new JFrame("Login GridLayout");
+        f.setLayout(new GridLayout(3, 2));
+        f.add(new JLabel("Username:"));
+        f.add(new JTextField());
+        f.add(new JLabel("Password:"));
+        f.add(new JPasswordField());
+        f.add(new JLabel());
+        f.add(new JButton("Login"));
+        f.setSize(300, 150);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setVisible(true);
+    }
+}
+```

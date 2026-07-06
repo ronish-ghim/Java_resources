@@ -1,18 +1,61 @@
-﻿## Getting Started
+# Lab 10: Ronish shape drawer
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+## Source Code
 
-## Folder Structure
+### App.java
 
-The workspace contains two folders by default, where:
+```java
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+public class App extends Canvas implements ActionListener {
+    String shape = "";
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+    public App() {
+        JFrame f = new JFrame("Shape Drawer");
+        f.setLayout(new BorderLayout());
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+        JPanel north = new JPanel();
+        JButton circle = new JButton("Circle");
+        JButton square = new JButton("Square");
+        JButton triangle = new JButton("Triangle");
+        circle.addActionListener(this);
+        square.addActionListener(this);
+        triangle.addActionListener(this);
+        north.add(circle); north.add(square); north.add(triangle);
+        f.add(north, BorderLayout.NORTH);
 
-## Dependency Management
+        setSize(400, 400);
+        f.add(this, BorderLayout.CENTER);
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+        f.setSize(500, 500);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        shape = e.getActionCommand();
+        repaint();
+    }
+
+    public void paint(Graphics g) {
+        if (shape.equals("Circle")) {
+            g.setColor(Color.RED);
+            g.fillOval(100, 100, 200, 200);
+        } else if (shape.equals("Square")) {
+            g.setColor(Color.BLUE);
+            g.fillRect(100, 100, 200, 200);
+        } else if (shape.equals("Triangle")) {
+            g.setColor(Color.GREEN);
+            int[] x = {200, 100, 300};
+            int[] y = {100, 300, 300};
+            g.fillPolygon(x, y, 3);
+        }
+    }
+
+    public static void main(String[] args) {
+        new App();
+    }
+}
+```

@@ -1,18 +1,41 @@
-﻿## Getting Started
+# Lab 08a: Ronish button color
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+## Source Code
 
-## Folder Structure
+### App.java
 
-The workspace contains two folders by default, where:
+```java
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+public class App implements ActionListener {
+    JFrame f;
+    JButton red, blue, green;
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+    public App() {
+        f = new JFrame("Button Color");
+        f.setLayout(new FlowLayout());
+        red = new JButton("RED");
+        blue = new JButton("BLUE");
+        green = new JButton("GREEN");
+        red.addActionListener(this);
+        blue.addActionListener(this);
+        green.addActionListener(this);
+        f.add(red); f.add(blue); f.add(green);
+        f.setSize(400, 200);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setVisible(true);
+    }
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == red) red.setBackground(Color.RED);
+        else if (e.getSource() == blue) blue.setBackground(Color.BLUE);
+        else if (e.getSource() == green) green.setBackground(Color.GREEN);
+    }
 
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+    public static void main(String[] args) {
+        new App();
+    }
+}
+```

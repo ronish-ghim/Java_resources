@@ -1,18 +1,43 @@
-﻿## Getting Started
+# Lab 11: Ronish color changer radio
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+## Source Code
 
-## Folder Structure
+### App.java
 
-The workspace contains two folders by default, where:
+```java
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+public class App implements ItemListener {
+    JFrame f;
+    JRadioButton red, green, blue;
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+    public App() {
+        f = new JFrame("Color Changer Radio");
+        f.setLayout(new FlowLayout());
+        red = new JRadioButton("Red");
+        green = new JRadioButton("Green");
+        blue = new JRadioButton("Blue");
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(red); bg.add(green); bg.add(blue);
+        red.addItemListener(this);
+        green.addItemListener(this);
+        blue.addItemListener(this);
+        f.add(red); f.add(green); f.add(blue);
+        f.setSize(300, 200);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setVisible(true);
+    }
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+    public void itemStateChanged(ItemEvent e) {
+        if (red.isSelected()) f.getContentPane().setBackground(Color.RED);
+        else if (green.isSelected()) f.getContentPane().setBackground(Color.GREEN);
+        else if (blue.isSelected()) f.getContentPane().setBackground(Color.BLUE);
+    }
 
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+    public static void main(String[] args) {
+        new App();
+    }
+}
+```

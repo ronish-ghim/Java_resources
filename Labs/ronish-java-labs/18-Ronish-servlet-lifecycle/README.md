@@ -1,18 +1,52 @@
-﻿## Getting Started
+# Lab 18: Ronish servlet lifecycle
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+## Source Code
 
-## Folder Structure
+### LifeCycleServlet.java
 
-The workspace contains two folders by default, where:
+```java
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+public class LifeCycleServlet implements Servlet {
+    private ServletConfig config;
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+    public void init(ServletConfig config) throws ServletException {
+        this.config = config;
+        System.out.println("in init");
+    }
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+    public ServletConfig getServletConfig() {
+        return config;
+    }
 
-## Dependency Management
+    public void service(ServletRequest req, ServletResponse res)
+            throws ServletException, IOException {
+        System.out.println("in service");
+        res.setContentType("text/html");
+        PrintWriter out = res.getWriter();
+        out.println("<h2>Hello from LifeCycleServlet</h2>");
+    }
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+    public String getServletInfo() {
+        return "LifeCycleServlet";
+    }
+
+    public void destroy() {
+        System.out.println("in destroy");
+    }
+}
+```
+
+### index.html
+
+```html
+<html>
+<body>
+    <form action="lifecycle">
+        <input type="submit" value="Call LifeCycleServlet">
+    </form>
+</body>
+</html>
+```

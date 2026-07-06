@@ -1,18 +1,42 @@
-﻿## Getting Started
+# Lab 23: Ronish jsp simple interest
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+## Source Code
 
-## Folder Structure
+### calculateSI.jsp
 
-The workspace contains two folders by default, where:
+```jsp
+<html>
+<body>
+<%
+    double p = Double.parseDouble(request.getParameter("principal"));
+    double t = Double.parseDouble(request.getParameter("time"));
+    double r = Double.parseDouble(request.getParameter("rate"));
+    double si = (p * t * r) / 100;
+%>
+<h2>Simple Interest Result</h2>
+<table border="1">
+    <tr><th>Field</th><th>Value</th></tr>
+    <tr><td>Principal</td><td><%= p %></td></tr>
+    <tr><td>Time (years)</td><td><%= t %></td></tr>
+    <tr><td>Rate (%)</td><td><%= r %></td></tr>
+    <tr><td>Simple Interest</td><td><%= si %></td></tr>
+</table>
+</body>
+</html>
+```
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+### simpleInterestForm.jsp
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+```jsp
+<html>
+<body>
+<h2>Simple Interest Calculator</h2>
+<form action="calculateSI.jsp" method="post">
+    Principal: <input type="text" name="principal"><br>
+    Time (years): <input type="text" name="time"><br>
+    Rate (%): <input type="text" name="rate"><br>
+    <input type="submit" value="Calculate">
+</form>
+</body>
+</html>
+```

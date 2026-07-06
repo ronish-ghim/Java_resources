@@ -1,18 +1,45 @@
-﻿## Getting Started
+# Lab 02: Ronish add two numbers
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+## Source Code
 
-## Folder Structure
+### App.java
 
-The workspace contains two folders by default, where:
+```java
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+public class App implements ActionListener {
+    JFrame f;
+    JTextField t1, t2, result;
+    JButton b;
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+    public App() {
+        f = new JFrame("Ronish 32");
+        t1 = new JTextField();
+        t2 = new JTextField();
+        result = new JTextField();
+        b = new JButton("Add");
+        result.setEditable(false);
+        b.addActionListener(this);
+        f.setLayout(new GridLayout(4, 2));
+        f.add(new JLabel("Number 1:")); f.add(t1);
+        f.add(new JLabel("Number 2:")); f.add(t2);
+        f.add(new JLabel("Result:")); f.add(result);
+        f.add(new JLabel()); f.add(b);
+        f.setSize(300, 200);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setVisible(true);
+    }
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+    public void actionPerformed(ActionEvent e) {
+        int a = Integer.parseInt(t1.getText());
+        int b = Integer.parseInt(t2.getText());
+        result.setText(String.valueOf(a + b));
+    }
 
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+    public static void main(String[] args) {
+        new App();
+    }
+}
+```

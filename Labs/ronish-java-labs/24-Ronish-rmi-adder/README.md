@@ -1,18 +1,63 @@
-﻿## Getting Started
+# Lab 24: Ronish rmi adder
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+## Source Code
 
-## Folder Structure
+### Adder.java
 
-The workspace contains two folders by default, where:
+```java
+import java.rmi.*;
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+public interface Adder extends Remote {
+    public int add(int x, int y) throws RemoteException;
+}
+```
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+### App.java
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+```java
+public class App {
+    public static void main(String[] args) {
+        System.out.println("Run MyServer first, then MyClient.");
+    }
+}
+```
 
-## Dependency Management
+### MyClient.java
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+```java
+import java.rmi.registry.*;
+
+public class MyClient {
+    public static void main(String[] args) throws Exception {
+        Registry reg = LocateRegistry.getRegistry("localhost", 5000);
+        Adder adder = (Adder) reg.lookup("hiserver");
+        int result = adder.add(20, 30);
+        System.out.println("Sum = " + result);
+    }
+}
+```
+
+### MyServer.java
+
+```java
+import java.rmi.*;
+import java.rmi.server.*;
+import java.rmi.registry.*;
+
+public class MyServer extends UnicastRemoteObject implements Adder {
+
+    public MyServer() throws RemoteException {
+        super();
+    }
+
+    public int add(int x, int y) throws RemoteException {
+        return x + y;
+    }
+
+    public static void main(String[] args) throws Exception {
+        Registry reg = LocateRegistry.createRegistry(5000);
+        reg.rebind("hiserver", new MyServer());
+        System.out.println("Server is ready on port 5000...");
+    }
+}
+```

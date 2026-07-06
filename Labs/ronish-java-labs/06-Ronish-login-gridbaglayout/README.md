@@ -1,18 +1,36 @@
-﻿## Getting Started
+# Lab 06: Ronish login gridbaglayout
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+## Source Code
 
-## Folder Structure
+### App.java
 
-The workspace contains two folders by default, where:
+```java
+import javax.swing.*;
+import java.awt.*;
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+public class App {
+    public static void main(String[] args) {
+        JFrame f = new JFrame("Login GridBagLayout");
+        f.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+        gbc.gridx = 0; gbc.gridy = 0;
+        f.add(new JLabel("Username:"), gbc);
+        gbc.gridx = 1;
+        f.add(new JTextField(15), gbc);
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+        gbc.gridx = 0; gbc.gridy = 1;
+        f.add(new JLabel("Password:"), gbc);
+        gbc.gridx = 1;
+        f.add(new JPasswordField(15), gbc);
 
-## Dependency Management
+        gbc.gridx = 0; gbc.gridy = 2; gbc.gridwidth = 2;
+        f.add(new JButton("Login"), gbc);
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+        f.setSize(350, 200);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setVisible(true);
+    }
+}
+```

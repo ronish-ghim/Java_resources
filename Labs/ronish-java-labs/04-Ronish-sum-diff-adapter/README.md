@@ -1,18 +1,43 @@
-﻿## Getting Started
+# Lab 04: Ronish sum diff adapter
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+## Source Code
 
-## Folder Structure
+### App.java
 
-The workspace contains two folders by default, where:
+```java
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+public class App {
+    public static void main(String[] args) {
+        JFrame f = new JFrame("Sum Diff Adapter");
+        f.setLayout(new GridLayout(3, 2));
+        JTextField t1 = new JTextField();
+        JTextField t2 = new JTextField();
+        JTextField result = new JTextField();
+        result.setEditable(false);
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+        f.add(new JLabel("Number 1:")); f.add(t1);
+        f.add(new JLabel("Number 2:")); f.add(t2);
+        f.add(new JLabel("Result:")); f.add(result);
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+        f.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                int a = Integer.parseInt(t1.getText());
+                int b = Integer.parseInt(t2.getText());
+                result.setText(String.valueOf(a + b));
+            }
+            public void mouseReleased(MouseEvent e) {
+                int a = Integer.parseInt(t1.getText());
+                int b = Integer.parseInt(t2.getText());
+                result.setText(String.valueOf(a - b));
+            }
+        });
 
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+        f.setSize(300, 200);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setVisible(true);
+    }
+}
+```
