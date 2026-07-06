@@ -1,4 +1,4 @@
-# Chapter 6_JavaFX
+# Chapter 6 JavaFX
 
 > *Source: Sunil Sir's Lecture Notes — B.Sc. CSIT (Tribhuvan University)*
 
@@ -31,7 +31,7 @@ Need to download and install **open** JDK 11.0 Version
 Step:1 Update vs code to version 1.49.3 above
 Step:2 Install JavaFx and FXML Viewer Extension in VS Code
 Step:3 Download and install open jdk and configure java runtime in VS code
-	Download javafx sdk 11.0.2()
+	Download javafx sdk 11.0.2
 
 ![Figure](images/Ch06_001.png)
 
@@ -43,8 +43,8 @@ After Referencing Open Visual Studio Code
 
 ![Figure](images/Ch06_003.png)
 
-It will Open Lunch.json (Add Highlighted Line)
-```java
+It will Open launch.json (Add Highlighted Line)
+```json
 {
     // Use IntelliSense to learn about possible attributes.
     // Hover to view descriptions of existing attributes.
@@ -63,16 +63,13 @@ It will Open Lunch.json (Add Highlighted Line)
             "request": "launch",
             "mainClass": "App",
             "projectName": "JavaFX_Example_9c70ee94",
-		"vmArgs": "--module-path \"C:\\Users\\User\\Downloads\\openjfx-19_windows-x64_bin-sdk\\javafx-sdk-19\\lib\" --add-modules javafx.controls,javafx.fxml"
-```
-
-```java
+            "vmArgs": "--module-path \"C:\\Users\\User\\Downloads\\openjfx-19_windows-x64_bin-sdk\\javafx-sdk-19\\lib\" --add-modules javafx.controls,javafx.fxml"
         }
     ]
 }
 ```
 
-**Java Swing and Java FX Comparison**
+### Java Swing and Java FX Comparison
 
 ### JavaFX Layouts
 
@@ -119,15 +116,14 @@ public class App extends Application {
         }
     public static void main(String[] args) throws Exception {
         launch(args);
-        }
+        }
     }
-Output:
 ```
-
+Output:
 
 ![Figure](images/Ch06_004.png)
 
-** BorderPane**
+### BorderPane
 In this, layout structure has five regions such as TOP, BOTTOM, CENTRE, LEFT, and RIGHT.
 
 ```java
@@ -155,15 +151,14 @@ public class App extends Application {
     public static void main(String[] args) throws Exception {
        //method to launch the JavaFX application
         launch(args);
-        }
+        }
     }
-Output:
 ```
-
+Output:
 
 ![Figure](images/Ch06_005.png)
 
-**HBox**
+### HBox
 HBox works in the opposite concept of VBox. That is, nodes will be organized horizontally. Following is a program that helps in understanding HBox.
 ```java
 // Java Program to create an HBox
@@ -202,14 +197,11 @@ public class App extends Application {
 }
 ```
 
-```java
 Output:
-```
-
 
 ![Figure](images/Ch06_006.png)
 
-**VBox**
+### VBox
 VBox helps in organizing the node in a vertical column. In this, the content area’s default height can display the children in its preferred height and default width is the greatest of the children’s width. Even though the locations cannot be set for the children since it is automatically computed, it can be controlled to an extent by customization of VBox properties.
 ```java
 // Java Program to create a VBox
@@ -249,15 +241,13 @@ public class App extends Application {
 }
 ```
 
-```java
 Output:
-```
-
 
 ![Figure](images/Ch06_007.png)
 
-**Grid Pane:**
-GridPane Layout pane allows us to add the multiple nodes in multiple rows and columns. It is seen as a flexible grid of rows and columns where nodes can be placed in any cell of the grid. It is represented by javafx.scence.layout.GridPane class. We just need to instantiate this class to implement GridPane.
+### Grid Pane
+
+GridPane Layout pane allows us to add the multiple nodes in multiple rows and columns. It is seen as a flexible grid of rows and columns where nodes can be placed in any cell of the grid. It is represented by `javafx.scene.layout.GridPane` class. We just need to instantiate this class to implement GridPane.
 ```java
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -283,10 +273,11 @@ public class App extends Application {
     }
     public static void main(String[] args) {
         launch(args);
+        }
     }
-}
-Output:
 ```
+Output:
+
 
 
 ![Figure](images/Ch06_008.png)
@@ -294,7 +285,7 @@ Output:
 
 ---
 
-**Table 1:**
+### Table 1
 
 |  | Java Swing | Java FX |
 | --- | --- | --- |
@@ -306,7 +297,7 @@ Output:
 | MVC Support | MVC support across components lack consistency | Friendly with MVC pattern |
 
 
-**Table 2:**
+### Table 2
 
 | Class | Description |
 | --- | --- |

@@ -10,8 +10,6 @@
 
 > 📷 *This document contains images/diagrams — see the original .docx for visual content*
 
-### UNIT-4 (Database Connectivity)
-
 Java Database Connectivity (JDBC) is a java-based API for connection to and interacting with relational databases. JDBC provides a standard interface that enables java applications to execute SQL queries and manage database connection.
 It Java that helps users to interact or communicate with various databases.
 The **classes** and **interfaces** of **JDBC API** allow the application to send the request to the specified database.
@@ -39,13 +37,11 @@ javax.sql.*;
 java.sql.*;
 ```
 
-```java
 2. JDBC Driver Manager: The Driver Manager of JDBC loads database-specific drivers in an application. This driver manager establishes a connection with a database. It also makes a database-specific call to the database so that it can process the user request.
 3. JDBC Test suite: JDBC Test suite facilitates the programmer to test the various operations such as deletion, updation, insertion that are being executed by the JDBC Drivers.
 4. JDBC-ODBC Bridge Drivers: JDBC-ODBC Bridge Drivers are used to connect the database drivers to the database. The bridge does the translation of the JDBC method calls into the ODBC method call. It makes the usage of the sun.jdbc.odbc package that includes the native library in order to access the ODBC (Open Database Connectivity) characteristics.
-```
 
-**Architecture of JDBC**
+### Architecture of JDBC
 The following figure shows the JDBC architecture:
 
 ![Figure](images/Ch04_001.png)
@@ -72,7 +68,9 @@ SQL data
 It uses **database-specific drivers** to connect the enterprise applications to various databases.
 4) JDBC drivers: To interact with a data source with the help of the JDBC, one needs a JDBC driver which conveniently interacts with the respective data source.
 
-### JDBC Driver Types JDBC drivers are classified into the following types:
+### JDBC Driver Types
+
+JDBC drivers are classified into the following types:
 
 JDBC Driver is a software component that enables java application to interact with the database. There are 4 types of JDBC drivers:
 JDBC-ODBC bridge driver: Type1
@@ -135,11 +133,9 @@ Requires database-specific coding to be done in the middle tier.
 
 The thin driver converts JDBC calls directly into the **vendor-specific database **protocol. That is why it is known as thin driver. It is fully written in Java language.
 
-### 100% Java — no native or middleware required
-
-### Best performance
-
-### Great for microservices and modern cloud apps
+- 100% Java — no native or middleware required
+- Best performance
+- Great for microservices and modern cloud apps
 
 ### Advantage:
 
@@ -160,7 +156,9 @@ It provides support to both Synchronous and Asynchronous processing.
 
 ### Architecture And Components Of JDBC
 
-**JDBC Architecture: **It supports two types of processing models to access the DB.
+### JDBC Architecture
+
+It supports two types of processing models to access the DB.
 
 ### These are:
 
@@ -176,7 +174,7 @@ It helps Java application to directly connect with the database. It needs a JDBC
 It is the opposite of two-tier architecture. There is no direct communication between the user and the database. The user sends the request to the middle tier (Application Server) from which the request is again sent to Database. Then the database processes the request and sends the result to the middle-tier from which the user receives the result/ response.
 It simplifies deployment and management. Management Information System (MIS) directors use this architecture as it makes it simple to maintain access control and updates to corporate data.
 
-Steps For Connectivity Between Java Program and Database
+### Steps For Connectivity Between Java Program and Database
 Import the Packages
 Load the drivers using the *forName**() method *
 Register the drivers *using **DriverManager** *
@@ -193,14 +191,15 @@ In order to begin with, you first need to load the driver or register it before 
 ### Import Packages
 
 First, we need to import the existing packages to use it in our Java program. Import will make sure that JDBC API classes are available for the program. We can then use the classes and subclasses of the packages.
-*Irrespective of the JDBC Driver, add the following import statement in the Java program**.*
+Irrespective of the JDBC Driver, add the following import statement in the Java program.
 
 ```java
 import java.sql.*;
-Import the other classes based on the functionality which you will use in the program. Download the appropriate Jar files for the database
 ```
 
-**JDBC API 4.0 mainly provides 2 important packages:**
+Import the other classes based on the functionality which you will use in the program. Download the appropriate Jar files for the database.
+
+### JDBC API 4.0
 java.sql
 javax.sql
 
@@ -243,21 +242,32 @@ Now we will create the statement object that runs the query with the connected d
 
 #### (i) Create Statement
 
-### a)Statement
+#### a) Statement
 
 This interface is used to implement simple SQL statements with no parameter. It returns the ResultSet object.
+
 ```java
 Statement statemnt1 = conn.createStatement();
-b) PreparedStatement
-It is used to implement parameterized and precompiled SQL statements. The performance of the application increases because it compiles the query only once.
-String select_query = “Select * from states where state_id = 1”;
-PreparedStatement prpstmt = conn.prepareStatement(select_query);
-c) CallableStatement
-It is used to implement a parameterized SQL statement that invokes procedure or function in the database. A stored procedure works like a method or function in a class.
-CallableStatementcallStmt = con.prepareCall("{call procedures(?,?)}");
 ```
 
-**(ii) Execute The Query**
+**b) PreparedStatement**
+
+It is used to implement parameterized and precompiled SQL statements. The performance of the application increases because it compiles the query only once.
+
+```java
+String select_query = "Select * from states where state_id = 1";
+PreparedStatement prpstmt = conn.prepareStatement(select_query);
+```
+
+**c) CallableStatement**
+
+It is used to implement a parameterized SQL statement that invokes procedure or function in the database. A stored procedure works like a method or function in a class.
+
+```java
+CallableStatement callStmt = con.prepareCall("{call procedures(?,?)}");
+```
+
+### Execute The Query
 There are 4 important methods to execute the query in Statement interface. These are explained below:
 ResultSet executeQuery(String sql)
 ```java
@@ -266,18 +276,18 @@ boolean execute(String sql)
 int []executeBatch()
 ```
 
-**a) ResultSet executeQuery(String sql)**
+### ResultSet executeQuery(String sql)
 The executeQuery() method in Statement interface is used to execute the SQL query and retrieve the values from DB. It returns the ResultSet object. Normally, we will use this method for the SELECT query.
 
-### b) executeUpdate(String sql)
+#### b) executeUpdate(String sql)
 
 The executeUpdate() method is used to execute value specified queries like INSERT, UPDATE, DELETE (DML statements), or DDL statements that return nothing. Mostly, we will use this method for inserting and updating.
 
-### c) execute(String sql)
+#### c) execute(String sql)
 
 The execute() method is used to execute the SQL query. It returns true if it executes the SELECT query. And, it returns false if it executes INSERT or UPDATE query.
 
-### d) executeBatch()
+#### d) executeBatch()
 
 This method is used to execute a batch of SQL queries to the Database and if all the queries get executed successfully, it returns an array of update counts. We will use this method to insert/update the bulk of records.
 
@@ -288,18 +298,20 @@ When we execute the queries using the **executeQuery()** method, the result will
 ResultSet rs 1= statemnt1.executeQuery(QUERY));
 ```
 
-6)Close Connection
+### 6) Close Connection
+
 ```java
 conn.close();
-Question: 1 How do you execute SQL queries in JDBC
-Ans:
-To process an SQL statement, you need to follow the steps given below:
-Establish the connection.
-Create a statement.
-Execute the statement/query.
-Process the result.
-Close the connection.
 ```
+
+**Question:** How do you execute SQL queries in JDBC?
+
+**Answer:** To process an SQL statement, you need to follow the steps given below:
+1. Establish the connection.
+2. Create a statement.
+3. Execute the statement/query.
+4. Process the result.
+5. Close the connection.
 
 1. Establishing a Connection
 To process SQL statements first of all you need to establish connection with the desired DBMS or, file System or, other data sources.
@@ -309,12 +321,16 @@ Driver myDriver = new com.mysql.jdbc.Driver();
 DriverManager.registerDriver(myDriver);
 ```
 
+You can also register the driver using the `forName()` method. This method loads the specified class in to the memory and it automatically gets registered.
+
 ```java
-You can also register the driver using the forName() method. This method loads the specified class in to the memory and it automatically gets registered.
 Class.forName("com.mysql.jdbc.Driver");
-After registering the Driver class, get the Connection object using the getConnection() method.
-This method accepts a database URL (an address that points to your database), Username and, password and, returns a connection object.
-Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/collegedb?useSSL=false","root","root");
+```
+
+After registering the Driver class, get the Connection object using the `getConnection()` method. This method accepts a database URL (an address that points to your database), Username and, password and, returns a connection object.
+
+```java
+Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/collegedb?useSSL=false","root","root");
 ```
 
 2.Creating a Statement
@@ -355,7 +371,7 @@ Once you execute the statements/queries you will get the result of the respectiv
 conn.close();
 ```
 
-**Connection with MySqlDatabase Example**
+### Connection with MySqlDatabase Example
 
 ### DML Operation in JAVA
 
@@ -384,8 +400,9 @@ Output:
 4  Hira Kahdma  Kathmandu
 ```
 
+### Insert Statement
+
 ```java
-Insert Statement
 import java.sql.*;
 public class App {
     public static void main(String[] args) throws Exception {
@@ -403,50 +420,34 @@ public class App {
             }
             catch(Exception e){ System.out.println(e);}
             }
-```
-
-```java
     }
 ```
 
-**Update Statement**
+### Update Statement
+
 ```java
 import java.sql.*;
 public class App {
-```
-
-```java
     public static void main(String[] args) throws Exception {
         try {
-```
-
-```java
             Class.forName("com.mysql.jdbc.Driver");
             Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/samriddhidb?useSSL=false","root","root");
             String sql="update emp set email = ? where id = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(2, 5);
             ps.setString(1, "suman@gmail.com");
-```
-
-```java
             ps.executeUpdate();
             con.close();
             System.out.println("Data Updated");
-```
-
-```java
             }
             catch(Exception e){ System.out.println(e);}
             }
-```
-
-```java
     }
 ```
 
+### Select statement with where clause
+
 ```java
-Select statement with where clause
 import java.sql.*;
 public class App {
     public static void main(String[] args) throws Exception {
@@ -462,57 +463,47 @@ public class App {
             }
             catch(Exception e){ System.out.println(e);}
             }
-```
-
-```java
 }
 ```
 
-**Delete Statement**
+### Delete Statement
+
 ```java
 import java.sql.*;
 public class App {
-```
-
-```java
     public static void main(String[] args) throws Exception {
         try {
-```
-
-```java
             Class.forName("com.mysql.jdbc.Driver");
             Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/samriddhidb?useSSL=false","root","root");
             String sql="delete from emp where id = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, 5);
-```
-
-```java
             ps.executeUpdate();
             con.close();
             System.out.println("Data Deleted");
-```
-
-```java
             }
             catch(Exception e){ System.out.println(e);}
             }
-```
-
-```java
     }
 ```
 
-**DDL Operation in JAVA**
+### DDL Operation in JAVA
 (Create,Alter,Drop,Truncate)
 **Data Definition Language (DDL)** is a unique set of SQL commands that lets you manipulate the structure of the database. 
 
 ### CREATE Command
 
 SQL Queries:
-```java
-Create Database: CREATE DATABASE database_name;
+
+Create Database:
+
+```sql
+CREATE DATABASE database_name;
+```
+
 Create Table:
+
+```sql
 CREATE TABLE table_name (
     Column_1 data_type,
     Column_2 data_type,
@@ -520,17 +511,25 @@ CREATE TABLE table_name (
 );
 ```
 
-**DROP Command**
-DROP is **used to delete a whole database or just a table**. The DROP statement destroys the objects like an existing database, table, index, or view. A DROP statement in SQL removes a component from a relational database management system (RDBMS)
-*Drop Database*
-```java
+### DROP Command
+
+DROP is used to delete a whole database or just a table. The DROP statement destroys the objects like an existing database, table, index, or view. A DROP statement in SQL removes a component from a relational database management system (RDBMS)
+
+Drop Database:
+
+```sql
 DROP DATABASE database_name;
-The syntax to DROP a table from the database is as follow,
-Drop Table
+```
+
+The syntax to DROP a table from the database is as follow:
+
+Drop Table:
+
+```sql
 DROP TABLE table_name;
 ```
 
-**The ALTER Command**
+### The ALTER Command
 when the data exists in the table(s) of our database, modifying the structure is easier through other means, such as ALTER is used to *add*, *change*, or *remove* columns or fields in the table. It can also be used to rename the table.
 Adding column(s)
 Modifying column(s)
@@ -538,34 +537,40 @@ Removing columns
 
 ### Add Column:
 
-```java
+```sql
 ALTER TABLE table_name ADD COLUMN column_name_1 data_type, column_name_2 data_type;
 ```
 
-**Modify Column:**
-```java
+### Modify Column
+
+```sql
 ALTER TABLE table_name MODIFY COLUMN column_name data_type;
 ```
 
-**Remove a Column:**
-```java
+### Remove a Column
+
+```sql
 ALTER TABLE table_name DROP COLUMN column_name;
 ```
 
-**The RENAME Command**
-The RENAME command is used to *change the name of an existing database object (like Table, Column) to a new name.* Renaming a table does not make it lose any data that is contained within it. 
-```java
+### The RENAME Command
+
+The RENAME command is used to change the name of an existing database object (like Table, Column) to a new name. Renaming a table does not make it lose any data that is contained within it.
+
+```sql
 RENAME TABLE current_table_name TO new_table_name;
 ```
 
-**TRUNCATE TABLE**
-The **TRUNCATE TABLE** command deletes the data inside a table, but not the table itself.
-The following SQL truncates the table "Categories": 
-```java
-TRUNCATE TABLE Categories;
+### TRUNCATE TABLE
+
+The TRUNCATE TABLE command deletes the data inside a table, but not the table itself. The following SQL truncates the table "Categories":
+
+```sql
+TRUNCATE TABLE Categories;
 ```
 
-**CREATE DATABSE JAVA CODE**
+### CREATE DATABASE JAVA CODE
+
 ```java
 import java.sql.*;
 public class App {
@@ -582,14 +587,12 @@ public class App {
             }
             catch(Exception e){ System.out.println(e);}
             }
-```
-
-```java
     }
 ```
 
+### Creating Table
+
 ```java
-Creating Table:
 import java.sql.*;
 public class App {
     public static void main(String[] args) throws Exception {
@@ -605,49 +608,55 @@ public class App {
             }
             catch(Exception e){ System.out.println(e);}
             }
-```
-
-```java
     }
 ```
 
-**Preapred Statement:**
-A **PreparedStatement **is a pre-compiled SQL statement. It is a subinterface of **Statement**. Prepared Statement objects have some useful additional features than Statement objects. Instead of hard coding queries, PreparedStatement object provides a feature to execute a **parameterized query.**
+### Prepared Statement
+
+A PreparedStatement is a pre-compiled SQL statement. It is a subinterface of Statement. Prepared Statement objects have some useful additional features than Statement objects. Instead of hard coding queries, PreparedStatement object provides a feature to execute a **parameterized query.**
+
 When PreparedStatement is created, the SQL query is passed as a parameter. This Prepared Statement contains a pre-compiled SQL query, so when the PreparedStatement is executed, DBMS can just run the query instead of first compiling it.
 
-Steps to use PreparedStatement
-Create Connection to Database
+Steps to use PreparedStatement:
+
+1. Create Connection to Database
+
 ```java
 Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/samriddhidb?useSSL=false","root","root");
 ```
 
-```java
 2. Prepare Statement
+
+```java
 String sql="delete from emp where id = ?";
 PreparedStatement ps = con.prepareStatement(sql);
+```
+
 3. Set parameter values for type and position
+
+```java
 ps.setInt(2, 5);
 ps.setString(1, "suman@gmail.com");
 ```
 
-```java
 4. Execute the Query
+
+```java
 ps.executeUpdate();
 ```
 
-```java
-Methods of PreparedStatement:
-setInt(int, int): This method can be used to set integer value at the given parameter index.
-setString(int, string): This method can be used to set string value at the given parameter index.
-setFloat(int, float): This method can be used to set float value at the given parameter index.
-setDouble(int, double): This method can be used to set a double value at the given parameter index.
-executeUpdate(): This method can be used to create, drop, insert, update, delete etc. It returns int type.
-executeQuery(): It returns an instance of ResultSet when a select query is executed.
-```
+### Methods of PreparedStatement
 
-**Multiple Result:**
-When working with inline SQL or SQL Server stored procedures that return more than one result set, the Microsoft JDBC Driver for SQL Server provides the **getResultSet** method in the  class for retrieving each set of data returned.
-To determine if more result sets are available, you can call the **getMoreResults** method, which returns a boolean value of true if more result sets are available. 
+- `setInt(int, int)`: This method can be used to set integer value at the given parameter index.
+- `setString(int, string)`: This method can be used to set string value at the given parameter index.
+- `setFloat(int, float)`: This method can be used to set float value at the given parameter index.
+- `setDouble(int, double)`: This method can be used to set a double value at the given parameter index.
+- `executeUpdate()`: This method can be used to create, drop, insert, update, delete etc. It returns int type.
+- `executeQuery()`: It returns an instance of ResultSet when a select query is executed.
+
+### Multiple Result
+
+When working with inline SQL or SQL Server stored procedures that return more than one result set, the Microsoft JDBC Driver for SQL Server provides the `getResultSet` method in the class for retrieving each set of data returned. To determine if more result sets are available, you can call the `getMoreResults` method, which returns a `boolean` value of `true` if more result sets are available.
 
 ```java
 import java.sql.*;
@@ -664,9 +673,6 @@ public class App {
                 if(results) {
                    ResultSet rs = st.getResultSet();
                    rsCount++;
-```
-
-```java
                    //Show data from the result set.
                    System.out.println("RESULT SET #" + rsCount);
                    while (rs.next()) {
@@ -681,14 +687,12 @@ public class App {
             }
             catch(Exception e){ System.out.println(e);}
             }
-```
-
-```java
     }
 ```
 
-**Scrollable ResultSet**
-Let’s first make the **ResultSet** object scrollable. **Scrollable** means that once the **ResultSet** object has been created, we can traverse through fetched records in any direction, forward and backward, as we like. This provides the ability to read the last record, first record, next record, and the previous record.
+### Scrollable ResultSet
+
+Let's first make the ResultSet object scrollable. **Scrollable** means that once the **ResultSet** object has been created, we can traverse through fetched records in any direction, forward and backward, as we like. This provides the ability to read the last record, first record, next record, and the previous record.
 **Scroll type constant** 
 There are 3 scroll type constants can be used with ResultSets. 
 *ResultSet.TYPE\_FORWARD\_ONLY*
@@ -702,24 +706,23 @@ PreparedStatement pstmt = conn.prepareStatement(sql,Scroll type constant,Concurr
 Statement stmt = conn.createStatement(Scroll type constant,Concurrency constant);
 ```
 
-```java
-Allows both forward and backward movement. Not sensitive to ResultSet updates.
-Concurrency constant 
+**Concurrency constant**
+
 We can use following Concurrency constants for the ResultSets.
-ResultSet.CONCUR_READ_ONLY
-Default value .. ResultSet can not be updated.
-ResultSet.CONCUR_UPDATABLE
-Signifies an updatable ResultSet.
-```
+
+- `ResultSet.CONCUR_READ_ONLY` — Default value, ResultSet can not be updated.
+- `ResultSet.CONCUR_UPDATABLE` — Signifies an updatable ResultSet.
+
+Example:
 
 ```java
-Example:
 Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
                                       ResultSet.CONCUR_UPDATABLE);
 PreparedStatement pstmt = conn.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 ```
 
-**Example:**
+### Example
+
 ```java
 import java.sql.*;
 public class App {
@@ -728,54 +731,41 @@ public class App {
             String sql="select * from emp";
             Class.forName("com.mysql.jdbc.Driver");
             Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/samriddhidb?useSSL=false","root","root");
-```
-
-```java
             PreparedStatement pstmt = con.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = pstmt.executeQuery();
               //First Record
             rs.first();
             System.out.println("ID : " + rs.getInt("id") + ", Name : " + rs.getString("name") + ", Email : " + rs.getString("Email"));
-```
-
-```java
             //Last Record
             rs.last();
             System.out.println("ID : " + rs.getInt("id") + ", Name : " + rs.getString("name") + ", Email : " + rs.getString("Email"));
-```
-
-```java
             //Previous Record
             rs.previous();
             System.out.println("ID : " + rs.getInt("id") + ", Name : " + rs.getString("name") + ", Email : " + rs.getString("Email"));
-```
-
-```java
             //Next Record
             rs.next();
             System.out.println("ID : " + rs.getInt("id") + ", Name : " + rs.getString("name") + ", Email : " + rs.getString("Email"));
             }
             catch(Exception e){ System.out.println(e);}
             }
-```
-
-```java
     }
 ```
 
 
 ![Figure](images/Ch04_004.png)
 
-```java
 Output:
+```
 ID : 1, Name : a, Email : b
 ID : 2, Name : sunil Chaudhary, Email : suneel@gmail.com
 ID : 1, Name : a, Email : b
 ID : 2, Name : sunil Chaudhary, Email : suneel@gmail.com
 ```
 
-**Updatable ResultSet:**
-Creating an updatable **ResultSet** means that the record it points to is not only be traversable but also be updatable. The changes will immediately be persisted in the database and reflected by the **ResultSet** object in real time.
+### Updatable ResultSet
+
+Creating an updatable ResultSet means that the record it points to is not only be traversable but also be updatable. The changes will immediately be persisted in the database and reflected by the ResultSet object in real time.
+
 ```java
 import java.sql.*;
 public class App {
@@ -795,24 +785,17 @@ public class App {
                 rs.updateString("name", "Subham");
                 rs.updateRow();
             }
-```
-
-```java
             }
             catch(Exception e){ System.out.println(e);}
             }
-```
-
-```java
     }
 ```
 
-```java
-The updatable ResultSet is particularly useful when we want to update certain values after doing some comparison by traversing back and forth through the fetched records. The process of creation is similar to the preceding program, but the ResultSet constants used here are TYPE_SCROLL_SENSITIVE and CONCUR_UPDATABLE.
-```
+The updatable ResultSet is particularly useful when we want to update certain values after doing some comparison by traversing back and forth through the fetched records. The process of creation is similar to the preceding program, but the ResultSet constants used here are `TYPE_SCROLL_SENSITIVE` and `CONCUR_UPDATABLE`.
 
-**RowSet:**
-A row set is an object which encapsulates a set of rows. These rows are accessible though the javax.sql.RowSet interface. 
+### RowSet
+
+A row set is an object which encapsulates a set of rows. These rows are accessible though the `javax.sql.RowSet` interface.
 
 Three kinds of row set are supported by Java:
 Cached row set
@@ -832,7 +815,7 @@ rowSet.setCommand("select * from emp400");
 rowSet.execute();
 ```
 
-**Advantage of RowSet**
+### Advantage of RowSet
 The advantages of using RowSet are given below:
 It is easy and flexible to use.
 It is Scrollable and Updatable by default.
@@ -847,32 +830,21 @@ public class App {
             rowSet.setUrl("jdbc:mysql://localhost:3306/samriddhidb?useSSL=false");
             rowSet.setUsername("root");
             rowSet.setPassword("root");
-```
-
-```java
             rowSet.setCommand("select * from emp");
             rowSet.execute();
             while(rowSet.next())
             {
                 System.out.println("ID : " + rowSet.getInt("id") + ", Name : " + rowSet.getString("name") + ", Email : " + rowSet.getString("Email"));
-```
-
-```java
             }
-```
-
-```java
             }
             catch(Exception e){ System.out.println(e);}
             }
-```
-
-```java
     }
 ```
 
-**CacheRowSet:**
-The **CachedRowSet** is the base implementation of disconnected row sets. It connects to the data source, reads data from it, disconnects with the data source and the processes the retrieved data, reconnects to the data source and writes the modifications.
+### CacheRowSet
+
+The CachedRowSet is the base implementation of disconnected row sets. It connects to the data source, reads data from it, disconnects with the data source and the processes the retrieved data, reconnects to the data source and writes the modifications.
 
 ### Creating a CachedRowSet
 
@@ -904,24 +876,16 @@ public class App {
             while(rowSet.next())
             {
                 System.out.println("ID : " + rowSet.getInt("id") + ", Name : " + rowSet.getString("name") + ", Email : " + rowSet.getString("Email"));
-```
-
-```java
             }
-```
-
-```java
             }
             catch(Exception e){ System.out.println(e);}
             }
-```
-
-```java
     }
 ```
 
-**What Is a Transaction:**
-Transactions in Java, as in general refer to . Hence, if one or more action fails, all other actions must back out leaving the state of the application unchanged. This is necessary to ensure that the integrity of the application state is never compromised.
+### What Is a Transaction
+
+Transactions in Java, as in general refer to. Hence, if one or more action fails, all other actions must back out leaving the state of the application unchanged. This is necessary to ensure that the integrity of the application state is never compromised.
 Also, these transactions may involve one or more resources like database, message queue, giving rise to different ways to perform actions under a transaction. These include performing resource local transactions with individual resources. Alternatively, multiple resources can participate in a global transaction.
 
 ```java
@@ -941,7 +905,7 @@ Also, these transactions may involve one or more resources like database, messag
         }
 ```
 
-**SQL Escape Sequences for JDBC**
+### SQL Escape Sequences for JDBC
 Language features, such as outer joins and scalar function calls, are commonly implemented by database systems. The syntax for these features is often database-specific, even when a standard syntax has been defined. JDBC defines escape sequences that contain the standard syntax for the following language features:
 Date, time, and timestamp literals
 Scalar functions such as numeric, string, and data type conversion functions
@@ -949,27 +913,44 @@ Outer joins
 Escape characters for wildcards used in LIKE clauses
 Procedure calls
 The escape sequence used by JDBC is:
-```java
-   {extension}
+
+```
+{extension}
+```
+
 The escape sequence is recognized and parsed by the Type 4 JDBC drivers, which replace the escape sequences with data store-specific grammar.
-```
 
-```java
-Date, Time, and Timestamp Escape Sequences
+### Date, Time, and Timestamp Escape Sequences
+
 The escape sequence for date, time, and timestamp literals is:
-   {literal-type 'value'}
-where literal-type is one of the following:
-Example:
-   UPDATE Orders SET OpenDate={d '1995-01-15'} 
-   WHERE OrderID=1023
+
+```
+{literal-type 'value'}
 ```
 
-**Scalar Functions**
-You can use scalar functions in SQL statements with the following syntax:
-   {fn *scalar-function*}
-where *scalar-function* is a scalar function supported by the Type 4 JDBC drivers, as listed in Table 
+where `literal-type` is one of the following:
+
 Example:
-   SELECT id, name FROM emp WHERE name LIKE {fn UCASE('Smith')}
+
+```sql
+UPDATE Orders SET OpenDate={d '1995-01-15'} WHERE OrderID=1023
+```
+
+### Scalar Functions
+
+You can use scalar functions in SQL statements with the following syntax:
+
+```
+{fn scalar-function}
+```
+
+where `scalar-function` is a scalar function supported by the Type 4 JDBC drivers.
+
+Example:
+
+```sql
+SELECT id, name FROM emp WHERE name LIKE {fn UCASE('Smith')}
+```
 
 ### Outer Join Escape Sequences
 
@@ -999,17 +980,19 @@ SELECT col1 FROM table1 WHERE col1 LIKE '*%%' {escape '*'}
 ### Procedure Call Escape Sequences
 
 A procedure is an executable object stored in the data store. Generally, it is one or more SQL statements that have been precompiled. The escape sequence for calling a procedure is:
-```java
-   {[?=]call procedure-name[([parameter][,parameter]...)]}
-where:
-   procedure-name specifies the name of a stored procedure.
-   parameter specifies a stored procedure parameter.
+
 ```
+{[?=]call procedure-name[([parameter][,parameter]...)]}
+```
+
+where:
+- `procedure-name` specifies the name of a stored procedure.
+- `parameter` specifies a stored procedure parameter.
 
 
 ---
 
-**Table 1:**
+### Table 1
 
 | DB Name | JDBC Driver Name |
 | --- | --- |
@@ -1023,7 +1006,7 @@ where:
 | TeraData | com.teradata.jdbc.TeraDriver |
 
 
-**Table 2:**
+### Table 2
 
 | Database | Connection String/DB URL |
 | --- | --- |
@@ -1037,7 +1020,7 @@ where:
 | TeraData | jdbc:teradata://HOSTNAME/database=< DATABASE_NAME>,tmode=ANSI,charset=UTF8 |
 
 
-**Table 3:**
+### Table 3
 
 | Table C-1 Literal Types for Date, Time, and Timestamp Escape Sequences | Table C-1 Literal Types for Date, Time, and Timestamp Escape Sequences | Table C-1 Literal Types for Date, Time, and Timestamp Escape Sequences |
 | --- | --- | --- |
@@ -1047,7 +1030,7 @@ where:
 | ts | Timestamp | yyyy-mm-dd hh:mm:ss[.f...] |
 
 
-**Table 4:**
+### Table 4
 
 | Table C-2 Scalar Functions Supported | Table C-2 Scalar Functions Supported | Table C-2 Scalar Functions Supported | Table C-2 Scalar Functions Supported | Table C-2 Scalar Functions Supported |
 | --- | --- | --- | --- | --- |
@@ -1116,7 +1099,7 @@ IFNULL
 USER |
 
 
-**Table 5:**
+### Table 5
 
 | Outer Join Escape Sequences Supported | Outer Join Escape Sequences Supported |
 | --- | --- |

@@ -313,12 +313,13 @@ if (time < 10) {
 // Outputs "Good evening."
 ```
 
-Switch Statement in Java
+## Switch Statement in Java
 
-# The switch statement is a multi-way branch statement. In simple words, the Java switch statement executes one statement from multiple conditions. It is like an if-else-if ladder statement. It provides an easy way to dispatch execution to different parts of code based on the value of the expression.
+The switch statement is a multi-way branch statement. In simple words, the Java switch statement executes one statement from multiple conditions. It is like an if-else-if ladder statement. It provides an easy way to dispatch execution to different parts of code based on the value of the expression.
 
-# Syntax:
+### Syntax
 
+```java
 switch(expression) {
   case x:
     // code block
@@ -329,7 +330,11 @@ switch(expression) {
   default:
     // code block
 }
-Example:        
+```
+
+### Example
+
+```java
 int day = 4;
 switch (day) {
   case 1:
@@ -354,7 +359,7 @@ switch (day) {
     System.out.println("Sunday");
     break;
 }
-// Outputs "Thursday" (day 4)  
+// Outputs "Thursday" (day 4)
 
 # Loops in Java
 
